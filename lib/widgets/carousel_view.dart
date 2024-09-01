@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class CarouselView extends StatelessWidget {
+class DogCarouselView extends StatelessWidget {
   final List<DogData> dogs;
 
   const CarouselView({super.key, required this.dogs});
