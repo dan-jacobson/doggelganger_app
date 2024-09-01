@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   : Column(
                       children: [
                         Expanded(
-                          child: CarouselView(dogs: dogs),
+                          child: DogCarouselView(dogs: dogs),
                         ),
                         ImagePickerButton(
                           onImageSelected: (image) {
