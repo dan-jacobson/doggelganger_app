@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:doggelganger/models/dog_data.dart';
+import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MatchedDogView extends StatelessWidget {
