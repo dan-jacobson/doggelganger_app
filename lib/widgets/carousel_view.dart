@@ -47,7 +47,7 @@ class DogCarouselView extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      'assets/images/carousel/${Uri.encodeComponent(dog.imageName)}',
+                      'assets/images/carousel/${Uri.encodeComponent(dog.imageName)}.jpg',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         print('Error loading image: ${dog.imageName}');
