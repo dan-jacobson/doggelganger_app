@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 class DogCarouselView extends StatelessWidget {
   final List<DogData> dogs;
 
-  const DogCarouselView({Key? key, required this.dogs}) : super(key: key);
+  const DogCarouselView({super.key, required this.dogs});
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +46,8 @@ class DogCarouselView extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
-                      'assets/images/carousel/${Uri.encodeComponent(dog.imageName)}.jpg',
+                    child: Image(image: AssetImage(
+                      'assets/images/carousel/${dog.imageName}.jpg'),
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         print('Error loading image: ${dog.imageName}');
