@@ -6,7 +6,7 @@ void main() {
 }
 
 class DoggelgangerApp extends StatelessWidget {
-  const DoggelgangerApp({Key? key}) : super(key: key);
+  const DoggelgangerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class DoggelgangerApp extends StatelessWidget {
         primaryColor: const Color(0xFF3399DD),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: const Color(0xFFFAB04F),
-          background: const Color(0xFFF2F2F7),
+          surface: const Color(0xFFF2F2F7),
         ),
         fontFamily: 'Chalkduster',
       ),

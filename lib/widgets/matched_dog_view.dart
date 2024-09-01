@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 class MatchedDogView extends StatelessWidget {
   final DogData dog;
 
-  const MatchedDogView({Key? key, required this.dog}) : super(key: key);
+  const MatchedDogView({super.key, required this.dog});
 
   @override
   Widget build(BuildContext context) {
@@ -78,15 +78,15 @@ class MatchedDogView extends StatelessWidget {
               }
             },
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             ),
-            child: Row(
+            child: const Row(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 Icon(Icons.favorite),
                 SizedBox(width: 10),
                 Text(

@@ -4,11 +4,11 @@ import 'package:image_picker/image_picker.dart';
 class ImagePickerButton extends StatelessWidget {
   final Function(XFile?) onImageSelected;
 
-  const ImagePickerButton({Key? key, required this.onImageSelected}) : super(key: key);
+  const ImagePickerButton({super.key, required this.onImageSelected});
 
   Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     onImageSelected(image);
   }
 
@@ -30,16 +30,15 @@ class ImagePickerButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: _pickImage,
         style: ElevatedButton.styleFrom(
-          primary: Theme.of(context).primaryColor,
-          onPrimary: Colors.white,
+          foregroundColor: Colors.white, backgroundColor: Theme.of(context).primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         ),
-        child: Row(
+        child: const Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Icon(Icons.pets),
             SizedBox(width: 10),
             Text(
