@@ -4,8 +4,10 @@ import 'package:doggelganger_app/widgets/image_picker_button.dart';
 import 'package:doggelganger_app/widgets/calculating_view.dart';
 import 'package:doggelganger_app/widgets/matched_dog_view.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
+import 'package:doggelganger_app/services/api_service.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,23 +40,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void startCalculating() {
+  Future<void> startCalculating(XFile image) async {
     setState(() {
       isCalculating = true;
     });
-    // Simulate API call
-    Future.delayed(const Duration(seconds: 3), () {
+    try {
+      final matchedDogData = await ApiService.uploadImageAndGetMatch(image.path);
       setState(() {
         isCalculating = false;
-        if (dogs.isNotEmpty) {
-          matchedDog = dogs[DateTime.now().millisecond % dogs.length];
-        } else {
-          // Handle the case when no dogs are loaded
-          print('No dogs available for matching');
-          // You might want to show an error message to the user here
-        }
+        matchedDog = matchedDogData;
       });
-    });
+    } catch (e) {
+      setState(() {
+        isCalculating = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    }
   }
 
   @override
@@ -83,10 +86,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ImagePickerButton(
                           onImageSelected: (image) {
                             if (image != null) {
-                              startCalculating();
+                              startCalculating(image);
                             }
                           },
-                          icon: Icons.pets, // Add this line to use the pets icon
+                          icon: Icons.pets,
                         ),
                       ],
                     ),

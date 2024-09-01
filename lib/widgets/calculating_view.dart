@@ -42,10 +42,18 @@ class _CalculatingViewState extends State<CalculatingView>
           ),
           const SizedBox(height: 20),
           Text(
-            'Calculating matches...',
+            'Finding your doggelganger...',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            'This may take a moment',
+            style: TextStyle(
+              fontSize: 16,
               color: Theme.of(context).primaryColor,
             ),
           ),

@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerButton extends StatelessWidget {
-  final Function(XFile?) onImageSelected;
+  final Function(XFile) onImageSelected;
 
   const ImagePickerButton({super.key, required this.onImageSelected, required IconData icon});
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    onImageSelected(image);
+    if (image != null) {
+      onImageSelected(image);
+    }
   }
 
   @override
