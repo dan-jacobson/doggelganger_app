@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 class ImagePickerButton extends StatelessWidget {
   final Function(XFile?) onImageSelected;
 
-  const ImagePickerButton({super.key, required this.onImageSelected});
+  const ImagePickerButton({super.key, required this.onImageSelected, required IconData icon});
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();

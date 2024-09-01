@@ -86,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               startCalculating();
                             }
                           },
+                          icon: Icons.pets, // Add this line to use the pets icon
                         ),
                       ],
                     ),
