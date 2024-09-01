@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 class DogCarouselView extends StatelessWidget {
   final List<DogData> dogs;
 
-  const CarouselView({super.key, required this.dogs});
+  const DogCarouselView({Key? key, required this.dogs}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
