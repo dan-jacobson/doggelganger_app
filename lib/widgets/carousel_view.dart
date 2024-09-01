@@ -47,7 +47,7 @@ class DogCarouselView extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      'assets/images/${dog.imageName}.jpg',
+                      'assets/images/carousel/${dog.imageName}',
                       fit: BoxFit.cover,
                     ),
                   ),

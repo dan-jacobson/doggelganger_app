@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> loadDogData() async {
-    final String response = await rootBundle.loadString('assets/dog_metadata.json');
+    final String response = await rootBundle.loadString('assets/images/carousel/dog_metadata.json');
     final List<dynamic> data = await json.decode(response);
     setState(() {
       dogs = data.map((json) => DogData.fromJson(json)).toList();
