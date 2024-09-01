@@ -35,7 +35,7 @@ class MatchedDogView extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.4,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/carousel/${Uri.encodeComponent(dog.imageName)}.jpg'),
+                image: AssetImage('assets/images/carousel/${dog.imageName}.jpg'),
                 fit: BoxFit.cover,
                 onError: (object, stackTrace) {
                   print('Error loading image: ${dog.imageName}');
