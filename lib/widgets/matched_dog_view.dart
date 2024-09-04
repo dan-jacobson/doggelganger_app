@@ -46,8 +46,9 @@ class MatchedDogView extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                dog.imageUrl, // Using the image_url field from the API
+              child: dog.imageUrl != null
+                  ? Image.network(
+                      dog.imageSource,
                 fit: BoxFit.cover,
                 loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -60,7 +61,7 @@ class MatchedDogView extends StatelessWidget {
                   );
                 },
                 errorBuilder: (context, error, stackTrace) {
-                  print('Error loading image: ${dog.imageUrl}');
+                  print('Error loading image: ${dog.imageSource}');
                   return const Center(child: Text('Error loading image'));
                 },
               ),

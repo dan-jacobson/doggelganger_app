@@ -3,6 +3,7 @@ class DogData {
   final String fullName;
   final String location;
   final String imageName;
+  final String? imageUrl;
   final String age;
   final String sex;
   final String breed;
@@ -14,6 +15,7 @@ class DogData {
     required this.fullName,
     required this.location,
     required this.imageName,
+    this.imageUrl,
     required this.age,
     required this.sex,
     required this.breed,
@@ -26,7 +28,8 @@ class DogData {
       name: json['name'],
       fullName: json['full_name'],
       location: json['location'],
-      imageName: json['local_image'].replaceAll('.jpg', ''),
+      imageName: json['local_image']?.replaceAll('.jpg', '') ?? '',
+      imageUrl: json['image_url'],
       age: json['age'],
       sex: json['sex'],
       breed: json['breed'],
@@ -34,4 +37,6 @@ class DogData {
       adoptionLink: json['adoption_link'],
     );
   }
+
+  String get imageSource => imageUrl ?? 'assets/images/carousel/$imageName.jpg';
 }

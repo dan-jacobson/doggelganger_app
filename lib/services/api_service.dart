@@ -17,6 +17,7 @@ class ApiService {
       return DogData.fromJson({
         ...bestResponse['metadata'],
         'image_url': bestResponse['image_url'],
+        'local_image': bestResponse['metadata']['local_image'],
       });
     } else {
       throw Exception('Failed to get a match. Status code: ${response.statusCode}');
