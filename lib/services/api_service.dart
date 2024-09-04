@@ -14,7 +14,10 @@ class ApiService {
       var responseData = await response.stream.bytesToString();
       var decodedData = json.decode(responseData);
       var bestResponse = decodedData['similar_images'][0];
-      return DogData.fromJson(bestResponse['metadata']);
+      return DogData.fromJson({
+        ...bestResponse['metadata'],
+        'image_url': bestResponse['image_url'],
+      });
     } else {
       throw Exception('Failed to get a match. Status code: ${response.statusCode}');
     }
