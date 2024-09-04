@@ -18,7 +18,7 @@ class ApiService {
         var bestMatch = decodedData['similar_images'][0];
         return DogData.fromJson({
           ...bestMatch['metadata'],
-          'image_url': bestMatch['url'],
+          'imageURL': bestMatch['url'],
         });
       } else {
         throw Exception('No similar images found in the response');
