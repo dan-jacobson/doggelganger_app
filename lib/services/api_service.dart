@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:doggelganger_app/models/dog_data.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://your-api-endpoint.com'; // Replace with your actual API endpoint
+  static const String baseUrl = 'http://0.0.0.0:8000'; // FastAPI server running locally
 
   static Future<DogData> uploadImageAndGetMatch(String imagePath) async {
     var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/match'));
