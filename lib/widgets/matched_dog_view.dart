@@ -46,9 +46,8 @@ class MatchedDogView extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: dog.imageUrl != null
-                  ? Image.network(
-                      dog.imageSource,
+              child: Image.network(
+                dog.imageSource,
                 fit: BoxFit.cover,
                 loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) return child;
