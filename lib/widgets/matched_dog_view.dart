@@ -34,13 +34,6 @@ class MatchedDogView extends StatelessWidget {
           Container(
             height: MediaQuery.of(context).size.height * 0.4,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/carousel/${dog.imageName}.jpg'),
-                fit: BoxFit.cover,
-                onError: (object, stackTrace) {
-                  print('Error loading image: ${dog.imageName}');
-                },
-              ),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
@@ -50,6 +43,27 @@ class MatchedDogView extends StatelessWidget {
                   offset: const Offset(0, 3),
                 ),
               ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                dog.imageName, // Assuming imageName now contains the full URL
+                fit: BoxFit.cover,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  print('Error loading image: ${dog.imageName}');
+                  return const Center(child: Text('Error loading image'));
+                },
+              ),
             ),
           ),
           const SizedBox(height: 20),
