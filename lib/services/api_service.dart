@@ -13,12 +13,16 @@ class ApiService {
     if (response.statusCode == 200) {
       var responseData = await response.stream.bytesToString();
       var decodedData = json.decode(responseData);
-      var bestResponse = decodedData['similar_images'][0];
-      return DogData.fromJson({
-        ...bestResponse['metadata'],
-        'image_url': bestResponse['image_url'],
-        'local_image': bestResponse['metadata']['local_image'],
-      });
+      if (decodedData['similar_images'] != null && decodedData['similar_images'].isNotEmpty) {
+        var bestResponse = decodedData['similar_images'][0];
+        return DogData.fromJson({
+          ...bestResponse['metadata'],
+          'image_url': bestResponse['image_url'],
+          'local_image': bestResponse['metadata']['local_image'],
+        });
+      } else {
+        throw Exception('No similar images found in the response');
+      }
     } else {
       throw Exception('Failed to get a match. Status code: ${response.statusCode}');
     }
