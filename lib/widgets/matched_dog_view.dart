@@ -87,12 +87,12 @@ class MatchedDogView extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             ),
-            child: Row(
+            child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.pets, color: Colors.white), // Changed to pets icon
-                const SizedBox(width: 10),
-                const Text(
+                SizedBox(width: 10),
+                Text(
                   'Adopt Me!',
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
