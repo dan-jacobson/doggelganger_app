@@ -48,18 +48,6 @@
     "distance": " 6 miles away"
   },
   {
-    "name": "Cane (AL)",
-    "location": "Manhattan",
-    "image_url": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/72460792/1/",
-    "adoption_link": "https://www.petfinder.com/dog/cane-al-72460792/ny/new-york/rescue-dogs-rock-nyc-ny1274/",
-    "local_image": "Cane_(AL)_Puppy_Male_Pit_Bull_Terrier_Mix_1_mile_away_Manhattan.jpg",
-    "full_name": "Cane (AL), Puppy Male Pit Bull Terrier Mix, 1 mile away",
-    "age": "Puppy",
-    "sex": "Male",
-    "breed": "Pit Bull Terrier Mix",
-    "distance": " 1 mile away"
-  },
-  {
     "name": "Venus",
     "location": "Manhattan",
     "image_url": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/72741626/1/",
@@ -144,18 +132,6 @@
     "distance": " 1 mile away"
   },
   {
-    "name": "Lucy-MA",
-    "location": "Boston",
-    "image_url": "https://dbw3zep4prcju.cloudfront.net/animal/8fd6fb98-c3b6-4f2b-9f9a-409f52a3d67b/image/460aaed3-352c-409b-befa-6116f4a03b1f.jpg",
-    "adoption_link": "https://www.petfinder.com/dog/lucy-ma-69160336/ma/boston/west-houston-animal-rescue-tx2014/",
-    "local_image": "Lucy-MA_Puppy_Female_American_Staffordshire_Terrier_&_Terrier_Mix_2_miles_away_has_video_Boston.jpg",
-    "full_name": "Lucy-MA, Puppy Female American Staffordshire Terrier & Terrier Mix, 2 miles away, has video",
-    "age": "Puppy",
-    "sex": "Female",
-    "breed": "American Staffordshire Terrier & Terrier Mix",
-    "distance": " 2 miles away"
-  },
-  {
     "name": "Fez",
     "location": "Boston",
     "image_url": "https://dbw3zep4prcju.cloudfront.net/animal/1d71619c-2758-400e-b0a8-d4d99ec8b44d/image/7014095d-6b56-4d22-80b8-249d4ba95fa1.jpeg",
@@ -190,30 +166,6 @@
     "sex": "Male",
     "breed": "Labrador Retriever Mix",
     "distance": " 4 miles away"
-  },
-  {
-    "name": "Preston",
-    "location": "Boston",
-    "image_url": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/72832314/1/",
-    "adoption_link": "https://www.petfinder.com/dog/preston-72832314/ma/saugus/gals-best-pal-ma575/",
-    "local_image": "Preston_Puppy_Male_Labrador_Retriever_Mix_7_miles_away_Boston.jpg",
-    "full_name": "Preston, Puppy Male Labrador Retriever Mix, 7 miles away",
-    "age": "Puppy",
-    "sex": "Male",
-    "breed": "Labrador Retriever Mix",
-    "distance": " 7 miles away"
-  },
-  {
-    "name": "Pea",
-    "location": "Seattle",
-    "image_url": "https://dbw3zep4prcju.cloudfront.net/animal/01ff7295-25e3-4cf2-8ea7-874ab64f04ea/image/435baf51-75d9-495f-b958-fbf4af38d485.jpeg",
-    "adoption_link": "https://www.petfinder.com/dog/pea-72811794/wa/seattle/little-paws-4-rescue-wa573/",
-    "local_image": "Pea_Young_Female_Chihuahua_&_Black_Labrador_Retriever_Mix_1_mile_away_Seattle.jpg",
-    "full_name": "Pea, Young Female Chihuahua & Black Labrador Retriever Mix, 1 mile away",
-    "age": "Young",
-    "sex": "Female",
-    "breed": "Chihuahua & Black Labrador Retriever Mix",
-    "distance": " 1 mile away"
   },
   {
     "name": "Laura",
@@ -288,18 +240,6 @@
     "distance": " 1 mile away"
   },
   {
-    "name": "Denali",
-    "location": "Seattle",
-    "image_url": "https://dbw3zep4prcju.cloudfront.net/animal/1b6b8ea1-f4ee-4663-948e-0e6e24b35b9a/image/634c02d7-c07f-4d22-9054-f67f78e9f370.jpeg",
-    "adoption_link": "https://www.petfinder.com/dog/denali-72880415/wa/seattle/path-of-hope-rescue-wa681/",
-    "local_image": "Denali_Adult_Female_Mixed_Breed_4_miles_away_has_video_Seattle.jpg",
-    "full_name": "Denali, Adult Female Mixed Breed, 4 miles away, has video",
-    "age": "Adult",
-    "sex": "Female",
-    "breed": "Mixed Breed",
-    "distance": " 4 miles away"
-  },
-  {
     "name": "Odie",
     "location": "Seattle",
     "image_url": "https://dbw3zep4prcju.cloudfront.net/animal/ae0bbaad-b3d3-4ae5-9645-26d7d38f7d4b/image/a2b37a73-165c-4ed6-983e-aab05e93f6fe.jpeg",
@@ -312,7 +252,7 @@
     "distance": " 4 miles away"
   },
   {
-    "name": "Elizabeth 11944",
+    "name": "Elizabeth",
     "location": "San Francisco",
     "image_url": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/72438807/1/",
     "adoption_link": "https://www.petfinder.com/dog/elizabeth-11944-72438807/ca/san-francisco/muttville-senior-dog-rescue-ca1287/",
