@@ -41,12 +41,10 @@ class _CalculatingViewState extends State<CalculatingView> with SingleTickerProv
             builder: (context, child) {
               return Transform.rotate(
                 angle: _animation.value * 2 * math.pi,
-                child: CustomPaint(
-                  painter: PawHandPrinter(
-                    animationValue: _animation.value,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  size: const Size(100, 100),
+                child: IconTransition(
+                  animation: _animation,
+                  color: Theme.of(context).primaryColor,
+                  size: 100,
                 ),
               );
             },
@@ -73,72 +71,36 @@ class _CalculatingViewState extends State<CalculatingView> with SingleTickerProv
     );
   }
 }
-class PawHandPrinter extends CustomPainter {
-  final double animationValue;
+
+class IconTransition extends StatelessWidget {
+  final Animation<double> animation;
   final Color color;
+  final double size;
 
-  PawHandPrinter({required this.animationValue, required this.color});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final pawPaint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-
-    final centerX = size.width / 2;
-    final centerY = size.height / 2;
-
-    // Draw paw print
-    if (animationValue <= 0.5) {
-      final pawProgress = 1 - (animationValue * 2);
-      _drawPaw(canvas, centerX, centerY, pawPaint, pawProgress);
-    }
-
-    // Draw hand print
-    if (animationValue >= 0.5) {
-      final handProgress = (animationValue - 0.5) * 2;
-      _drawHand(canvas, centerX, centerY, pawPaint, handProgress);
-    }
-  }
-
-  void _drawPaw(Canvas canvas, double centerX, double centerY, Paint paint, double progress) {
-    final mainCircleRadius = 20.0 * progress;
-    canvas.drawCircle(Offset(centerX, centerY), mainCircleRadius, paint);
-
-    final smallCircleRadius = 10.0 * progress;
-    final distance = 30.0 * progress;
-
-    for (var i = 0; i < 4; i++) {
-      final angle = i * (math.pi / 2);
-      final x = centerX + math.cos(angle) * distance;
-      final y = centerY + math.sin(angle) * distance;
-      canvas.drawCircle(Offset(x, y), smallCircleRadius, paint);
-    }
-  }
-
-  void _drawHand(Canvas canvas, double centerX, double centerY, Paint paint, double progress) {
-    final palmRadius = 25.0 * progress;
-    canvas.drawCircle(Offset(centerX, centerY), palmRadius, paint);
-
-    final fingerLength = 40.0 * progress;
-    final fingerWidth = 15.0 * progress;
-
-    for (var i = 0; i < 5; i++) {
-      final angle = (i - 2) * (math.pi / 8);
-      final startX = centerX + math.cos(angle) * palmRadius;
-      final startY = centerY + math.sin(angle) * palmRadius;
-      final endX = startX + math.cos(angle) * fingerLength;
-      final endY = startY + math.sin(angle) * fingerLength;
-
-      canvas.drawLine(
-        Offset(startX, startY),
-        Offset(endX, endY),
-        paint..strokeWidth = fingerWidth,
-      );
-      canvas.drawCircle(Offset(endX, endY), fingerWidth / 2, paint);
-    }
-  }
+  const IconTransition({
+    Key? key,
+    required this.animation,
+    required this.color,
+    required this.size,
+  }) : super(key: key);
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        final isPaw = animation.value <= 0.5;
+        final progress = isPaw ? 1 - (animation.value * 2) : (animation.value - 0.5) * 2;
+        
+        return Opacity(
+          opacity: progress,
+          child: Icon(
+            isPaw ? Icons.pets : Icons.pan_tool,
+            size: size,
+            color: color,
+          ),
+        );
+      },
+    );
+  }
 }
