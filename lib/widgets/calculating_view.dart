@@ -12,16 +12,27 @@ class CalculatingView extends StatefulWidget {
 class _CalculatingViewState extends State<CalculatingView> with SingleTickerProviderStateMixin {
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
   late AnimationController _controller;
-  late Animation<double> _animation;
+  late Animation<double> _progressAnimation;
+  late Animation<double> _rotationAnimation;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 4),
       vsync: this,
     )..repeat();
-    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
+    
+    _progressAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+
+    _rotationAnimation = Tween<double>(begin: 0, end: 4 * math.pi).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
   }
 
   @override
@@ -37,12 +48,14 @@ class _CalculatingViewState extends State<CalculatingView> with SingleTickerProv
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AnimatedBuilder(
-            animation: _animation,
+            animation: _controller,
             builder: (context, child) {
+              final progress = _progressAnimation.value;
+              final rotationSpeed = math.sin(progress * math.pi);
               return Transform.rotate(
-                angle: _animation.value * 2 * math.pi,
+                angle: _rotationAnimation.value * rotationSpeed,
                 child: IconTransition(
-                  animation: _animation,
+                  animation: _progressAnimation,
                   color: Theme.of(context).primaryColor,
                   size: 100,
                 ),
@@ -90,7 +103,7 @@ class IconTransition extends StatelessWidget {
       animation: animation,
       builder: (context, child) {
         final progress = animation.value;
-        final pawOpacity = progress <= 0.5 ? 1 - 2 * progress : 2 * progress - 1;
+        final pawOpacity = math.cos(progress * math.pi) * 0.5 + 0.5;
         final handOpacity = 1 - pawOpacity;
         
         return Stack(
