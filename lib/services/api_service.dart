@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:doggelganger_app/models/dog_data.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://0.0.0.0:8000'; // FastAPI server running locally
+  static const String baseUrl = 'https://serve-371619654395.us-east4.run.app'; // FastAPI server running locally
 
   static Future<DogData> uploadImageAndGetMatch(String imagePath) async {
     var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/embed'));
@@ -14,11 +14,11 @@ class ApiService {
       var responseData = await response.stream.bytesToString();
       var decodedData = json.decode(responseData);
       
-      if (decodedData['similar_images'] != null && decodedData['similar_images'].isNotEmpty) {
-        var bestMatch = decodedData['similar_images'][0];
+      if (decodedData['similar_image'] != null && decodedData['similar_image'].isNotEmpty) {
+        var bestMatch = decodedData['similar_image'];
         return DogData.fromJson({
           ...bestMatch['metadata'],
-          'imageURL': bestMatch['url'],
+          'imageURL': bestMatch['image_url'],
         });
       } else {
         throw Exception('No similar images found in the response');
