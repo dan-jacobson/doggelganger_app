@@ -159,7 +159,7 @@ class _MatchedDogViewState extends State<MatchedDogView> with SingleTickerProvid
                                 ? const Icon(CupertinoIcons.share)
                                 : const Icon(Icons.share),
                             onPressed: () {
-                              Share.share('Check out my Doggelganger, ${dog.name}!');
+                              Share.share('Check out my Doggelganger, ${widget.dog.name}!');
                             },
                           ),
                         ],
