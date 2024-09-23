@@ -7,11 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MatchedDogView extends StatelessWidget {
-  final TextStyle _baseTextStyle = GoogleFonts.quicksand();
   final DogData dog;
   final String userImagePath;
 
   const MatchedDogView({super.key, required this.dog, required this.userImagePath});
+
+  TextStyle get _baseTextStyle => GoogleFonts.quicksand();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class MatchedDogView extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   'Your Doggelganger is...',
-                  style: _baseTextStyle.copyWith(
+                  style: _baseTextStyle().copyWith(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).primaryColor,
