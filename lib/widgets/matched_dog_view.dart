@@ -149,7 +149,7 @@ class _MatchedDogViewState extends State<MatchedDogView> with SingleTickerProvid
                         children: [
                           Expanded(
                             child: Text(
-                              dog.breed,
+                              widget.dog.breed,
                               style: _baseTextStyle.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -169,11 +169,11 @@ class _MatchedDogViewState extends State<MatchedDogView> with SingleTickerProvid
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '${dog.age} • ${dog.sex}',
+                            '${widget.dog.age} • ${widget.dog.sex}',
                             style: _baseTextStyle.copyWith(fontSize: 16),
                           ),
                           Text(
-                            dog.location,
+                            widget.dog.location,
                             style: _baseTextStyle.copyWith(fontSize: 16),
                             textAlign: TextAlign.right,
                           ),
@@ -190,8 +190,8 @@ class _MatchedDogViewState extends State<MatchedDogView> with SingleTickerProvid
           padding: const EdgeInsets.all(20),
           child: ElevatedButton(
             onPressed: () async {
-              if (await canLaunch(dog.adoptionLink)) {
-                await launch(dog.adoptionLink);
+              if (await canLaunch(widget.dog.adoptionLink)) {
+                await launch(widget.dog.adoptionLink);
               }
             },
             style: ElevatedButton.styleFrom(
