@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MatchedDogView extends StatelessWidget {
   final DogData dog;
@@ -11,58 +12,82 @@ class MatchedDogView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          Text(
-            'Your Doggelganger is...',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            dog.name,
-            style: TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildImageContainer(context, userImagePath, isUserImage: true),
-              _buildImageContainer(context, dog.imageSource, isUserImage: false),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              color: const Color(0xFFE6F3FF),
-              borderRadius: BorderRadius.circular(10),
-            ),
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(height: 20),
                 Text(
-                  '${dog.age} • ${dog.sex} • ${dog.breed}',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  'Your Doggelganger is...',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 10),
                 Text(
-                  dog.location,
-                  style: const TextStyle(fontSize: 16),
+                  dog.name,
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildImageContainer(context, userImagePath, isUserImage: true),
+                    _buildImageContainer(context, dog.imageSource, isUserImage: false),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE6F3FF),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${dog.age} • ${dog.sex}',
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.share),
+                            onPressed: () {
+                              Share.share('Check out my Doggelganger, ${dog.name}!');
+                            },
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        dog.breed,
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        dog.location,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 20),
-          ElevatedButton(
+        ),
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: ElevatedButton(
             onPressed: () async {
               if (await canLaunch(dog.adoptionLink)) {
                 await launch(dog.adoptionLink);
@@ -78,7 +103,7 @@ class MatchedDogView extends StatelessWidget {
             child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.pets, color: Colors.white), // Changed to pets icon
+                Icon(Icons.pets, color: Colors.white),
                 SizedBox(width: 10),
                 Text(
                   'Adopt Me!',
@@ -87,8 +112,8 @@ class MatchedDogView extends StatelessWidget {
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
