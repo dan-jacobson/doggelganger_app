@@ -6,11 +6,57 @@ import 'package:share_plus/share_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MatchedDogView extends StatelessWidget {
+class MatchedDogView extends StatefulWidget {
   final DogData dog;
   final String userImagePath;
 
   const MatchedDogView({super.key, required this.dog, required this.userImagePath});
+
+  @override
+  _MatchedDogViewState createState() => _MatchedDogViewState();
+}
+
+class _MatchedDogViewState extends State<MatchedDogView> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  bool _isUserImageExpanded = false;
+  bool _isDogImageExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _toggleImageExpansion(bool isUserImage) {
+    setState(() {
+      if (isUserImage) {
+        _isUserImageExpanded = !_isUserImageExpanded;
+        _isDogImageExpanded = false;
+      } else {
+        _isDogImageExpanded = !_isDogImageExpanded;
+        _isUserImageExpanded = false;
+      }
+    });
+    if (_isUserImageExpanded || _isDogImageExpanded) {
+      _controller.forward();
+    } else {
+      _controller.reverse();
+    }
+  }
 
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
 
@@ -33,7 +79,7 @@ class MatchedDogView extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  dog.name,
+                  widget.dog.name,
                   style: _baseTextStyle.copyWith(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -45,15 +91,45 @@ class MatchedDogView extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.5,
                   child: Stack(
                     children: [
-                      Positioned(
-                        top: 0,
-                        left: 20,
-                        child: _buildImageContainer(context, userImagePath, isUserImage: true),
+                      AnimatedBuilder(
+                        animation: _animation,
+                        builder: (context, child) {
+                          return Positioned(
+                            top: _isUserImageExpanded ? 0 : 0,
+                            left: _isUserImageExpanded ? 0 : 20,
+                            right: _isUserImageExpanded ? 0 : null,
+                            bottom: _isUserImageExpanded ? 0 : null,
+                            child: GestureDetector(
+                              onTap: () => _toggleImageExpansion(true),
+                              child: _buildImageContainer(
+                                context,
+                                widget.userImagePath,
+                                isUserImage: true,
+                                isExpanded: _isUserImageExpanded,
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                      Positioned(
-                        bottom: 0,
-                        right: 20,
-                        child: _buildImageContainer(context, dog.imageSource, isUserImage: false),
+                      AnimatedBuilder(
+                        animation: _animation,
+                        builder: (context, child) {
+                          return Positioned(
+                            top: _isDogImageExpanded ? 0 : null,
+                            left: _isDogImageExpanded ? 0 : null,
+                            right: _isDogImageExpanded ? 0 : 20,
+                            bottom: _isDogImageExpanded ? 0 : 0,
+                            child: GestureDetector(
+                              onTap: () => _toggleImageExpansion(false),
+                              child: _buildImageContainer(
+                                context,
+                                widget.dog.imageSource,
+                                isUserImage: false,
+                                isExpanded: _isDogImageExpanded,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -132,12 +208,17 @@ class MatchedDogView extends StatelessWidget {
     );
   }
 
-  Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage}) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.55,
-      height: MediaQuery.of(context).size.width * 0.55,
+  Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage, required bool isExpanded}) {
+    final double containerSize = isExpanded
+        ? MediaQuery.of(context).size.height * 0.5
+        : MediaQuery.of(context).size.width * 0.55;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      width: containerSize,
+      height: containerSize,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(isExpanded ? 0 : 20),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -148,7 +229,7 @@ class MatchedDogView extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(isExpanded ? 0 : 20),
         child: isUserImage
             ? Image.file(
                 File(imagePath),
