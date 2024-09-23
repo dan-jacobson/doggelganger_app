@@ -12,27 +12,36 @@ class CalculatingView extends StatefulWidget {
 class _CalculatingViewState extends State<CalculatingView> with SingleTickerProviderStateMixin {
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
   late AnimationController _controller;
-  late Animation<double> _progressAnimation;
+  late Animation<double> _iconTransitionAnimation;
   late Animation<double> _rotationAnimation;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 6),
       vsync: this,
-    )..repeat();
+    )..repeat(reverse: true);
     
-    _progressAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
-
-    _rotationAnimation = Tween<double>(begin: 0, end: 2 * math.pi).animate(
+    _iconTransitionAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Curves.easeInOut,
+        curve: const Interval(0.0, 0.5, curve: Curves.easeInOut),
       ),
     );
+
+    _rotationAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0, end: 2 * math.pi)
+            .chain(CurveTween(curve: Curves.easeIn)),
+        weight: 50,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 2 * math.pi, end: 4 * math.pi)
+            .chain(CurveTween(curve: Curves.easeOut)),
+        weight: 50,
+      ),
+    ]).animate(_controller);
   }
 
   @override
@@ -50,12 +59,10 @@ class _CalculatingViewState extends State<CalculatingView> with SingleTickerProv
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {
-              final progress = _progressAnimation.value;
-              final rotationSpeed = 1 + math.sin(math.pi * progress);
               return Transform.rotate(
-                angle: _rotationAnimation.value * rotationSpeed,
+                angle: _rotationAnimation.value,
                 child: IconTransition(
-                  animation: _progressAnimation,
+                  animation: _iconTransitionAnimation,
                   color: Theme.of(context).primaryColor,
                   size: 100,
                 ),
@@ -103,8 +110,8 @@ class IconTransition extends StatelessWidget {
       animation: animation,
       builder: (context, child) {
         final progress = animation.value;
-        final pawOpacity = math.sin(math.pi * progress / 2);
-        final handOpacity = math.cos(math.pi * progress / 2);
+        final pawOpacity = 1 - progress;
+        final handOpacity = progress;
         
         return Stack(
           alignment: Alignment.center,
