@@ -92,66 +92,83 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                   child: AnimatedBuilder(
                     animation: _animation,
                     builder: (context, child) {
-                      return Stack(
-                        children: [
-                          if (_isDogImageExpanded)
-                            Positioned.fill(
-                              child: GestureDetector(
-                                onTap: () => _toggleImageExpansion(false),
-                                child: _buildImageContainer(
-                                  context,
-                                  widget.dog.imageSource,
-                                  isUserImage: false,
-                                  isExpanded: _isDogImageExpanded,
-                                ),
+                      List<Widget> stackChildren = [];
+
+                      // Add the non-expanded image first (it will be in the background)
+                      if (!_isDogImageExpanded) {
+                        stackChildren.add(
+                          Positioned(
+                            top: 20,
+                            left: 20,
+                            right: MediaQuery.of(context).size.width * 0.5,
+                            bottom: MediaQuery.of(context).size.height * 0.25,
+                            child: GestureDetector(
+                              onTap: () => _toggleImageExpansion(false),
+                              child: _buildImageContainer(
+                                context,
+                                widget.dog.imageSource,
+                                isUserImage: false,
+                                isExpanded: _isDogImageExpanded,
                               ),
                             ),
-                          if (!_isDogImageExpanded)
-                            Positioned(
-                              top: 20,
-                              left: 20,
-                              right: MediaQuery.of(context).size.width * 0.5,
-                              bottom: MediaQuery.of(context).size.height * 0.25,
-                              child: GestureDetector(
-                                onTap: () => _toggleImageExpansion(false),
-                                child: _buildImageContainer(
-                                  context,
-                                  widget.dog.imageSource,
-                                  isUserImage: false,
-                                  isExpanded: _isDogImageExpanded,
-                                ),
+                          ),
+                        );
+                      }
+
+                      if (!_isUserImageExpanded) {
+                        stackChildren.add(
+                          Positioned(
+                            top: MediaQuery.of(context).size.height * 0.25,
+                            left: MediaQuery.of(context).size.width * 0.5,
+                            right: 20,
+                            bottom: 20,
+                            child: GestureDetector(
+                              onTap: () => _toggleImageExpansion(true),
+                              child: _buildImageContainer(
+                                context,
+                                widget.userImagePath,
+                                isUserImage: true,
+                                isExpanded: _isUserImageExpanded,
                               ),
                             ),
-                          if (!_isUserImageExpanded)
-                            Positioned(
-                              top: MediaQuery.of(context).size.height * 0.25,
-                              left: MediaQuery.of(context).size.width * 0.5,
-                              right: 20,
-                              bottom: 20,
-                              child: GestureDetector(
-                                onTap: () => _toggleImageExpansion(true),
-                                child: _buildImageContainer(
-                                  context,
-                                  widget.userImagePath,
-                                  isUserImage: true,
-                                  isExpanded: _isUserImageExpanded,
-                                ),
+                          ),
+                        );
+                      }
+
+                      // Add the expanded image last (it will be on top)
+                      if (_isDogImageExpanded) {
+                        stackChildren.add(
+                          Positioned.fill(
+                            child: GestureDetector(
+                              onTap: () => _toggleImageExpansion(false),
+                              child: _buildImageContainer(
+                                context,
+                                widget.dog.imageSource,
+                                isUserImage: false,
+                                isExpanded: _isDogImageExpanded,
                               ),
                             ),
-                          if (_isUserImageExpanded)
-                            Positioned.fill(
-                              child: GestureDetector(
-                                onTap: () => _toggleImageExpansion(true),
-                                child: _buildImageContainer(
-                                  context,
-                                  widget.userImagePath,
-                                  isUserImage: true,
-                                  isExpanded: _isUserImageExpanded,
-                                ),
+                          ),
+                        );
+                      }
+
+                      if (_isUserImageExpanded) {
+                        stackChildren.add(
+                          Positioned.fill(
+                            child: GestureDetector(
+                              onTap: () => _toggleImageExpansion(true),
+                              child: _buildImageContainer(
+                                context,
+                                widget.userImagePath,
+                                isUserImage: true,
+                                isExpanded: _isUserImageExpanded,
                               ),
                             ),
-                        ],
-                      );
+                          ),
+                        );
+                      }
+
+                      return Stack(children: stackChildren);
                     },
                   ),
                 ),
