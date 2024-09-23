@@ -95,10 +95,10 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                       return Stack(
                         children: [
                           Positioned(
-                            top: 20 + _animation.value * ((_isDogImageExpanded ? -20 : 0)),
-                            left: 20 + _animation.value * ((_isDogImageExpanded ? -20 : 0)),
-                            right: 20 + _animation.value * ((_isDogImageExpanded ? -20 : MediaQuery.of(context).size.width * 0.45 - 20)),
-                            bottom: 20 + _animation.value * ((_isDogImageExpanded ? -20 : MediaQuery.of(context).size.height * 0.25 - 20)),
+                            top: 20 + _animation.value * (_isDogImageExpanded ? -20 : MediaQuery.of(context).size.height * 0.125),
+                            left: 20 + _animation.value * (_isDogImageExpanded ? -20 : 0),
+                            right: 20 + _animation.value * (_isDogImageExpanded ? -20 : MediaQuery.of(context).size.width * 0.45),
+                            bottom: 20 + _animation.value * (_isDogImageExpanded ? -20 : MediaQuery.of(context).size.height * 0.125),
                             child: GestureDetector(
                               onTap: () => _toggleImageExpansion(false),
                               child: _buildImageContainer(
@@ -110,10 +110,10 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                             ),
                           ),
                           Positioned(
-                            top: 20 + _animation.value * ((_isUserImageExpanded ? -20 : MediaQuery.of(context).size.height * 0.25 - 20)),
-                            left: 20 + _animation.value * ((_isUserImageExpanded ? -20 : MediaQuery.of(context).size.width * 0.45 - 20)),
-                            right: 20 + _animation.value * ((_isUserImageExpanded ? -20 : 0)),
-                            bottom: 20 + _animation.value * ((_isUserImageExpanded ? -20 : 0)),
+                            top: 20 + _animation.value * (_isUserImageExpanded ? -20 : MediaQuery.of(context).size.height * 0.25),
+                            left: 20 + _animation.value * (_isUserImageExpanded ? -20 : MediaQuery.of(context).size.width * 0.45),
+                            right: 20 + _animation.value * (_isUserImageExpanded ? -20 : 0),
+                            bottom: 20 + _animation.value * (_isUserImageExpanded ? -20 : 0),
                             child: GestureDetector(
                               onTap: () => _toggleImageExpansion(true),
                               child: _buildImageContainer(
@@ -204,13 +204,14 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
   }
 
   Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage, required bool isExpanded}) {
-    final double containerSize = MediaQuery.of(context).size.width * 0.45 + _animation.value * (MediaQuery.of(context).size.width * 0.55);
+    final double containerSize = MediaQuery.of(context).size.width * (0.45 + _animation.value * 0.55);
+    final double borderRadius = 20 - _animation.value * 10;
 
     return Container(
       width: containerSize,
       height: containerSize,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20 - _animation.value * 10),
+        borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -221,7 +222,7 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20 - _animation.value * 10),
+        borderRadius: BorderRadius.circular(borderRadius),
         child: isUserImage
             ? Image.file(
                 File(imagePath),
