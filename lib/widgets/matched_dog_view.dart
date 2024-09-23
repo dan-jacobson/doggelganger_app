@@ -71,15 +71,23 @@ class MatchedDogView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5),
-                      Text(
-                        dog.breed,
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        dog.location,
-                        style: const TextStyle(fontSize: 16),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              dog.breed,
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            dog.location,
+                            style: const TextStyle(fontSize: 16),
+                            textAlign: TextAlign.right,
+                          ),
+                        ],
                       ),
                     ],
                   ),
