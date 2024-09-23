@@ -95,7 +95,44 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                       List<Widget> stackChildren = [];
 
                       // Add the non-expanded image first (it will be in the background)
-                      if (!_isDogImageExpanded) {
+                      if (!_isDogImageExpanded && !_isUserImageExpanded) {
+                        // Both images are small, place them side-by-side
+                        stackChildren.add(
+                          Positioned(
+                            top: 20,
+                            left: 20,
+                            right: MediaQuery.of(context).size.width * 0.5 + 10,
+                            bottom: 20,
+                            child: GestureDetector(
+                              onTap: () => _toggleImageExpansion(false),
+                              child: _buildImageContainer(
+                                context,
+                                widget.dog.imageSource,
+                                isUserImage: false,
+                                isExpanded: false,
+                              ),
+                            ),
+                          ),
+                        );
+                        stackChildren.add(
+                          Positioned(
+                            top: 20,
+                            left: MediaQuery.of(context).size.width * 0.5 + 10,
+                            right: 20,
+                            bottom: 20,
+                            child: GestureDetector(
+                              onTap: () => _toggleImageExpansion(true),
+                              child: _buildImageContainer(
+                                context,
+                                widget.userImagePath,
+                                isUserImage: true,
+                                isExpanded: false,
+                              ),
+                            ),
+                          ),
+                        );
+                      } else if (!_isDogImageExpanded) {
+                        // Only dog image is small
                         stackChildren.add(
                           Positioned(
                             top: 20,
@@ -108,14 +145,13 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                                 context,
                                 widget.dog.imageSource,
                                 isUserImage: false,
-                                isExpanded: _isDogImageExpanded,
+                                isExpanded: false,
                               ),
                             ),
                           ),
                         );
-                      }
-
-                      if (!_isUserImageExpanded) {
+                      } else if (!_isUserImageExpanded) {
+                        // Only user image is small
                         stackChildren.add(
                           Positioned(
                             top: MediaQuery.of(context).size.height * 0.25,
@@ -128,7 +164,7 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                                 context,
                                 widget.userImagePath,
                                 isUserImage: true,
-                                isExpanded: _isUserImageExpanded,
+                                isExpanded: false,
                               ),
                             ),
                           ),
