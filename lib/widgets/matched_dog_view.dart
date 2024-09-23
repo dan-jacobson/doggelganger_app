@@ -171,6 +171,7 @@ class MatchedDogView extends StatelessWidget {
                 },
               ),
       ),
+      )
     );
   }
 
