@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           flex: 9, // This will make the carousel take up 90% of the available space
                           child: Transform.rotate(
-                            angle: 0.087, // This is approximately 5 degrees in radians
+                            angle: 0.052, // This is approximately 3 degrees in radians
                             child: dogs.isEmpty
                                 ? Center(child: CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
