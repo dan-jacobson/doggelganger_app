@@ -53,13 +53,17 @@ class MatchedDogView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '${dog.age} • ${dog.sex}',
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: Text(
+                              dog.breed,
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           IconButton(
                             icon: Platform.isIOS
@@ -75,12 +79,9 @@ class MatchedDogView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: Text(
-                              dog.breed,
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          Text(
+                            '${dog.age} • ${dog.sex}',
+                            style: const TextStyle(fontSize: 16),
                           ),
                           Text(
                             dog.location,
