@@ -19,25 +19,25 @@ class _CalculatingViewState extends State<CalculatingView> with SingleTickerProv
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 6),
+      duration: const Duration(seconds: 4),
       vsync: this,
     )..repeat(reverse: true);
     
     _iconTransitionAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeInOut),
+        curve: const Interval(0.0, 1.0, curve: Curves.easeInOut),
       ),
     );
 
     _rotationAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0, end: 4 * math.pi)
+        tween: Tween<double>(begin: 0, end: 8 * math.pi)
             .chain(CurveTween(curve: Curves.easeIn)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 4 * math.pi, end: 8 * math.pi)
+        tween: Tween<double>(begin: 8 * math.pi, end: 16 * math.pi)
             .chain(CurveTween(curve: Curves.easeOut)),
         weight: 50,
       ),
