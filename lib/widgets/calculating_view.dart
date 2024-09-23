@@ -89,14 +89,15 @@ class IconTransition extends StatelessWidget {
     return AnimatedBuilder(
       animation: animation,
       builder: (context, child) {
-        final pawProgress = (1 - (animation.value * 2)).abs();
-        final handProgress = ((animation.value - 0.5) * 2).abs();
+        final progress = animation.value;
+        final pawOpacity = progress <= 0.5 ? 1 - 2 * progress : 2 * progress - 1;
+        final handOpacity = 1 - pawOpacity;
         
         return Stack(
           alignment: Alignment.center,
           children: [
             Opacity(
-              opacity: pawProgress,
+              opacity: pawOpacity,
               child: Icon(
                 Icons.pets,
                 size: size,
@@ -104,7 +105,7 @@ class IconTransition extends StatelessWidget {
               ),
             ),
             Opacity(
-              opacity: handProgress,
+              opacity: handOpacity,
               child: Icon(
                 Icons.pan_tool,
                 size: size,
