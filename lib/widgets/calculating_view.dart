@@ -51,7 +51,7 @@ class _CalculatingViewState extends State<CalculatingView> with SingleTickerProv
             animation: _controller,
             builder: (context, child) {
               final progress = _progressAnimation.value;
-              final rotationSpeed = math.sin(progress) + 2;//math.sin(progress * math.pi);
+              final rotationSpeed = 1 + math.sin(math.pi * progress);
               return Transform.rotate(
                 angle: _rotationAnimation.value * rotationSpeed,
                 child: IconTransition(
@@ -103,8 +103,8 @@ class IconTransition extends StatelessWidget {
       animation: animation,
       builder: (context, child) {
         final progress = animation.value;
-        final pawOpacity = math.cos(progress);
-        final handOpacity = math.sin(progress);
+        final pawOpacity = math.sin(math.pi * progress / 2);
+        final handOpacity = math.cos(math.pi * progress / 2);
         
         return Stack(
           alignment: Alignment.center,
