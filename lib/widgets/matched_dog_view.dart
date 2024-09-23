@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:flutter/cupertino.dart';
 
 class MatchedDogView extends StatelessWidget {
+  final TextStyle _baseTextStyle = const TextStyle(fontFamily: 'Quicksand');
   final DogData dog;
   final String userImagePath;
 
@@ -22,7 +23,7 @@ class MatchedDogView extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   'Your Doggelganger is...',
-                  style: TextStyle(
+                  style: _baseTextStyle.copyWith(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).primaryColor,
@@ -31,7 +32,7 @@ class MatchedDogView extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   dog.name,
-                  style: TextStyle(
+                  style: _baseTextStyle.copyWith(
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.secondary,
@@ -61,7 +62,7 @@ class MatchedDogView extends StatelessWidget {
                           Expanded(
                             child: Text(
                               dog.breed,
-                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              style: _baseTextStyle.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -81,11 +82,11 @@ class MatchedDogView extends StatelessWidget {
                         children: [
                           Text(
                             '${dog.age} • ${dog.sex}',
-                            style: const TextStyle(fontSize: 16),
+                            style: _baseTextStyle.copyWith(fontSize: 16),
                           ),
                           Text(
                             dog.location,
-                            style: const TextStyle(fontSize: 16),
+                            style: _baseTextStyle.copyWith(fontSize: 16),
                             textAlign: TextAlign.right,
                           ),
                         ],
@@ -119,7 +120,7 @@ class MatchedDogView extends StatelessWidget {
                 SizedBox(width: 10),
                 Text(
                   'Adopt Me!',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  style: _baseTextStyle.copyWith(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
