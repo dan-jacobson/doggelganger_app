@@ -41,12 +41,22 @@ class MatchedDogView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    _buildImageContainer(context, dog.imageSource, isUserImage: false, alignment: Alignment.centerRight),
-                    _buildImageContainer(context, userImagePath, isUserImage: true, alignment: Alignment.centerLeft),
-                  ],
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 0,
+                        left: 20,
+                        child: _buildImageContainer(context, userImagePath, isUserImage: true),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 20,
+                        child: _buildImageContainer(context, dog.imageSource, isUserImage: false),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Container(
@@ -122,14 +132,10 @@ class MatchedDogView extends StatelessWidget {
     );
   }
 
-  Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage, required Alignment alignment}) {
+  Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage}) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
-      height: MediaQuery.of(context).size.height * 0.5,
-      alignment: alignment,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.6,
-        height: MediaQuery.of(context).size.height * 0.45,
+      width: MediaQuery.of(context).size.width * 0.6,
+      height: MediaQuery.of(context).size.width * 0.6,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
