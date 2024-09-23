@@ -27,7 +27,7 @@ class _CalculatingViewState extends State<CalculatingView> with SingleTickerProv
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 
-    _rotationAnimation = Tween<double>(begin: 0, end: 4 * math.pi).animate(
+    _rotationAnimation = Tween<double>(begin: 0, end: 2 * math.pi).animate(
       CurvedAnimation(
         parent: _controller,
         curve: Curves.easeInOut,
