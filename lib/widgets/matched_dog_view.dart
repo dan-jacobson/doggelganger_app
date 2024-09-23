@@ -4,9 +4,10 @@ import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MatchedDogView extends StatelessWidget {
-  final TextStyle _baseTextStyle = const TextStyle(fontFamily: 'Quicksand');
+  final TextStyle _baseTextStyle = GoogleFonts.quicksand();
   final DogData dog;
   final String userImagePath;
 
