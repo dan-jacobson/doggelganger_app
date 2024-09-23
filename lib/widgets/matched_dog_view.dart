@@ -9,8 +9,14 @@ import 'package:google_fonts/google_fonts.dart';
 class MatchedDogView extends StatefulWidget {
   final DogData dog;
   final String userImagePath;
+  final VoidCallback onClose;
 
-  const MatchedDogView({super.key, required this.dog, required this.userImagePath});
+  const MatchedDogView({
+    super.key,
+    required this.dog,
+    required this.userImagePath,
+    required this.onClose,
+  });
 
   @override
   _MatchedDogViewState createState() => _MatchedDogViewState();
@@ -62,21 +68,40 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Text(
-                  'Your Doggelganger is...',
-                  style: _baseTextStyle.copyWith(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  ),
+        Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    // ... rest of the column content
+                  ],
                 ),
+              ),
+            ),
+            // ... rest of the column content
+          ],
+        ),
+        Positioned(
+          top: 10,
+          left: 10,
+          child: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: widget.onClose,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+                    Text(
+                      'Your Doggelganger is...',
+                      style: _baseTextStyle.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
                 const SizedBox(height: 5),
                 Text(
                   widget.dog.name,
