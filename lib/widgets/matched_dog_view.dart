@@ -95,10 +95,10 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                       return Stack(
                         children: [
                           Positioned(
-                            top: _isDogImageExpanded ? 0 : _animation.value * 20,
-                            left: _isDogImageExpanded ? 0 : _animation.value * 20,
-                            right: _isDogImageExpanded ? 0 : 20 - _animation.value * 20,
-                            bottom: _isDogImageExpanded ? 0 : _animation.value * 20,
+                            top: _isDogImageExpanded ? 0 : 20 - _animation.value * 20,
+                            left: _isDogImageExpanded ? 0 : 20 - _animation.value * 20,
+                            right: _isDogImageExpanded ? 0 : 20 + _animation.value * (MediaQuery.of(context).size.width * 0.45 - 20),
+                            bottom: _isDogImageExpanded ? 0 : 20 + _animation.value * (MediaQuery.of(context).size.height * 0.5 - MediaQuery.of(context).size.width * 0.55 - 20),
                             child: GestureDetector(
                               onTap: () => _toggleImageExpansion(false),
                               child: _buildImageContainer(
@@ -111,8 +111,8 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                           ),
                           Positioned(
                             top: _isUserImageExpanded ? 0 : 0,
-                            left: _isUserImageExpanded ? 0 : 20 - _animation.value * 20,
-                            right: _isUserImageExpanded ? 0 : _animation.value * 20,
+                            left: _isUserImageExpanded ? 0 : 20 + _animation.value * (MediaQuery.of(context).size.width * 0.45 - 20),
+                            right: _isUserImageExpanded ? 0 : 20 - _animation.value * 20,
                             bottom: _isUserImageExpanded ? 0 : 20 - _animation.value * 20,
                             child: GestureDetector(
                               onTap: () => _toggleImageExpansion(true),
@@ -204,9 +204,7 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
   }
 
   Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage, required bool isExpanded}) {
-    final double containerSize = isExpanded
-        ? MediaQuery.of(context).size.height * 0.5
-        : MediaQuery.of(context).size.width * 0.55 + _animation.value * (MediaQuery.of(context).size.height * 0.5 - MediaQuery.of(context).size.width * 0.55);
+    final double containerSize = MediaQuery.of(context).size.width * 0.55 + _animation.value * (MediaQuery.of(context).size.height * 0.5 - MediaQuery.of(context).size.width * 0.55);
 
     return Container(
       width: containerSize,
