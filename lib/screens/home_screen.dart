@@ -20,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<DogData> dogs = [];
   bool isCalculating = false;
   DogData? matchedDog;
+  String? userImagePath;
 
   @override
   void initState() {
@@ -43,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> startCalculating(XFile image) async {
     setState(() {
       isCalculating = true;
+      userImagePath = image.path;
     });
     try {
       final matchedDogData = await ApiService.uploadImageAndGetMatch(image.path);
@@ -74,8 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: isCalculating
               ? const CalculatingView()
-              : matchedDog != null
-                  ? MatchedDogView(dog: matchedDog!)
+              : matchedDog != null && userImagePath != null
+                  ? MatchedDogView(dog: matchedDog!, userImagePath: userImagePath!)
                   : Column(
                       children: [
                         Expanded(
