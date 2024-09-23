@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CalculatingView extends StatefulWidget {
   const CalculatingView({super.key});
@@ -9,6 +10,7 @@ class CalculatingView extends StatefulWidget {
 
 class _CalculatingViewState extends State<CalculatingView>
     with SingleTickerProviderStateMixin {
+  TextStyle get _baseTextStyle => GoogleFonts.quicksand();
   late AnimationController _controller;
 
   @override
@@ -43,7 +45,7 @@ class _CalculatingViewState extends State<CalculatingView>
           const SizedBox(height: 20),
           Text(
             'Finding your doggelganger...',
-            style: TextStyle(
+            style: _baseTextStyle.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor,
@@ -52,7 +54,7 @@ class _CalculatingViewState extends State<CalculatingView>
           const SizedBox(height: 10),
           Text(
             'This may take a moment',
-            style: TextStyle(
+            style: _baseTextStyle.copyWith(
               fontSize: 16,
               color: Theme.of(context).primaryColor,
             ),

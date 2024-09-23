@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class DogCarouselView extends StatelessWidget {
+  TextStyle get _baseTextStyle => GoogleFonts.quicksand();
   final List<DogData> dogs;
 
   const DogCarouselView({super.key, required this.dogs});
@@ -77,7 +79,7 @@ class DogCarouselView extends StatelessWidget {
                       children: [
                         Text(
                           dog.name,
-                          style: const TextStyle(
+                          style: _baseTextStyle.copyWith(
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -85,14 +87,14 @@ class DogCarouselView extends StatelessWidget {
                         ),
                         Text(
                           '${dog.age} • ${dog.sex} • ${dog.breed}',
-                          style: const TextStyle(
+                          style: _baseTextStyle.copyWith(
                             color: Colors.white,
                             fontSize: 16,
                           ),
                         ),
                         Text(
                           '${dog.location} - ${dog.distance}',
-                          style: const TextStyle(
+                          style: _baseTextStyle.copyWith(
                             color: Colors.white,
                             fontSize: 14,
                           ),

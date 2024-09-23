@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:doggelganger_app/widgets/carousel_view.dart';
 import 'package:doggelganger_app/widgets/image_picker_button.dart';
 import 'package:doggelganger_app/widgets/calculating_view.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextStyle get _baseTextStyle => GoogleFonts.quicksand();
   List<DogData> dogs = [];
   bool isCalculating = false;
   DogData? matchedDog;
@@ -82,7 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Expanded(
                           child: dogs.isEmpty
-                              ? const Center(child: CircularProgressIndicator())
+                              ? Center(child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                                ))
                               : DogCarouselView(dogs: dogs),
                         ),
                         ImagePickerButton(
