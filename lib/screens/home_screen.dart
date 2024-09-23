@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final List<dynamic> data = await json.decode(response);
       setState(() {
         dogs = data.map((json) => DogData.fromJson(json)).toList();
+        dogs.shuffle(); // Randomize the order of dogs
       });
     } catch (e) {
       print('Error loading dog data: $e');
