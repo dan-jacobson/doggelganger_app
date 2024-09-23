@@ -40,9 +40,9 @@ class MatchedDogView extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   child: Stack(
                     children: [
                       Positioned(
@@ -58,7 +58,7 @@ class MatchedDogView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
@@ -134,21 +134,21 @@ class MatchedDogView extends StatelessWidget {
 
   Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage}) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.6,
-      height: MediaQuery.of(context).size.width * 0.6,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+      width: MediaQuery.of(context).size.width * 0.55,
+      height: MediaQuery.of(context).size.width * 0.55,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
         child: isUserImage
             ? Image.file(
                 File(imagePath),
