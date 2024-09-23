@@ -32,12 +32,12 @@ class _CalculatingViewState extends State<CalculatingView> with SingleTickerProv
 
     _rotationAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 0, end: 2 * math.pi)
+        tween: Tween<double>(begin: 0, end: 4 * math.pi)
             .chain(CurveTween(curve: Curves.easeIn)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 2 * math.pi, end: 4 * math.pi)
+        tween: Tween<double>(begin: 4 * math.pi, end: 8 * math.pi)
             .chain(CurveTween(curve: Curves.easeOut)),
         weight: 50,
       ),
