@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:flutter/cupertino.dart';
 
 class MatchedDogView extends StatelessWidget {
   final DogData dog;
@@ -61,7 +62,9 @@ class MatchedDogView extends StatelessWidget {
                             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.share),
+                            icon: Platform.isIOS
+                                ? const Icon(CupertinoIcons.share)
+                                : const Icon(Icons.share),
                             onPressed: () {
                               Share.share('Check out my Doggelganger, ${dog.name}!');
                             },
