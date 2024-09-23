@@ -91,46 +91,48 @@ class _MatchedDogViewState extends State<MatchedDogView> with SingleTickerProvid
                   height: MediaQuery.of(context).size.height * 0.5,
                   child: Stack(
                     children: [
-                      AnimatedBuilder(
-                        animation: _animation,
-                        builder: (context, child) {
-                          return Positioned(
-                            top: _isDogImageExpanded ? 0 : null,
-                            left: _isDogImageExpanded ? 0 : null,
-                            right: _isDogImageExpanded ? 0 : 20,
-                            bottom: _isDogImageExpanded ? 0 : 0,
-                            child: GestureDetector(
-                              onTap: () => _toggleImageExpansion(false),
-                              child: _buildImageContainer(
-                                context,
-                                widget.dog.imageSource,
-                                isUserImage: false,
-                                isExpanded: _isDogImageExpanded,
+                      if (!_isUserImageExpanded)
+                        AnimatedBuilder(
+                          animation: _animation,
+                          builder: (context, child) {
+                            return Positioned(
+                              top: _isDogImageExpanded ? 0 : null,
+                              left: _isDogImageExpanded ? 0 : null,
+                              right: _isDogImageExpanded ? 0 : 20,
+                              bottom: _isDogImageExpanded ? 0 : 0,
+                              child: GestureDetector(
+                                onTap: () => _toggleImageExpansion(false),
+                                child: _buildImageContainer(
+                                  context,
+                                  widget.dog.imageSource,
+                                  isUserImage: false,
+                                  isExpanded: _isDogImageExpanded,
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                      AnimatedBuilder(
-                        animation: _animation,
-                        builder: (context, child) {
-                          return Positioned(
-                            top: _isUserImageExpanded ? 0 : 0,
-                            left: _isUserImageExpanded ? 0 : 20,
-                            right: _isUserImageExpanded ? 0 : null,
-                            bottom: _isUserImageExpanded ? 0 : null,
-                            child: GestureDetector(
-                              onTap: () => _toggleImageExpansion(true),
-                              child: _buildImageContainer(
-                                context,
-                                widget.userImagePath,
-                                isUserImage: true,
-                                isExpanded: _isUserImageExpanded,
+                            );
+                          },
+                        ),
+                      if (!_isDogImageExpanded)
+                        AnimatedBuilder(
+                          animation: _animation,
+                          builder: (context, child) {
+                            return Positioned(
+                              top: _isUserImageExpanded ? 0 : 0,
+                              left: _isUserImageExpanded ? 0 : 20,
+                              right: _isUserImageExpanded ? 0 : null,
+                              bottom: _isUserImageExpanded ? 0 : null,
+                              child: GestureDetector(
+                                onTap: () => _toggleImageExpansion(true),
+                                child: _buildImageContainer(
+                                  context,
+                                  widget.userImagePath,
+                                  isUserImage: true,
+                                  isExpanded: _isUserImageExpanded,
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
+                            );
+                          },
+                        ),
                     ],
                   ),
                 ),
