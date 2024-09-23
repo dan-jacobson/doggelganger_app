@@ -40,7 +40,7 @@ class MatchedDogView extends StatelessWidget {
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.6,
                   child: Stack(
@@ -58,7 +58,7 @@ class MatchedDogView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
