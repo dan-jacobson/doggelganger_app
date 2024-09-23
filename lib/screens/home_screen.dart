@@ -79,7 +79,16 @@ class _HomeScreenState extends State<HomeScreen> {
           child: isCalculating
               ? const CalculatingView()
               : matchedDog != null && userImagePath != null
-                  ? MatchedDogView(dog: matchedDog!, userImagePath: userImagePath!)
+                  ? MatchedDogView(
+                      dog: matchedDog!,
+                      userImagePath: userImagePath!,
+                      onClose: () {
+                        setState(() {
+                          matchedDog = null;
+                          userImagePath = null;
+                        });
+                      },
+                    )
                   : Column(
                       children: [
                         Expanded(
