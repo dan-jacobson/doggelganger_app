@@ -94,36 +94,62 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                     builder: (context, child) {
                       return Stack(
                         children: [
-                          Positioned(
-                            top: _isDogImageExpanded ? 0 : 20,
-                            left: _isDogImageExpanded ? 0 : 20,
-                            right: _isDogImageExpanded ? 0 : MediaQuery.of(context).size.width * 0.5,
-                            bottom: _isDogImageExpanded ? 0 : MediaQuery.of(context).size.height * 0.25,
-                            child: GestureDetector(
-                              onTap: () => _toggleImageExpansion(false),
-                              child: _buildImageContainer(
-                                context,
-                                widget.dog.imageSource,
-                                isUserImage: false,
-                                isExpanded: _isDogImageExpanded,
+                          if (_isDogImageExpanded)
+                            Positioned.fill(
+                              child: GestureDetector(
+                                onTap: () => _toggleImageExpansion(false),
+                                child: _buildImageContainer(
+                                  context,
+                                  widget.dog.imageSource,
+                                  isUserImage: false,
+                                  isExpanded: _isDogImageExpanded,
+                                ),
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top: _isUserImageExpanded ? 0 : MediaQuery.of(context).size.height * 0.25,
-                            left: _isUserImageExpanded ? 0 : MediaQuery.of(context).size.width * 0.5,
-                            right: _isUserImageExpanded ? 0 : 20,
-                            bottom: _isUserImageExpanded ? 0 : 20,
-                            child: GestureDetector(
-                              onTap: () => _toggleImageExpansion(true),
-                              child: _buildImageContainer(
-                                context,
-                                widget.userImagePath,
-                                isUserImage: true,
-                                isExpanded: _isUserImageExpanded,
+                          if (!_isDogImageExpanded)
+                            Positioned(
+                              top: 20,
+                              left: 20,
+                              right: MediaQuery.of(context).size.width * 0.5,
+                              bottom: MediaQuery.of(context).size.height * 0.25,
+                              child: GestureDetector(
+                                onTap: () => _toggleImageExpansion(false),
+                                child: _buildImageContainer(
+                                  context,
+                                  widget.dog.imageSource,
+                                  isUserImage: false,
+                                  isExpanded: _isDogImageExpanded,
+                                ),
                               ),
                             ),
-                          ),
+                          if (!_isUserImageExpanded)
+                            Positioned(
+                              top: MediaQuery.of(context).size.height * 0.25,
+                              left: MediaQuery.of(context).size.width * 0.5,
+                              right: 20,
+                              bottom: 20,
+                              child: GestureDetector(
+                                onTap: () => _toggleImageExpansion(true),
+                                child: _buildImageContainer(
+                                  context,
+                                  widget.userImagePath,
+                                  isUserImage: true,
+                                  isExpanded: _isUserImageExpanded,
+                                ),
+                              ),
+                            ),
+                          if (_isUserImageExpanded)
+                            Positioned.fill(
+                              child: GestureDetector(
+                                onTap: () => _toggleImageExpansion(true),
+                                child: _buildImageContainer(
+                                  context,
+                                  widget.userImagePath,
+                                  isUserImage: true,
+                                  isExpanded: _isUserImageExpanded,
+                                ),
+                              ),
+                            ),
                         ],
                       );
                     },
