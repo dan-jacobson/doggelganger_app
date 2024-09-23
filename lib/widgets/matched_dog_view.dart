@@ -25,7 +25,7 @@ class MatchedDogView extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   'Your Doggelganger is...',
-                  style: _baseTextStyle().copyWith(
+                  style: _baseTextStyle.copyWith(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).primaryColor,
@@ -115,17 +115,7 @@ class MatchedDogView extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
             ),
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.pets, color: Colors.white),
-                SizedBox(width: 10),
-                Text(
-                  'Adopt Me!',
-                  style: _baseTextStyle.copyWith(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
+            child: _buildAdoptMeButton(),
           ),
         ),
       ],
@@ -177,6 +167,20 @@ class MatchedDogView extends StatelessWidget {
                 },
               ),
       ),
+    );
+  }
+
+  Widget _buildAdoptMeButton() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(Icons.pets, color: Colors.white),
+        const SizedBox(width: 10),
+        Text(
+          'Adopt Me!',
+          style: _baseTextStyle.copyWith(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 }
