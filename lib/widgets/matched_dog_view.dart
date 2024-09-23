@@ -22,33 +22,33 @@ class MatchedDogView extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Text(
                   'Your Doggelganger is...',
                   style: _baseTextStyle.copyWith(
-                    fontSize: 28,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 Text(
                   dog.name,
                   style: _baseTextStyle.copyWith(
-                    fontSize: 36,
+                    fontSize: 32,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                const SizedBox(height: 10),
+                Stack(
+                  alignment: Alignment.center,
                   children: [
-                    _buildImageContainer(context, userImagePath, isUserImage: true),
-                    _buildImageContainer(context, dog.imageSource, isUserImage: false),
+                    _buildImageContainer(context, dog.imageSource, isUserImage: false, alignment: Alignment.centerRight),
+                    _buildImageContainer(context, userImagePath, isUserImage: true, alignment: Alignment.centerLeft),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
@@ -122,23 +122,27 @@ class MatchedDogView extends StatelessWidget {
     );
   }
 
-  Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage}) {
+  Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage, required Alignment alignment}) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.4,
-      height: MediaQuery.of(context).size.height * 0.3,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+      width: MediaQuery.of(context).size.width * 0.7,
+      height: MediaQuery.of(context).size.height * 0.5,
+      alignment: alignment,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.6,
+        height: MediaQuery.of(context).size.height * 0.45,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
         child: isUserImage
             ? Image.file(
                 File(imagePath),
