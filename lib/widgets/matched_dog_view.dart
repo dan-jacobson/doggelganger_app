@@ -1,11 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MatchedDogView extends StatelessWidget {
   final DogData dog;
+  final String userImagePath;
 
-  const MatchedDogView({super.key, required this.dog});
+  const MatchedDogView({super.key, required this.dog, required this.userImagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -31,40 +33,12 @@ class MatchedDogView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.4,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                dog.imageSource,
-                fit: BoxFit.cover,
-                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  print('Error loading image: ${dog.imageSource}');
-                  return const Center(child: Text('Error loading image'));
-                },
-              ),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildImageContainer(context, userImagePath, isUserImage: true),
+              _buildImageContainer(context, dog.imageSource, isUserImage: false),
+            ],
           ),
           const SizedBox(height: 20),
           Container(
@@ -81,7 +55,7 @@ class MatchedDogView extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  '${dog.location} - ${dog.distance}',
+                  dog.location,
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
@@ -114,6 +88,54 @@ class MatchedDogView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage}) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.4,
+      height: MediaQuery.of(context).size.height * 0.3,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: isUserImage
+            ? Image.file(
+                File(imagePath),
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  print('Error loading user image: $imagePath');
+                  return const Center(child: Text('Error loading image'));
+                },
+              )
+            : Image.network(
+                imagePath,
+                fit: BoxFit.cover,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  print('Error loading dog image: $imagePath');
+                  return const Center(child: Text('Error loading image'));
+                },
+              ),
       ),
     );
   }
