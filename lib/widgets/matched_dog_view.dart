@@ -6,7 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:flutter/cupertino.dart';
 
 class MatchedDogView extends StatelessWidget {
-  final TextStyle _baseTextStyle = const TextStyle(fontFamily: 'Quicksand');
+  final TextStyle _baseTextStyle = const TextStyle();
   final DogData dog;
   final String userImagePath;
 
