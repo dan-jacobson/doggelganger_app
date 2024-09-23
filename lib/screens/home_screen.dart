@@ -83,12 +83,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   : Column(
                       children: [
                         Expanded(
-                          child: dogs.isEmpty
-                              ? Center(child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-                                ))
-                              : DogCarouselView(dogs: dogs),
+                          flex: 9, // This will make the carousel take up 90% of the available space
+                          child: Transform.rotate(
+                            angle: 0.087, // This is approximately 5 degrees in radians
+                            child: dogs.isEmpty
+                                ? Center(child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                                  ))
+                                : DogCarouselView(dogs: dogs),
+                          ),
                         ),
+                        SizedBox(height: 20), // Add some space between the carousel and the button
                         ImagePickerButton(
                           onImageSelected: (image) {
                             if (image != null) {

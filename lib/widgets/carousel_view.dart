@@ -13,9 +13,9 @@ class DogCarouselView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 400.0,
-        aspectRatio: 16/9,
-        viewportFraction: 0.8,
+        height: MediaQuery.of(context).size.height * 0.7, // 70% of screen height
+        aspectRatio: 3/4, // More vertical aspect ratio
+        viewportFraction: 0.85, // Slightly larger cards
         initialPage: 0,
         enableInfiniteScroll: true,
         reverse: false,
@@ -25,6 +25,7 @@ class DogCarouselView extends StatelessWidget {
         autoPlayCurve: Curves.fastOutSlowIn,
         enlargeCenterPage: true,
         scrollDirection: Axis.horizontal,
+        enlargeFactor: 0.3, // Increase the size difference between center and side items
       ),
       items: dogs.map((dog) {
         return Builder(
