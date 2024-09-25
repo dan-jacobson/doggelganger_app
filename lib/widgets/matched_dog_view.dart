@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MatchedDogView extends StatefulWidget {
   final DogData dog;
@@ -27,6 +31,7 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
   late Animation<double> _animation;
   bool _isUserImageExpanded = false;
   bool _isDogImageExpanded = false;
+  final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
   void initState() {
@@ -66,25 +71,45 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
 
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
 
+  Future<String> _captureAndSaveScreenshot() async {
+    final ui.Image image = await _screenshotController.capture(
+      delay: const Duration(milliseconds: 10),
+      pixelRatio: 3.0,
+    ) as ui.Image;
+
+    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List pngBytes = byteData!.buffer.asUint8List();
+
+    final tempDir = await getTemporaryDirectory();
+    final file = await File('${tempDir.path}/doggelganger.png').create();
+    await file.writeAsBytes(pngBytes);
+
+    return file.path;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Text(
-                      'Your Doggelganger is...',
-                      style: _baseTextStyle.copyWith(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
+        Screenshot(
+          controller: _screenshotController,
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        Text(
+                          'My Doggelganger is...',
+                          style: _baseTextStyle.copyWith(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
                     const SizedBox(height: 5),
                     Text(
                       widget.dog.name,
@@ -240,8 +265,9 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                                 icon: Platform.isIOS
                                     ? const Icon(CupertinoIcons.share)
                                     : const Icon(Icons.share),
-                                onPressed: () {
-                                  Share.share('Check out my Doggelganger, ${widget.dog.name}!');
+                                onPressed: () async {
+                                  final imagePath = await _captureAndSaveScreenshot();
+                                  await Share.shareFiles([imagePath], text: 'Check out my Doggelganger, ${widget.dog.name}!');
                                 },
                               ),
                             ],
