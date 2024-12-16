@@ -100,230 +100,103 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        const SizedBox(height: 10),
-                        Text(
-                          'My Doggelganger is...',
-                          style: _baseTextStyle.copyWith(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                    const SizedBox(height: 5),
-                    Text(
-                      widget.dog.name,
-                      style: _baseTextStyle.copyWith(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
+                        _buildHeader(),
+                        _buildImageSection(),
+                        _buildDogInfo(),
+                      ],
                     ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      child: AnimatedBuilder(
-                        animation: _animation,
-                        builder: (context, child) {
-                          List<Widget> stackChildren = [];
-
-                          // Add the non-expanded image first (it will be in the background)
-                          if (!_isDogImageExpanded && !_isUserImageExpanded) {
-                            // Both images are small, place them side-by-side
-                            stackChildren.add(
-                              Positioned(
-                                top: 20,
-                                left: 20,
-                                right: MediaQuery.of(context).size.width * 0.5 + 10,
-                                bottom: 20,
-                                child: GestureDetector(
-                                  onTap: () => _toggleImageExpansion(false),
-                                  child: _buildImageContainer(
-                                    context,
-                                    widget.dog.imageSource,
-                                    isUserImage: false,
-                                    isExpanded: false,
-                                  ),
-                                ),
-                              ),
-                            );
-                            stackChildren.add(
-                              Positioned(
-                                top: 20,
-                                left: MediaQuery.of(context).size.width * 0.5 + 10,
-                                right: 20,
-                                bottom: 20,
-                                child: GestureDetector(
-                                  onTap: () => _toggleImageExpansion(true),
-                                  child: _buildImageContainer(
-                                    context,
-                                    widget.userImagePath,
-                                    isUserImage: true,
-                                    isExpanded: false,
-                                  ),
-                                ),
-                              ),
-                            );
-                          } else if (!_isDogImageExpanded) {
-                            // Only dog image is small
-                            stackChildren.add(
-                              Positioned(
-                                top: 20,
-                                left: 20,
-                                right: MediaQuery.of(context).size.width * 0.5,
-                                bottom: MediaQuery.of(context).size.height * 0.25,
-                                child: GestureDetector(
-                                  onTap: () => _toggleImageExpansion(false),
-                                  child: _buildImageContainer(
-                                    context,
-                                    widget.dog.imageSource,
-                                    isUserImage: false,
-                                    isExpanded: false,
-                                  ),
-                                ),
-                              ),
-                            );
-                          } else if (!_isUserImageExpanded) {
-                            // Only user image is small
-                            stackChildren.add(
-                              Positioned(
-                                top: MediaQuery.of(context).size.height * 0.25,
-                                left: MediaQuery.of(context).size.width * 0.5,
-                                right: 20,
-                                bottom: 20,
-                                child: GestureDetector(
-                                  onTap: () => _toggleImageExpansion(true),
-                                  child: _buildImageContainer(
-                                    context,
-                                    widget.userImagePath,
-                                    isUserImage: true,
-                                    isExpanded: false,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-
-                          // Add the expanded image last (it will be on top)
-                          if (_isDogImageExpanded) {
-                            stackChildren.add(
-                              Positioned.fill(
-                                child: GestureDetector(
-                                  onTap: () => _toggleImageExpansion(false),
-                                  child: _buildImageContainer(
-                                    context,
-                                    widget.dog.imageSource,
-                                    isUserImage: false,
-                                    isExpanded: _isDogImageExpanded,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-
-                          if (_isUserImageExpanded) {
-                            stackChildren.add(
-                              Positioned.fill(
-                                child: GestureDetector(
-                                  onTap: () => _toggleImageExpansion(true),
-                                  child: _buildImageContainer(
-                                    context,
-                                    widget.userImagePath,
-                                    isUserImage: true,
-                                    isExpanded: _isUserImageExpanded,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-
-                          return Stack(children: stackChildren);
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE6F3FF),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  widget.dog.breed,
-                                  style: _baseTextStyle.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              IconButton(
-                                icon: Platform.isIOS
-                                    ? const Icon(CupertinoIcons.share)
-                                    : const Icon(Icons.share),
-                                onPressed: () async {
-                                  final imagePath = await _captureAndSaveScreenshot();
-                                  await Share.shareFiles([imagePath], text: 'Check out my Doggelganger, ${widget.dog.name}!');
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '${widget.dog.age} • ${widget.dog.sex}',
-                                style: _baseTextStyle.copyWith(fontSize: 16),
-                              ),
-                              Text(
-                                widget.dog.location,
-                                style: _baseTextStyle.copyWith(fontSize: 16),
-                                textAlign: TextAlign.right,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (await canLaunch(widget.dog.adoptionLink)) {
-                    await launch(widget.dog.adoptionLink);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 ),
-                child: _buildAdoptMeButton(),
-              ),
+                _buildAdoptButton(),
+              ],
             ),
-          ],
+          ),
         ),
-        Positioned(
-          top: 10,
-          left: 10,
-          child: IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: widget.onClose,
+        _buildCloseButton(),
+      ],
+    );
+  }
+
+  Widget _buildHeader() {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Text(
+          'My Doggelganger is...',
+          style: _baseTextStyle.copyWith(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
             color: Theme.of(context).primaryColor,
           ),
         ),
+        const SizedBox(height: 5),
+        Text(
+          widget.dog.name,
+          style: _baseTextStyle.copyWith(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.secondary,
           ),
+        ),
+        const SizedBox(height: 10),
       ],
+    );
+  }
+
+  Widget _buildImageSection() {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context, child) => _buildImageStack(),
+      ),
+    );
+  }
+
+  Widget _buildDogInfo() {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE6F3FF),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildDogInfoHeader(),
+          const SizedBox(height: 10),
+          _buildDogInfoDetails(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAdoptButton() {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: ElevatedButton(
+        onPressed: _launchAdoptionLink,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+        ),
+        child: _buildAdoptMeButton(),
+      ),
+    );
+  }
+
+  Widget _buildCloseButton() {
+    return Positioned(
+      top: 10,
+      left: 10,
+      child: IconButton(
+        icon: const Icon(Icons.close),
+        onPressed: widget.onClose,
+        color: Theme.of(context).primaryColor,
+      ),
     );
   }
 
@@ -395,3 +268,172 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
     );
   }
 }
+  Widget _buildImageStack() {
+    List<Widget> stackChildren = [];
+
+    if (!_isDogImageExpanded && !_isUserImageExpanded) {
+      stackChildren.addAll(_buildSideBySideImages());
+    } else if (!_isDogImageExpanded) {
+      stackChildren.add(_buildSmallDogImage());
+    } else if (!_isUserImageExpanded) {
+      stackChildren.add(_buildSmallUserImage());
+    }
+
+    if (_isDogImageExpanded) {
+      stackChildren.add(_buildExpandedDogImage());
+    }
+
+    if (_isUserImageExpanded) {
+      stackChildren.add(_buildExpandedUserImage());
+    }
+
+    return Stack(children: stackChildren);
+  }
+
+  List<Widget> _buildSideBySideImages() {
+    return [
+      Positioned(
+        top: 20,
+        left: 20,
+        right: MediaQuery.of(context).size.width * 0.5 + 10,
+        bottom: 20,
+        child: GestureDetector(
+          onTap: () => _toggleImageExpansion(false),
+          child: _buildImageContainer(
+            context,
+            widget.dog.imageSource,
+            isUserImage: false,
+            isExpanded: false,
+          ),
+        ),
+      ),
+      Positioned(
+        top: 20,
+        left: MediaQuery.of(context).size.width * 0.5 + 10,
+        right: 20,
+        bottom: 20,
+        child: GestureDetector(
+          onTap: () => _toggleImageExpansion(true),
+          child: _buildImageContainer(
+            context,
+            widget.userImagePath,
+            isUserImage: true,
+            isExpanded: false,
+          ),
+        ),
+      ),
+    ];
+  }
+
+  Widget _buildSmallDogImage() {
+    return Positioned(
+      top: 20,
+      left: 20,
+      right: MediaQuery.of(context).size.width * 0.5,
+      bottom: MediaQuery.of(context).size.height * 0.25,
+      child: GestureDetector(
+        onTap: () => _toggleImageExpansion(false),
+        child: _buildImageContainer(
+          context,
+          widget.dog.imageSource,
+          isUserImage: false,
+          isExpanded: false,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSmallUserImage() {
+    return Positioned(
+      top: MediaQuery.of(context).size.height * 0.25,
+      left: MediaQuery.of(context).size.width * 0.5,
+      right: 20,
+      bottom: 20,
+      child: GestureDetector(
+        onTap: () => _toggleImageExpansion(true),
+        child: _buildImageContainer(
+          context,
+          widget.userImagePath,
+          isUserImage: true,
+          isExpanded: false,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildExpandedDogImage() {
+    return Positioned.fill(
+      child: GestureDetector(
+        onTap: () => _toggleImageExpansion(false),
+        child: _buildImageContainer(
+          context,
+          widget.dog.imageSource,
+          isUserImage: false,
+          isExpanded: true,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildExpandedUserImage() {
+    return Positioned.fill(
+      child: GestureDetector(
+        onTap: () => _toggleImageExpansion(true),
+        child: _buildImageContainer(
+          context,
+          widget.userImagePath,
+          isUserImage: true,
+          isExpanded: true,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDogInfoHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            widget.dog.breed,
+            style: _baseTextStyle.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        IconButton(
+          icon: Platform.isIOS
+              ? const Icon(CupertinoIcons.share)
+              : const Icon(Icons.share),
+          onPressed: _shareScreenshot,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDogInfoDetails() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '${widget.dog.age} • ${widget.dog.sex}',
+          style: _baseTextStyle.copyWith(fontSize: 16),
+        ),
+        Text(
+          widget.dog.location,
+          style: _baseTextStyle.copyWith(fontSize: 16),
+          textAlign: TextAlign.right,
+        ),
+      ],
+    );
+  }
+
+  Future<void> _shareScreenshot() async {
+    final imagePath = await _captureAndSaveScreenshot();
+    await Share.shareFiles([imagePath], text: 'Check out my Doggelganger, ${widget.dog.name}!');
+  }
+
+  Future<void> _launchAdoptionLink() async {
+    if (await canLaunch(widget.dog.adoptionLink)) {
+      await launch(widget.dog.adoptionLink);
+    }
+  }
