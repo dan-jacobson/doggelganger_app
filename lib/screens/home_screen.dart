@@ -19,31 +19,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
-  List<DogData> dogs = [];
   bool isCalculating = false;
   DogData? matchedDog;
   String? userImagePath;
-
-  @override
-  void initState() {
-    super.initState();
-    loadDogData();
-  }
-
-  Future<void> loadDogData() async {
-    try {
-      final String response = await rootBundle
-          .loadString('assets/images/carousel/dog_metadata.json');
-      final List<dynamic> data = await json.decode(response);
-      setState(() {
-        dogs = data.map((json) => DogData.fromJson(json)).toList();
-        dogs.shuffle(); // Randomize the order of dogs
-      });
-    } catch (e) {
-      print('Error loading dog data: $e');
-      // Handle the error, maybe show a message to the user
-    }
-  }
 
   Future<void> startCalculating(XFile image) async {
     setState(() {
