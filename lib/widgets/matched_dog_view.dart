@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:logger/logger.dart';
 
 class MatchedDogView extends StatefulWidget {
   final DogData dog;
@@ -23,7 +24,7 @@ class MatchedDogView extends StatefulWidget {
   });
 
   @override
-  _MatchedDogViewState createState() => _MatchedDogViewState();
+  State<MatchedDogView> createState() => _MatchedDogViewState();
 }
 
 class _MatchedDogViewState extends State<MatchedDogView>
@@ -232,7 +233,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
                 File(imagePath),
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
-                  print('Error loading user image: $imagePath');
+                  Logger().e('Error loading user image: $imagePath', error, stackTrace);
                   return const Center(child: Text('Error loading image'));
                 },
               )
@@ -252,7 +253,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
                   );
                 },
                 errorBuilder: (context, error, stackTrace) {
-                  print('Error loading dog image: $imagePath');
+                  Logger().e('Error loading dog image: $imagePath', error, stackTrace);
                   return const Center(child: Text('Error loading image'));
                 },
               ),
@@ -441,8 +442,11 @@ class _MatchedDogViewState extends State<MatchedDogView>
   }
 
   Future<void> _launchAdoptionLink() async {
-    if (await canLaunch(widget.dog.adoptionLink)) {
-      await launch(widget.dog.adoptionLink);
+    final Uri url = Uri.parse(widget.dog.adoptionLink);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      Logger().e('Could not launch $url');
     }
   }
 }
