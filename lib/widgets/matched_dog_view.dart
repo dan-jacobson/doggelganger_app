@@ -261,6 +261,10 @@ class _MatchedDogViewState extends State<MatchedDogView>
     );
   }
 
+  String _getDogImagePath(bool isExpanded) {
+    return isExpanded ? widget.dog.photo : widget.dog.croppedPhoto;
+  }
+
   Widget _buildAdoptMeButton() {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -308,7 +312,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
           onTap: () => _toggleImageExpansion(false),
           child: _buildImageContainer(
             context,
-            widget.dog.imageSource,
+            _getDogImagePath(false),
             isUserImage: false,
             isExpanded: false,
           ),
@@ -342,7 +346,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
         onTap: () => _toggleImageExpansion(false),
         child: _buildImageContainer(
           context,
-          widget.dog.imageSource,
+          _getDogImagePath(false),
           isUserImage: false,
           isExpanded: false,
         ),
@@ -374,7 +378,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
         onTap: () => _toggleImageExpansion(false),
         child: _buildImageContainer(
           context,
-          widget.dog.imageSource,
+          _getDogImagePath(true),
           isUserImage: false,
           isExpanded: true,
         ),
@@ -427,7 +431,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
           style: _baseTextStyle.copyWith(fontSize: 16),
         ),
         Text(
-          widget.dog.location,
+          '${widget.dog.location.city}, ${widget.dog.location.state}',
           style: _baseTextStyle.copyWith(fontSize: 16),
           textAlign: TextAlign.right,
         ),
