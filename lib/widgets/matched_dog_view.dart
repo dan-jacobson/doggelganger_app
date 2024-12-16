@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui' as ui;
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -435,7 +436,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
 
   Future<void> _shareScreenshot() async {
     final imagePath = await _captureAndSaveScreenshot();
-    await Share.shareFiles([imagePath],
+    await Share.shareXFiles([XFile(imagePath)],
         text: 'Check out my Doggelganger, ${widget.dog.name}!');
   }
 
