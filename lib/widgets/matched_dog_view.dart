@@ -25,7 +25,8 @@ class MatchedDogView extends StatefulWidget {
   _MatchedDogViewState createState() => _MatchedDogViewState();
 }
 
-class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStateMixin {
+class _MatchedDogViewState extends State<MatchedDogView>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   bool _isUserImageExpanded = false;
@@ -76,7 +77,8 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
       pixelRatio: 3.0,
     ) as ui.Image;
 
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
     final Uint8List pngBytes = byteData!.buffer.asUint8List();
 
     final tempDir = await getTemporaryDirectory();
@@ -200,7 +202,8 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
     );
   }
 
-  Widget _buildImageContainer(BuildContext context, String imagePath, {required bool isUserImage, required bool isExpanded}) {
+  Widget _buildImageContainer(BuildContext context, String imagePath,
+      {required bool isUserImage, required bool isExpanded}) {
     final double containerSize = isExpanded
         ? MediaQuery.of(context).size.width
         : MediaQuery.of(context).size.width * 0.45;
@@ -235,12 +238,14 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
             : Image.network(
                 imagePath,
                 fit: BoxFit.cover,
-                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Center(
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
                           : null,
                     ),
                   );
@@ -262,75 +267,43 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
         const SizedBox(width: 10),
         Text(
           'Adopt Me!',
-          style: _baseTextStyle.copyWith(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+          style: _baseTextStyle.copyWith(
+              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ],
     );
   }
 }
-  Widget _buildImageStack() {
-    List<Widget> stackChildren = [];
 
-    if (!_isDogImageExpanded && !_isUserImageExpanded) {
-      stackChildren.addAll(_buildSideBySideImages());
-    } else if (!_isDogImageExpanded) {
-      stackChildren.add(_buildSmallDogImage());
-    } else if (!_isUserImageExpanded) {
-      stackChildren.add(_buildSmallUserImage());
-    }
+Widget _buildImageStack() {
+  List<Widget> stackChildren = [];
 
-    if (_isDogImageExpanded) {
-      stackChildren.add(_buildExpandedDogImage());
-    }
-
-    if (_isUserImageExpanded) {
-      stackChildren.add(_buildExpandedUserImage());
-    }
-
-    return Stack(children: stackChildren);
+  if (!_isDogImageExpanded && !_isUserImageExpanded) {
+    stackChildren.addAll(_buildSideBySideImages());
+  } else if (!_isDogImageExpanded) {
+    stackChildren.add(_buildSmallDogImage());
+  } else if (!_isUserImageExpanded) {
+    stackChildren.add(_buildSmallUserImage());
   }
 
-  List<Widget> _buildSideBySideImages() {
-    return [
-      Positioned(
-        top: 20,
-        left: 20,
-        right: MediaQuery.of(context).size.width * 0.5 + 10,
-        bottom: 20,
-        child: GestureDetector(
-          onTap: () => _toggleImageExpansion(false),
-          child: _buildImageContainer(
-            context,
-            widget.dog.imageSource,
-            isUserImage: false,
-            isExpanded: false,
-          ),
-        ),
-      ),
-      Positioned(
-        top: 20,
-        left: MediaQuery.of(context).size.width * 0.5 + 10,
-        right: 20,
-        bottom: 20,
-        child: GestureDetector(
-          onTap: () => _toggleImageExpansion(true),
-          child: _buildImageContainer(
-            context,
-            widget.userImagePath,
-            isUserImage: true,
-            isExpanded: false,
-          ),
-        ),
-      ),
-    ];
+  if (_isDogImageExpanded) {
+    stackChildren.add(_buildExpandedDogImage());
   }
 
-  Widget _buildSmallDogImage() {
-    return Positioned(
+  if (_isUserImageExpanded) {
+    stackChildren.add(_buildExpandedUserImage());
+  }
+
+  return Stack(children: stackChildren);
+}
+
+List<Widget> _buildSideBySideImages() {
+  return [
+    Positioned(
       top: 20,
       left: 20,
-      right: MediaQuery.of(context).size.width * 0.5,
-      bottom: MediaQuery.of(context).size.height * 0.25,
+      right: MediaQuery.of(context).size.width * 0.5 + 10,
+      bottom: 20,
       child: GestureDetector(
         onTap: () => _toggleImageExpansion(false),
         child: _buildImageContainer(
@@ -340,13 +313,10 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
           isExpanded: false,
         ),
       ),
-    );
-  }
-
-  Widget _buildSmallUserImage() {
-    return Positioned(
-      top: MediaQuery.of(context).size.height * 0.25,
-      left: MediaQuery.of(context).size.width * 0.5,
+    ),
+    Positioned(
+      top: 20,
+      left: MediaQuery.of(context).size.width * 0.5 + 10,
       right: 20,
       bottom: 20,
       child: GestureDetector(
@@ -358,82 +328,121 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
           isExpanded: false,
         ),
       ),
-    );
-  }
+    ),
+  ];
+}
 
-  Widget _buildExpandedDogImage() {
-    return Positioned.fill(
-      child: GestureDetector(
-        onTap: () => _toggleImageExpansion(false),
-        child: _buildImageContainer(
-          context,
-          widget.dog.imageSource,
-          isUserImage: false,
-          isExpanded: true,
+Widget _buildSmallDogImage() {
+  return Positioned(
+    top: 20,
+    left: 20,
+    right: MediaQuery.of(context).size.width * 0.5,
+    bottom: MediaQuery.of(context).size.height * 0.25,
+    child: GestureDetector(
+      onTap: () => _toggleImageExpansion(false),
+      child: _buildImageContainer(
+        context,
+        widget.dog.imageSource,
+        isUserImage: false,
+        isExpanded: false,
+      ),
+    ),
+  );
+}
+
+Widget _buildSmallUserImage() {
+  return Positioned(
+    top: MediaQuery.of(context).size.height * 0.25,
+    left: MediaQuery.of(context).size.width * 0.5,
+    right: 20,
+    bottom: 20,
+    child: GestureDetector(
+      onTap: () => _toggleImageExpansion(true),
+      child: _buildImageContainer(
+        context,
+        widget.userImagePath,
+        isUserImage: true,
+        isExpanded: false,
+      ),
+    ),
+  );
+}
+
+Widget _buildExpandedDogImage() {
+  return Positioned.fill(
+    child: GestureDetector(
+      onTap: () => _toggleImageExpansion(false),
+      child: _buildImageContainer(
+        context,
+        widget.dog.imageSource,
+        isUserImage: false,
+        isExpanded: true,
+      ),
+    ),
+  );
+}
+
+Widget _buildExpandedUserImage() {
+  return Positioned.fill(
+    child: GestureDetector(
+      onTap: () => _toggleImageExpansion(true),
+      child: _buildImageContainer(
+        context,
+        widget.userImagePath,
+        isUserImage: true,
+        isExpanded: true,
+      ),
+    ),
+  );
+}
+
+Widget _buildDogInfoHeader() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Expanded(
+        child: Text(
+          widget.dog.breed,
+          style: _baseTextStyle.copyWith(
+              fontSize: 18, fontWeight: FontWeight.bold),
+          overflow: TextOverflow.ellipsis,
         ),
       ),
-    );
-  }
-
-  Widget _buildExpandedUserImage() {
-    return Positioned.fill(
-      child: GestureDetector(
-        onTap: () => _toggleImageExpansion(true),
-        child: _buildImageContainer(
-          context,
-          widget.userImagePath,
-          isUserImage: true,
-          isExpanded: true,
-        ),
+      IconButton(
+        icon: Platform.isIOS
+            ? const Icon(CupertinoIcons.share)
+            : const Icon(Icons.share),
+        onPressed: _shareScreenshot,
       ),
-    );
-  }
+    ],
+  );
+}
 
-  Widget _buildDogInfoHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Text(
-            widget.dog.breed,
-            style: _baseTextStyle.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        IconButton(
-          icon: Platform.isIOS
-              ? const Icon(CupertinoIcons.share)
-              : const Icon(Icons.share),
-          onPressed: _shareScreenshot,
-        ),
-      ],
-    );
-  }
+Widget _buildDogInfoDetails() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        '${widget.dog.age} • ${widget.dog.sex}',
+        style: _baseTextStyle.copyWith(fontSize: 16),
+      ),
+      Text(
+        widget.dog.location,
+        style: _baseTextStyle.copyWith(fontSize: 16),
+        textAlign: TextAlign.right,
+      ),
+    ],
+  );
+}
 
-  Widget _buildDogInfoDetails() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          '${widget.dog.age} • ${widget.dog.sex}',
-          style: _baseTextStyle.copyWith(fontSize: 16),
-        ),
-        Text(
-          widget.dog.location,
-          style: _baseTextStyle.copyWith(fontSize: 16),
-          textAlign: TextAlign.right,
-        ),
-      ],
-    );
-  }
+Future<void> _shareScreenshot() async {
+  final imagePath = await _captureAndSaveScreenshot();
+  await Share.shareFiles([imagePath],
+      text: 'Check out my Doggelganger, ${widget.dog.name}!');
+}
 
-  Future<void> _shareScreenshot() async {
-    final imagePath = await _captureAndSaveScreenshot();
-    await Share.shareFiles([imagePath], text: 'Check out my Doggelganger, ${widget.dog.name}!');
+Future<void> _launchAdoptionLink() async {
+  if (await canLaunch(widget.dog.adoptionLink)) {
+    await launch(widget.dog.adoptionLink);
   }
-
-  Future<void> _launchAdoptionLink() async {
-    if (await canLaunch(widget.dog.adoptionLink)) {
-      await launch(widget.dog.adoptionLink);
-    }
-  }
+}
