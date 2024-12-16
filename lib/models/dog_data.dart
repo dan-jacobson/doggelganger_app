@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class DogData {
   final String name;
   final Map location;
