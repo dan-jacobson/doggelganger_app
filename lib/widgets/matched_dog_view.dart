@@ -233,7 +233,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
                 File(imagePath),
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
-                  Logger().e('Error loading user image: $imagePath', error, stackTrace);
+                  Logger().e('Error loading user image: $imagePath');
                   return const Center(child: Text('Error loading image'));
                 },
               )
@@ -253,7 +253,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
                   );
                 },
                 errorBuilder: (context, error, stackTrace) {
-                  Logger().e('Error loading dog image: $imagePath', error, stackTrace);
+                  Logger().e('Error loading dog image: $imagePath');
                   return const Center(child: Text('Error loading image'));
                 },
               ),
@@ -446,7 +446,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
-      Logger().e('Could not launch $url');
+      Logger().e('Could not launch ${url.toString()}');
     }
   }
 }
