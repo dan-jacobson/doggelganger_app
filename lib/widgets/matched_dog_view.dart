@@ -323,6 +323,7 @@ class _MatchedDogViewState extends State<MatchedDogView> with TickerProviderStat
             color: Theme.of(context).primaryColor,
           ),
         ),
+          ),
       ],
     );
   }
