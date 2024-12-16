@@ -41,6 +41,9 @@ dependencies:
   image_picker: any
   http: ^1.2.2
   google_fonts: ^6.1.0
+  screenshot: ^3.0.0
+  path_provider: ^2.1.4
+  logger: ^2.5.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -69,7 +72,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/carousel/
-    - assets/images/carousel/dog_metadata.json
+    - assets/images/carousel/dog_metadata.jsonl
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
