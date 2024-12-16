@@ -78,13 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Transform.rotate(
                             angle:
                                 0.052, // This is approximately 3 degrees in radians
-                            child: dogs.isEmpty
-                                ? Center(
-                                    child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Theme.of(context).primaryColor),
-                                  ))
-                                : DogCarouselView(dogs: dogs),
+                            child: DogCarouselView(),
                           ),
                         ),
                         const SizedBox(
