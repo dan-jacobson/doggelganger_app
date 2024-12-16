@@ -9,7 +9,8 @@ class CalculatingView extends StatefulWidget {
   _CalculatingViewState createState() => _CalculatingViewState();
 }
 
-class _CalculatingViewState extends State<CalculatingView> with SingleTickerProviderStateMixin {
+class _CalculatingViewState extends State<CalculatingView>
+    with SingleTickerProviderStateMixin {
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
   late AnimationController _controller;
   late Animation<double> _iconTransitionAnimation;
@@ -19,10 +20,10 @@ class _CalculatingViewState extends State<CalculatingView> with SingleTickerProv
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 3),
       vsync: this,
     )..repeat(reverse: true);
-    
+
     _iconTransitionAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
@@ -98,11 +99,11 @@ class IconTransition extends StatelessWidget {
   final double size;
 
   const IconTransition({
-    Key? key,
+    super.key,
     required this.animation,
     required this.color,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +113,7 @@ class IconTransition extends StatelessWidget {
         final progress = animation.value;
         final pawOpacity = 1 - progress;
         final handOpacity = progress;
-        
+
         return Stack(
           alignment: Alignment.center,
           children: [

@@ -446,7 +446,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
   }
 
   Future<void> _launchAdoptionLink() async {
-    final Uri url = Uri.parse(widget.dog.adoptionLink);
+    final Uri url = Uri.parse(widget.dog.url);
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
