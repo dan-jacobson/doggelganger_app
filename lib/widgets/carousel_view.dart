@@ -2,21 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 
-class DogCarouselView extends StatelessWidget {
+class DogCarouselView extends StatefulWidget {
+  const DogCarouselView({Key? key}) : super(key: key);
+
+  @override
+  _DogCarouselViewState createState() => _DogCarouselViewState();
+}
+
+class _DogCarouselViewState extends State<DogCarouselView> {
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
-  final List<DogData> dogs;
+  List<DogData> dogs = [];
 
-  const DogCarouselView({super.key, required this.dogs});
+  @override
+  void initState() {
+    super.initState();
+    _loadDogData();
+  }
+
+  Future<void> _loadDogData() async {
+    final String jsonlContent = await rootBundle.loadString('assets/images/carousel/dog_metadata.jsonl');
+    final List<DogData> loadedDogs = jsonlContent
+        .split('\n')
+        .where((line) => line.isNotEmpty)
+        .map((line) => DogData.fromJson(json.decode(line)))
+        .toList();
+
+    setState(() {
+      dogs = loadedDogs;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (dogs.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return CarouselSlider(
       options: CarouselOptions(
-        height:
-            MediaQuery.of(context).size.height * 0.7, // 70% of screen height
-        aspectRatio: 3 / 4, // More vertical aspect ratio
-        viewportFraction: 0.85, // Slightly larger cards
+        height: MediaQuery.of(context).size.height * 0.7,
+        aspectRatio: 3 / 4,
+        viewportFraction: 0.85,
         initialPage: 0,
         enableInfiniteScroll: true,
         reverse: false,
@@ -26,8 +55,7 @@ class DogCarouselView extends StatelessWidget {
         autoPlayCurve: Curves.fastOutSlowIn,
         enlargeCenterPage: true,
         scrollDirection: Axis.horizontal,
-        enlargeFactor:
-            0.3, // Increase the size difference between center and side items
+        enlargeFactor: 0.3,
       ),
       items: dogs.map((dog) {
         return Builder(
