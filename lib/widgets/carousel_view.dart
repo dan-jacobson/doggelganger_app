@@ -51,12 +51,11 @@ class DogCarouselView extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image(
-                      image: AssetImage(
-                          'assets/images/carousel/${dog.imageName}.jpg'),
+                    child: Image.asset(
+                      'assets/images/carousel/${dog.photo}',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        print('Error loading image: ${dog.imageName}');
+                        print('Error loading image: ${dog.photo}');
                         return const Icon(Icons.error);
                       },
                     ),
@@ -97,12 +96,20 @@ class DogCarouselView extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          dog.location,
+                          '${dog.location.city}, ${dog.location.state}',
                           style: _baseTextStyle.copyWith(
                             color: Colors.white,
                             fontSize: 14,
                           ),
                         ),
+                        if (dog.location.postcode != null)
+                          Text(
+                            'Postcode: ${dog.location.postcode}',
+                            style: _baseTextStyle.copyWith(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
                       ],
                     ),
                   ),
