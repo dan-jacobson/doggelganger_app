@@ -32,7 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> loadDogData() async {
     try {
-      final String response = await rootBundle.loadString('assets/images/carousel/dog_metadata.json');
+      final String response = await rootBundle
+          .loadString('assets/images/carousel/dog_metadata.json');
       final List<dynamic> data = await json.decode(response);
       setState(() {
         dogs = data.map((json) => DogData.fromJson(json)).toList();
@@ -50,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
       userImagePath = image.path;
     });
     try {
-      final matchedDogData = await ApiService.uploadImageAndGetMatch(image.path);
+      final matchedDogData =
+          await ApiService.uploadImageAndGetMatch(image.path);
       setState(() {
         isCalculating = false;
         matchedDog = matchedDogData;
@@ -93,22 +95,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   : Column(
                       children: [
                         Expanded(
-                          flex: 9, // This will make the carousel take up 90% of the available space
+                          flex:
+                              9, // This will make the carousel take up 90% of the available space
                           child: Transform.rotate(
-                            angle: 0.052, // This is approximately 3 degrees in radians
+                            angle:
+                                0.052, // This is approximately 3 degrees in radians
                             child: dogs.isEmpty
-                                ? Center(child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Theme.of(context).primaryColor),
                                   ))
                                 : DogCarouselView(dogs: dogs),
                           ),
                         ),
-                        SizedBox(height: 20), // Add some space between the carousel and the button
+                        const SizedBox(
+                            height:
+                                20), // Add some space between the carousel and the button
                         ImagePickerButton(
                           onImageSelected: (image) {
-                            if (image != null) {
-                              startCalculating(image);
-                            }
+                            startCalculating(image);
                           },
                           icon: Icons.pets,
                         ),
