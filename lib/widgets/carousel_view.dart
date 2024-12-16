@@ -13,8 +13,9 @@ class DogCarouselView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: MediaQuery.of(context).size.height * 0.7, // 70% of screen height
-        aspectRatio: 3/4, // More vertical aspect ratio
+        height:
+            MediaQuery.of(context).size.height * 0.7, // 70% of screen height
+        aspectRatio: 3 / 4, // More vertical aspect ratio
         viewportFraction: 0.85, // Slightly larger cards
         initialPage: 0,
         enableInfiniteScroll: true,
@@ -25,7 +26,8 @@ class DogCarouselView extends StatelessWidget {
         autoPlayCurve: Curves.fastOutSlowIn,
         enlargeCenterPage: true,
         scrollDirection: Axis.horizontal,
-        enlargeFactor: 0.3, // Increase the size difference between center and side items
+        enlargeFactor:
+            0.3, // Increase the size difference between center and side items
       ),
       items: dogs.map((dog) {
         return Builder(
@@ -49,8 +51,9 @@ class DogCarouselView extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image(image: AssetImage(
-                      'assets/images/carousel/${dog.imageName}.jpg'),
+                    child: Image(
+                      image: AssetImage(
+                          'assets/images/carousel/${dog.imageName}.jpg'),
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         print('Error loading image: ${dog.imageName}');
@@ -94,7 +97,7 @@ class DogCarouselView extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${dog.location} - ${dog.distance}',
+                          dog.location,
                           style: _baseTextStyle.copyWith(
                             color: Colors.white,
                             fontSize: 14,
