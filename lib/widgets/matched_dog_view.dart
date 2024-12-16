@@ -273,8 +273,6 @@ class _MatchedDogViewState extends State<MatchedDogView>
       ],
     );
   }
-}
-
   Widget _buildImageStack() {
     List<Widget> stackChildren = [];
 
@@ -446,3 +444,4 @@ class _MatchedDogViewState extends State<MatchedDogView>
       await launch(widget.dog.adoptionLink);
     }
   }
+}
