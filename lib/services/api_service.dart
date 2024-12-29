@@ -15,13 +15,8 @@ class ApiService {
       var responseData = await response.stream.bytesToString();
       var decodedData = json.decode(responseData);
 
-      if (decodedData['similar_image'] != null &&
-          decodedData['similar_image'].isNotEmpty) {
-        var bestMatch = decodedData['similar_image'];
-        return DogData.fromJson({
-          ...bestMatch['metadata'],
-          'imageURL': bestMatch['image_url'],
-        });
+      if (decodedData.containsKey("result")) {
+        return DogData.fromJson(decodedData['result']);
       } else {
         throw Exception('No similar images found in the response');
       }
