@@ -6,8 +6,6 @@ import 'package:doggelganger_app/widgets/calculating_view.dart';
 import 'package:doggelganger_app/widgets/matched_dog_view.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:doggelganger_app/services/api_service.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
