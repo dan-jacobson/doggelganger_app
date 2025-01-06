@@ -15,11 +15,7 @@ class DoggelgangerApp extends StatelessWidget {
     return MaterialApp(
       title: 'Doggelganger',
       theme: ThemeData(
-        primaryColor: const Color(0xFF3399DD),
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: const Color(0xFFFAB04F),
-          surface: const Color(0xFFF2F2F7),
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 6, 230, 218)),
         fontFamily: 'Chalkduster',
       ),
       home: const HomeScreen(),
