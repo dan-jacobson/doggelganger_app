@@ -17,41 +17,27 @@ class ImagePickerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
-            offset: Offset(0, -5),
-          ),
-        ],
-      ),
-      child: ElevatedButton(
+    return ElevatedButton.icon(
+      icon: Icons.pets,
         onPressed: _pickImage,
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Theme.of(context).primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         ),
+    )
         child: const Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.pets),
-            SizedBox(width: 10),
             Text(
               'Find your doggelganger!',
               style: TextStyle(fontSize: 18),
             ),
+            Icon(Icons.pets),
           ],
         ),
-      ),
-    );
+      );
   }
 }
