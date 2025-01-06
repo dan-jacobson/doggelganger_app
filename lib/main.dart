@@ -17,7 +17,7 @@ class DoggelgangerApp extends StatelessWidget {
       title: 'Doggelganger',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 6, 230, 218)),
-        textTheme: GoogleFonts.jostTextTheme(Theme.of(context).textTheme),
+        textTheme: GoogleFonts.josefinSansTextTheme(),
       ),
       home: const HomeScreen(),
     );
