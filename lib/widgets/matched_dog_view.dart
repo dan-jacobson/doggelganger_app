@@ -59,9 +59,13 @@ class _MatchedDogViewState extends State<MatchedDogView>
 
   Future<void> _cleanupAllScreenshots() async {
     for (final path in _screenshotPaths) {
-      final file = File(path);
-      if (await file.exists()) {
-        await file.delete();
+      try {
+        final file = File(path);
+        if (await file.exists()) {
+          await file.delete();
+        }
+      } catch (e) {
+        Logger().e('Error deleting file: $path', error: e);
       }
     }
     _screenshotPaths.clear();
@@ -103,16 +107,15 @@ class _MatchedDogViewState extends State<MatchedDogView>
     }
 
     // Calculate crop dimensions
-    final int topCrop = (image.height * 0.05).round(); // Remove top 5%
-    final int bottomCrop = (image.height * 0.75).round(); // Keep only top 75%
+    final int bottomCrop = (image.height * 0.83).round(); // Cut out the bottom
 
     // Crop the image
     final croppedImage = img.copyCrop(
       image,
       x: 0,
-      y: topCrop,
+      y: 0,
       width: image.width,
-      height: bottomCrop - topCrop,
+      height: bottomCrop,
     );
 
     // Encode the cropped image
@@ -480,7 +483,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
     _screenshotPaths.add(imagePath);
     await Share.shareXFiles(
       [XFile(imagePath, mimeType: "image/png")],
-      text: 'Check out my Doggelganger, ${widget.dog.name}!',
+      // text: 'Check out my Doggelganger, ${widget.dog.name}!',
       subject: 'Check out my Doggelganger',
     );
     
