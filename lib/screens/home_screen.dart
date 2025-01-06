@@ -72,27 +72,33 @@ class HomeScreenState extends State<HomeScreen> {
                             });
                           },
                         )
-                      : Column(
-                          children: [
-                            const SizedBox(
-                                height: 20), // Add some space at the top
-                            Expanded(
-                              flex: 8,
-                              child: DogCarouselView(),
-                            ),
-                            const SizedBox(
-                                height:
-                                    20), // Add padding between carousel and button
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: 20), // Add padding at the bottom
-                              child: ImagePickerButton(
-                                onImageSelected: (image) {
-                                  startCalculating(image);
-                                },
-                              ),
-                            ),
-                          ],
+                      : LayoutBuilder(
+                          builder: (context, constraints) {
+                            return Column(
+                              children: [
+                                SizedBox(
+                                    height: constraints.maxHeight *
+                                        0.03), // 3% of screen height
+                                Expanded(
+                                  flex: 8,
+                                  child: DogCarouselView(),
+                                ),
+                                SizedBox(
+                                    height: constraints.maxHeight *
+                                        0.03), // 3% of screen height
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: constraints.maxHeight *
+                                          0.03), // 3% of screen height
+                                  child: ImagePickerButton(
+                                    onImageSelected: (image) {
+                                      startCalculating(image);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         ),
             ),
           );
