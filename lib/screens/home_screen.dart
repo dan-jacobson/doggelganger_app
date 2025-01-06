@@ -44,15 +44,21 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFE6F3FF), Colors.white],
-          ),
-        ),
-        child: SafeArea(
+      body: Builder(
+        builder: (BuildContext context) {
+          final theme = Theme.of(context);
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  theme.colorScheme.primary.withOpacity(0.1),
+                  theme.colorScheme.background,
+                ],
+              ),
+            ),
+            child: SafeArea(
           child: isCalculating
               ? const CalculatingView()
               : matchedDog != null && userImagePath != null
@@ -84,7 +90,9 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
