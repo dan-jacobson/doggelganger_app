@@ -441,8 +441,9 @@ class _MatchedDogViewState extends State<MatchedDogView>
 
   Future<void> _shareScreenshot() async {
     final imagePath = await _captureAndSaveScreenshot();
+    final file = XFile(imagePath, mimeType: 'image/jpeg');
     final result = await Share.shareXFiles(
-      [XFile(imagePath)],
+      [file],
       text: 'Check out my Doggelganger, ${widget.dog.name}!',
     );
 
