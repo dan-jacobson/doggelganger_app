@@ -123,7 +123,8 @@ class _MatchedDogViewState extends State<MatchedDogView>
 
     final tempDir = await getTemporaryDirectory();
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    final file = await File('${tempDir.path}/doggelganger_$timestamp.png').create();
+    final file =
+        await File('${tempDir.path}/doggelganger_$timestamp.png').create();
     file.writeAsBytesSync(croppedImageBytes);
 
     return file.path;
@@ -318,6 +319,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
       ],
     );
   }
+
   Widget _buildImageStack() {
     List<Widget> stackChildren = [];
 
@@ -486,7 +488,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
       // text: 'Check out my Doggelganger, ${widget.dog.name}!',
       subject: 'Check out my Doggelganger',
     );
-    
+
     // Cleanup old screenshots if there are more than 5
     if (_screenshotPaths.length > 5) {
       await _cleanupOldScreenshots();

@@ -59,7 +59,9 @@ class DogData {
       url: json['url'],
       photo: json['primary_photo'],
       croppedPhoto: json['primary_photo_cropped'],
-      similarity: json['similarity'] != null ? (json['similarity'] as num).toDouble() : null,
+      similarity: json['similarity'] != null
+          ? (json['similarity'] as num).toDouble()
+          : null,
     );
   }
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:doggelganger_app/models/dog_data.dart';
-import 'package:doggelganger_app/config/environment.dart';   
+import 'package:doggelganger_app/config/environment.dart';
 
 class ApiService {
   static String get baseUrl => Environment.apiUrl;

@@ -23,7 +23,8 @@ class _DogCarouselViewState extends State<DogCarouselView> {
   }
 
   Future<void> _loadDogData() async {
-    final String jsonlContent = await rootBundle.loadString('assets/images/carousel/dog_metadata.jsonl');
+    final String jsonlContent = await rootBundle
+        .loadString('assets/images/carousel/dog_metadata.jsonl');
     final List<DogData> loadedDogs = jsonlContent
         .split('\n')
         .where((line) => line.isNotEmpty)
