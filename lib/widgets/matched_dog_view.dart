@@ -74,18 +74,18 @@ class _MatchedDogViewState extends State<MatchedDogView>
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
 
   Future<String> _captureAndSaveScreenshot() async {
-    final ui.Image image = await _screenshotController.capture(
+    final Uint8List? imageBytes = await _screenshotController.capture(
       delay: const Duration(milliseconds: 10),
       pixelRatio: 3.0,
-    ) as ui.Image;
+    );
 
-    final ByteData? byteData =
-        await image.toByteData(format: ui.ImageByteFormat.png);
-    final Uint8List pngBytes = byteData!.buffer.asUint8List();
+    if (imageBytes == null) {
+      throw Exception('Failed to capture screenshot');
+    }
 
     final tempDir = await getTemporaryDirectory();
     final file = await File('${tempDir.path}/doggelganger.png').create();
-    await file.writeAsBytes(pngBytes);
+    await file.writeAsBytes(imageBytes);
 
     return file.path;
   }
