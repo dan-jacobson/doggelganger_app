@@ -44,9 +44,9 @@ class _DogCarouselViewState extends State<DogCarouselView> {
 
     return CarouselSlider(
       options: CarouselOptions(
-        height: MediaQuery.of(context).size.height * 0.7,
-        aspectRatio: 3 / 4,
-        viewportFraction: 0.85,
+        height: MediaQuery.of(context).size.width,  // Make it square
+        aspectRatio: 1,  // 1:1 aspect ratio for square
+        viewportFraction: 0.7,  // Show more of adjacent items
         initialPage: 0,
         enableInfiniteScroll: true,
         reverse: false,
@@ -56,7 +56,7 @@ class _DogCarouselViewState extends State<DogCarouselView> {
         autoPlayCurve: Curves.fastOutSlowIn,
         enlargeCenterPage: true,
         scrollDirection: Axis.horizontal,
-        enlargeFactor: 0.3,
+        enlargeFactor: 0.2,  // Reduced enlargement for better visibility of adjacent items
       ),
       items: dogs.map((dog) {
         return Builder(
