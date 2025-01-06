@@ -75,11 +75,11 @@ class HomeScreenState extends State<HomeScreen> {
                   : Column(
                       children: [
                         Expanded(
-                          flex: 8, // Reduced from 9 to 8
+                          flex: 9, // Increased from 8 to 9
                           child: DogCarouselView(),
                         ),
                         Expanded(
-                          flex: 2, // Added flex of 2 for the button area
+                          flex: 1, // Reduced from 2 to 1
                           child: Center(
                             child: ImagePickerButton(
                               onImageSelected: (image) {
