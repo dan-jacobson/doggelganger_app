@@ -13,11 +13,15 @@ class DoggelgangerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return MaterialApp(
       title: 'Doggelganger',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 6, 230, 218)),
-        textTheme: GoogleFonts.figtreeTextTheme(),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 150, 21, 160)),
+        textTheme: GoogleFonts.figtreeTextTheme(textTheme).copyWith(
+          bodyMedium: GoogleFonts.cabin(textStyle: textTheme.bodyMedium),
+        ),
       ),
       home: const HomeScreen(),
     );
