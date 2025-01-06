@@ -71,11 +71,7 @@ class HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           flex:
                               9, // This will make the carousel take up 90% of the available space
-                          child: Transform.rotate(
-                            angle:
-                                0.052, // This is approximately 3 degrees in radians
-                            child: DogCarouselView(),
-                          ),
+                          child: DogCarouselView(),
                         ),
                         const SizedBox(
                             height:
