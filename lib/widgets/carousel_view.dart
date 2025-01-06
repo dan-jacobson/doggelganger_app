@@ -68,7 +68,7 @@ class _DogCarouselViewState extends State<DogCarouselView> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
+                    color: Color.fromRGBO(0, 0, 0, 0.2),
                     spreadRadius: 2,
                     blurRadius: 5,
                     offset: const Offset(0, 3),
@@ -97,7 +97,7 @@ class _DogCarouselViewState extends State<DogCarouselView> {
                         end: Alignment.bottomCenter,
                         colors: [
                           Colors.transparent,
-                          Colors.black.withOpacity(0.7),
+                          Color.fromRGBO(0, 0, 0, 0.7),
                         ],
                       ),
                     ),
