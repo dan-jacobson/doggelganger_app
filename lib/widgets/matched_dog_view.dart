@@ -34,6 +34,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
   bool _isUserImageExpanded = false;
   bool _isDogImageExpanded = false;
   final ScreenshotController _screenshotController = ScreenshotController();
+  List<String> _screenshotPaths = [];
 
   @override
   void initState() {
@@ -51,7 +52,18 @@ class _MatchedDogViewState extends State<MatchedDogView>
   @override
   void dispose() {
     _controller.dispose();
+    _cleanupAllScreenshots();
     super.dispose();
+  }
+
+  Future<void> _cleanupAllScreenshots() async {
+    for (final path in _screenshotPaths) {
+      final file = File(path);
+      if (await file.exists()) {
+        await file.delete();
+      }
+    }
+    _screenshotPaths.clear();
   }
 
   void _toggleImageExpansion(bool isUserImage) {
@@ -83,11 +95,40 @@ class _MatchedDogViewState extends State<MatchedDogView>
       throw Exception('Failed to capture screenshot');
     }
 
+    // Decode the image
+    final image = await decodeImageFromList(imageBytes);
+
+    // Calculate crop dimensions
+    final int topCrop = (image.height * 0.05).round(); // Remove top 5%
+    final int bottomCrop = (image.height * 0.75).round(); // Keep only top 75%
+
+    // Crop the image
+    final ui.Image croppedImage = await _cropImage(image, 0, topCrop, image.width, bottomCrop - topCrop);
+
+    // Encode the cropped image
+    final ByteData? byteData = await croppedImage.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List croppedImageBytes = byteData!.buffer.asUint8List();
+
     final tempDir = await getTemporaryDirectory();
-    final file = await File('${tempDir.path}/doggelganger.png').create();
-    file.writeAsBytesSync(imageBytes);
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final file = await File('${tempDir.path}/doggelganger_$timestamp.png').create();
+    file.writeAsBytesSync(croppedImageBytes);
 
     return file.path;
+  }
+
+  Future<ui.Image> _cropImage(ui.Image image, int x, int y, int width, int height) async {
+    final pictureRecorder = ui.PictureRecorder();
+    final canvas = Canvas(pictureRecorder);
+    final paint = Paint();
+    canvas.drawImageRect(
+      image,
+      Rect.fromLTWH(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble()),
+      Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()),
+      paint,
+    );
+    final croppedImage = await pictureRecorder.endRecording().toImage(width, height);
+    return croppedImage;
   }
 
   @override
@@ -441,11 +482,27 @@ class _MatchedDogViewState extends State<MatchedDogView>
 
   Future<void> _shareScreenshot() async {
     final imagePath = await _captureAndSaveScreenshot();
+    _screenshotPaths.add(imagePath);
     await Share.shareXFiles(
       [XFile(imagePath, mimeType: "image/png")],
       text: 'Check out my Doggelganger, ${widget.dog.name}!',
       subject: 'Check out my Doggelganger',
     );
+    
+    // Cleanup old screenshots if there are more than 5
+    if (_screenshotPaths.length > 5) {
+      await _cleanupOldScreenshots();
+    }
+  }
+
+  Future<void> _cleanupOldScreenshots() async {
+    while (_screenshotPaths.length > 5) {
+      final oldPath = _screenshotPaths.removeAt(0);
+      final file = File(oldPath);
+      if (await file.exists()) {
+        await file.delete();
+      }
+    }
   }
 
   Future<void> _launchAdoptionLink() async {
