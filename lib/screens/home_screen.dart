@@ -59,37 +59,41 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ),
             child: SafeArea(
-          child: isCalculating
-              ? const CalculatingView()
-              : matchedDog != null && userImagePath != null
-                  ? MatchedDogView(
-                      dog: matchedDog!,
-                      userImagePath: userImagePath!,
-                      onClose: () {
-                        setState(() {
-                          matchedDog = null;
-                          userImagePath = null;
-                        });
-                      },
-                    )
-                  : Column(
-                      children: [
-                        const SizedBox(height: 20), // Add some space at the top
-                        Expanded(
-                          flex: 8,
-                          child: DogCarouselView(),
+              child: isCalculating
+                  ? const CalculatingView()
+                  : matchedDog != null && userImagePath != null
+                      ? MatchedDogView(
+                          dog: matchedDog!,
+                          userImagePath: userImagePath!,
+                          onClose: () {
+                            setState(() {
+                              matchedDog = null;
+                              userImagePath = null;
+                            });
+                          },
+                        )
+                      : Column(
+                          children: [
+                            const SizedBox(
+                                height: 20), // Add some space at the top
+                            Expanded(
+                              flex: 8,
+                              child: DogCarouselView(),
+                            ),
+                            const SizedBox(
+                                height:
+                                    20), // Add padding between carousel and button
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 20), // Add padding at the bottom
+                              child: ImagePickerButton(
+                                onImageSelected: (image) {
+                                  startCalculating(image);
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 20), // Add padding between carousel and button
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20), // Add padding at the bottom
-                          child: ImagePickerButton(
-                            onImageSelected: (image) {
-                              startCalculating(image);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
             ),
           );
         },
