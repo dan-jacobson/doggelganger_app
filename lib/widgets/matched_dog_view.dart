@@ -441,8 +441,21 @@ class _MatchedDogViewState extends State<MatchedDogView>
 
   Future<void> _shareScreenshot() async {
     final imagePath = await _captureAndSaveScreenshot();
-    await Share.shareXFiles([XFile(imagePath)],
-        text: 'Check out my Doggelganger, ${widget.dog.name}!');
+    final result = await Share.shareXFiles(
+      [XFile(imagePath)],
+      text: 'Check out my Doggelganger, ${widget.dog.name}!',
+      subject: 'My Doggelganger Match',
+    );
+
+    if (result.status == ShareResultStatus.success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Shared successfully!')),
+      );
+    } else if (result.status == ShareResultStatus.dismissed) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Share cancelled')),
+      );
+    }
   }
 
   Future<void> _launchAdoptionLink() async {
