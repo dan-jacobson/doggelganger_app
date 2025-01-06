@@ -69,14 +69,18 @@ class HomeScreenState extends State<HomeScreen> {
                   : Column(
                       children: [
                         Expanded(
-                          flex:
-                              9, // This will make the carousel take up 90% of the available space
+                          flex: 8, // Reduced from 9 to 8
                           child: DogCarouselView(),
                         ),
-                        ImagePickerButton(
-                          onImageSelected: (image) {
-                            startCalculating(image);
-                          },
+                        Expanded(
+                          flex: 2, // Added flex of 2 for the button area
+                          child: Center(
+                            child: ImagePickerButton(
+                              onImageSelected: (image) {
+                                startCalculating(image);
+                              },
+                            ),
+                          ),
                         ),
                       ],
                     ),

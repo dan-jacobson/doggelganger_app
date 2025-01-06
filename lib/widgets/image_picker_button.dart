@@ -18,16 +18,17 @@ class ImagePickerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: _pickImage,
-      icon: const Icon(Icons.pets),
+      icon: const Icon(Icons.pets, size: 28),
       label: const Text(
         'Find your doggelganger!',
-        style: TextStyle(fontSize: 18),
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        minimumSize: const Size(300, 60),
       ),
     );
   }
