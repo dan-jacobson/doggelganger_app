@@ -44,9 +44,8 @@ class _DogCarouselViewState extends State<DogCarouselView> {
 
     return CarouselSlider(
       options: CarouselOptions(
-        height: MediaQuery.of(context).size.width,  // Make it square
-        aspectRatio: 1,  // 1:1 aspect ratio for square
-        viewportFraction: 0.7,  // Show more of adjacent items
+        aspectRatio: 2 / 3,  // 1:1 aspect ratio for square
+        viewportFraction: 0.8,  // Show more of adjacent items
         initialPage: 0,
         enableInfiniteScroll: true,
         reverse: false,
@@ -68,7 +67,7 @@ class _DogCarouselViewState extends State<DogCarouselView> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.2),
+                    // color: Color.fromRGBO(0, 0, 0, 0.2),
                     spreadRadius: 2,
                     blurRadius: 5,
                     offset: const Offset(0, 3),
