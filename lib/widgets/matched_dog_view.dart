@@ -84,8 +84,8 @@ class _MatchedDogViewState extends State<MatchedDogView>
     }
 
     final tempDir = await getTemporaryDirectory();
-    final file = await File('${tempDir.path}/doggelganger.jpg').create();
-    await file.writeAsBytes(imageBytes);
+    final file = await File('${tempDir.path}/doggelganger.png').create();
+    file.writeAsBytesSync(imageBytes);
 
     return file.path;
   }
@@ -441,21 +441,11 @@ class _MatchedDogViewState extends State<MatchedDogView>
 
   Future<void> _shareScreenshot() async {
     final imagePath = await _captureAndSaveScreenshot();
-    final file = XFile(imagePath, mimeType: 'image/jpeg');
-    final result = await Share.shareXFiles(
-      [file],
+    await Share.shareXFiles(
+      [XFile(imagePath, mimeType: "image/png")],
       text: 'Check out my Doggelganger, ${widget.dog.name}!',
+      subject: 'Check out my Doggelganger',
     );
-
-    if (result.status == ShareResultStatus.success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Shared successfully!')),
-      );
-    } else if (result.status == ShareResultStatus.dismissed) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Share cancelled')),
-      );
-    }
   }
 
   Future<void> _launchAdoptionLink() async {
