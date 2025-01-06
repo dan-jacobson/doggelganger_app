@@ -4,8 +4,7 @@ import 'package:image_picker/image_picker.dart';
 class ImagePickerButton extends StatelessWidget {
   final Function(XFile) onImageSelected;
 
-  const ImagePickerButton(
-      {super.key, required this.onImageSelected, required IconData icon});
+  const ImagePickerButton({super.key, required this.onImageSelected});
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
@@ -18,26 +17,18 @@ class ImagePickerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      icon: Icons.pets,
-        onPressed: _pickImage,
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      onPressed: _pickImage,
+      icon: const Icon(Icons.pets),
+      label: const Text(
+        'Find your doggelganger!',
+        style: TextStyle(fontSize: 18),
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
         ),
-    )
-        child: const Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.pets),
-            Text(
-              'Find your doggelganger!',
-              style: TextStyle(fontSize: 18),
-            ),
-            Icon(Icons.pets),
-          ],
-        ),
-      );
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      ),
+    );
   }
 }
