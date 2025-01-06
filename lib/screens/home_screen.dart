@@ -74,32 +74,21 @@ class HomeScreenState extends State<HomeScreen> {
                     )
                   : Column(
                       children: [
+                        const SizedBox(height: 20), // Add some space at the top
                         Expanded(
-                          child: 
-                        DogCarouselView(),
-                        ImagePickerButton(
-                              onImageSelected: (image) {
-                                startCalculating(image);
-                              },
-                            ),
-                        )
+                          flex: 8,
+                          child: DogCarouselView(),
+                        ),
+                        const SizedBox(height: 20), // Add padding between carousel and button
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20), // Add padding at the bottom
+                          child: ImagePickerButton(
+                            onImageSelected: (image) {
+                              startCalculating(image);
+                            },
+                          ),
+                        ),
                       ],
-                      // ],
-                    // ),
-                        // Expanded(
-                        //   flex: 6,
-                        //   child: DogCarouselView(),
-                        // ),
-                        // Expanded(
-                        //   flex: 2, // Reduced from 2 to 1
-                        //   child: Center(
-                        //     child: ImagePickerButton(
-                        //       onImageSelected: (image) {
-                        //         startCalculating(image);
-                        //       },
-                        //     ),
-                        //   ),
-                        // ),
                     ),
             ),
           );
