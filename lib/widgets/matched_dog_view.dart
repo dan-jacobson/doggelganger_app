@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:logger/logger.dart';
+import 'package:image/image.dart' as img;
 
 class MatchedDogView extends StatefulWidget {
   final DogData dog;
@@ -96,18 +97,26 @@ class _MatchedDogViewState extends State<MatchedDogView>
     }
 
     // Decode the image
-    final image = await decodeImageFromList(imageBytes);
+    final image = img.decodeImage(imageBytes);
+    if (image == null) {
+      throw Exception('Failed to decode image');
+    }
 
     // Calculate crop dimensions
     final int topCrop = (image.height * 0.05).round(); // Remove top 5%
     final int bottomCrop = (image.height * 0.75).round(); // Keep only top 75%
 
     // Crop the image
-    final ui.Image croppedImage = await _cropImage(image, 0, topCrop, image.width, bottomCrop - topCrop);
+    final croppedImage = img.copyCrop(
+      image,
+      x: 0,
+      y: topCrop,
+      width: image.width,
+      height: bottomCrop - topCrop,
+    );
 
     // Encode the cropped image
-    final ByteData? byteData = await croppedImage.toByteData(format: ui.ImageByteFormat.png);
-    final Uint8List croppedImageBytes = byteData!.buffer.asUint8List();
+    final croppedImageBytes = img.encodePng(croppedImage);
 
     final tempDir = await getTemporaryDirectory();
     final timestamp = DateTime.now().millisecondsSinceEpoch;
@@ -115,20 +124,6 @@ class _MatchedDogViewState extends State<MatchedDogView>
     file.writeAsBytesSync(croppedImageBytes);
 
     return file.path;
-  }
-
-  Future<ui.Image> _cropImage(ui.Image image, int x, int y, int width, int height) async {
-    final pictureRecorder = ui.PictureRecorder();
-    final canvas = Canvas(pictureRecorder);
-    final paint = Paint();
-    canvas.drawImageRect(
-      image,
-      Rect.fromLTWH(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble()),
-      Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()),
-      paint,
-    );
-    final croppedImage = await pictureRecorder.endRecording().toImage(width, height);
-    return croppedImage;
   }
 
   @override
