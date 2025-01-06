@@ -3,8 +3,7 @@ import 'package:doggelganger_app/screens/home_screen.dart';
 import 'package:doggelganger_app/config/environment.dart';
 
 void main() {
-  const flavor = String.fromEnvironment('FLAVOR');
-  Environment.appFlavor = flavor == 'production' ? Flavor.production : Flavor.development;
+  Environment.appFlavor = Flavor.development;
   runApp(const DoggelgangerApp());
 }
 
