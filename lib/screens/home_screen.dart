@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:doggelganger_app/widgets/carousel_view.dart';
 import 'package:doggelganger_app/widgets/image_picker_button.dart';
 import 'package:doggelganger_app/widgets/calculating_view.dart';
@@ -12,11 +11,10 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  TextStyle get _baseTextStyle => GoogleFonts.quicksand();
+class HomeScreenState extends State<HomeScreen> {
   bool isCalculating = false;
   DogData? matchedDog;
   String? userImagePath;
