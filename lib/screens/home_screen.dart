@@ -50,10 +50,10 @@ class HomeScreenState extends State<HomeScreen> {
           return Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
                 colors: [
-                  theme.colorScheme.primary.withOpacity(0.1),
+                  theme.colorScheme.primary.withAlpha((0.5 * 255).round()),
                   theme.colorScheme.surface,
                 ],
               ),
