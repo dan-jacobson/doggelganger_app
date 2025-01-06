@@ -84,7 +84,7 @@ class _MatchedDogViewState extends State<MatchedDogView>
     }
 
     final tempDir = await getTemporaryDirectory();
-    final file = await File('${tempDir.path}/doggelganger.png').create();
+    final file = await File('${tempDir.path}/doggelganger.jpg').create();
     await file.writeAsBytes(imageBytes);
 
     return file.path;
@@ -444,7 +444,6 @@ class _MatchedDogViewState extends State<MatchedDogView>
     final result = await Share.shareXFiles(
       [XFile(imagePath)],
       text: 'Check out my Doggelganger, ${widget.dog.name}!',
-      subject: 'My Doggelganger Match',
     );
 
     if (result.status == ShareResultStatus.success) {
