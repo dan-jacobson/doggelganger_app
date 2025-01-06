@@ -73,14 +73,10 @@ class HomeScreenState extends State<HomeScreen> {
                               9, // This will make the carousel take up 90% of the available space
                           child: DogCarouselView(),
                         ),
-                        const SizedBox(
-                            height:
-                                20), // Add some space between the carousel and the button
                         ImagePickerButton(
                           onImageSelected: (image) {
                             startCalculating(image);
                           },
-                          icon: Icons.pets,
                         ),
                       ],
                     ),
