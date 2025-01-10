@@ -266,45 +266,28 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: GradientBackground(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
+        child: Column(
+          children: [
+            AppBar(
               leading: IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text("My Doggelganger is"),
               backgroundColor: Colors.transparent,
-              floating: true,
-              snap: true,
             ),
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: constraints.maxHeight * 0.10,
-                        child: _buildHeader(),
-                      ),
-                      SizedBox(
-                        height: constraints.maxHeight * 0.40,
-                        child: _buildImageSection(),
-                      ),
-                      SizedBox(
-                        height: constraints.maxHeight * 0.25,
-                        child: SingleChildScrollView(
-                          child: _buildDogInfo(),
-                        ),
-                      ),
-                      SizedBox(
-                        height: constraints.maxHeight * 0.25,
-                        child: Center(child: _buildAdoptButton()),
-                      ),
-                    ],
-                  );
-                },
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildHeader(),
+                    _buildImageSection(),
+                    _buildDogInfo(),
+                    SizedBox(height: 20),
+                    _buildAdoptButton(),
+                    SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
           ],
