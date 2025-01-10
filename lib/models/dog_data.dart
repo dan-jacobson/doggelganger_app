@@ -32,6 +32,7 @@ class DogData {
   final String age;
   final String sex;
   final String breed;
+  final String description;
   final String url;
   final String photo;
   final String croppedPhoto;
@@ -43,6 +44,7 @@ class DogData {
     required this.age,
     required this.sex,
     required this.breed,
+    required this.description,
     required this.url,
     required this.photo,
     required this.croppedPhoto,
@@ -56,6 +58,7 @@ class DogData {
       age: json['age'],
       sex: json['sex'],
       breed: json['breed'],
+      description: json['description'],
       url: json['url'],
       photo: json['primary_photo'],
       croppedPhoto: json['primary_photo_cropped'],
@@ -72,6 +75,7 @@ class DogData {
       'age': age,
       'sex': sex,
       'breed': breed,
+      'description': description,
       'url': url,
       'primary_photo': photo,
       'primary_photo_cropped': croppedPhoto,
