@@ -76,15 +76,16 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
     }
 
     // Calculate crop dimensions
+    final int topCrop = (image.height * .14).round();
     final int bottomCrop = (image.height * 0.83).round(); // Cut out the bottom
 
     // Crop the image
     final croppedImage = img.copyCrop(
       image,
       x: 0,
-      y: 0,
+      y: topCrop,
       width: image.width,
-      height: bottomCrop,
+      height: bottomCrop - topCrop,
     );
 
     // Encode the cropped image
