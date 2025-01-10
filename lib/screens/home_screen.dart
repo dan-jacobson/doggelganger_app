@@ -1,3 +1,4 @@
+import 'package:doggelganger_app/widgets/gradient_background.dart';
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/widgets/carousel_view.dart';
 import 'package:doggelganger_app/widgets/image_picker_button.dart';
@@ -50,21 +51,8 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Builder(
-        builder: (BuildContext context) {
-          final theme = Theme.of(context);
-          return Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  theme.colorScheme.primary.withAlpha((0.5 * 255).round()),
-                  theme.colorScheme.surface,
-                ],
-              ),
-            ),
-            child: SafeArea(
+      body: GradientBackground(
+        child: SafeArea(
               child: isCalculating
                   ? const CalculatingView()
                   : LayoutBuilder(
@@ -96,9 +84,7 @@ class HomeScreenState extends State<HomeScreen> {
                       },
                     ),
             ),
-          );
-        },
-      ),
-    );
+          )
+      );
   }
 }
