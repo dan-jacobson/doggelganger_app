@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:doggelganger_app/widgets/carousel_view.dart';
 import 'package:doggelganger_app/widgets/image_picker_button.dart';
 import 'package:doggelganger_app/widgets/calculating_view.dart';
-import 'package:doggelganger_app/widgets/matched_dog_view.dart';
+import 'package:doggelganger_app/screens/matched_dog_screen.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:doggelganger_app/services/api_service.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,15 +22,21 @@ class HomeScreenState extends State<HomeScreen> {
   Future<void> startCalculating(XFile image) async {
     setState(() {
       isCalculating = true;
-      userImagePath = image.path;
     });
     try {
       final matchedDogData =
           await ApiService.uploadImageAndGetMatch(image.path);
       setState(() {
         isCalculating = false;
-        matchedDog = matchedDogData;
       });
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => MatchedDogScreen(
+            dog: matchedDogData,
+            userImagePath: image.path,
+          ),
+        ),
+      );
     } catch (e) {
       setState(() {
         isCalculating = false;
@@ -61,45 +67,34 @@ class HomeScreenState extends State<HomeScreen> {
             child: SafeArea(
               child: isCalculating
                   ? const CalculatingView()
-                  : matchedDog != null && userImagePath != null
-                      ? MatchedDogView(
-                          dog: matchedDog!,
-                          userImagePath: userImagePath!,
-                          onClose: () {
-                            setState(() {
-                              matchedDog = null;
-                              userImagePath = null;
-                            });
-                          },
-                        )
-                      : LayoutBuilder(
-                          builder: (context, constraints) {
-                            return Column(
-                              children: [
-                                SizedBox(
-                                    height: constraints.maxHeight *
-                                        0.03), // 3% of screen height
-                                Expanded(
-                                  flex: 8,
-                                  child: DogCarouselView(),
-                                ),
-                                SizedBox(
-                                    height: constraints.maxHeight *
-                                        0.03), // 3% of screen height
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom: constraints.maxHeight *
-                                          0.03), // 3% of screen height
-                                  child: ImagePickerButton(
-                                    onImageSelected: (image) {
-                                      startCalculating(image);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
+                  : LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                                height: constraints.maxHeight *
+                                    0.03), // 3% of screen height
+                            Expanded(
+                              flex: 8,
+                              child: DogCarouselView(),
+                            ),
+                            SizedBox(
+                                height: constraints.maxHeight *
+                                    0.03), // 3% of screen height
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: constraints.maxHeight *
+                                      0.03), // 3% of screen height
+                              child: ImagePickerButton(
+                                onImageSelected: (image) {
+                                  startCalculating(image);
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
             ),
           );
         },
