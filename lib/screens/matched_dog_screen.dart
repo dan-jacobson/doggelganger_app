@@ -50,11 +50,135 @@ class _MatchedDogScreenState extends State<MatchedDogScreen>
   @override
   void dispose() {
     _controller.dispose();
-    _cleanupAllScreenshots();
     super.dispose();
   }
 
-  // ... (rest of the methods from MatchedDogView)
+  Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Text(
+        'You matched with ${widget.dog.name}!',
+        style: GoogleFonts.quicksand(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget _buildImageSection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _isUserImageExpanded = !_isUserImageExpanded;
+              _isDogImageExpanded = false;
+            });
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            width: _isUserImageExpanded ? 250 : 150,
+            height: _isUserImageExpanded ? 250 : 150,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.file(
+                File(widget.userImagePath),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _isDogImageExpanded = !_isDogImageExpanded;
+              _isUserImageExpanded = false;
+            });
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            width: _isDogImageExpanded ? 250 : 150,
+            height: _isDogImageExpanded ? 250 : 150,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                widget.dog.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDogInfo() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Breed: ${widget.dog.breed}',
+            style: GoogleFonts.quicksand(fontSize: 18),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Age: ${widget.dog.age}',
+            style: GoogleFonts.quicksand(fontSize: 18),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Gender: ${widget.dog.gender}',
+            style: GoogleFonts.quicksand(fontSize: 18),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'About ${widget.dog.name}:',
+            style: GoogleFonts.quicksand(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            widget.dog.description,
+            style: GoogleFonts.quicksand(fontSize: 16),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAdoptButton() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ElevatedButton(
+        onPressed: () async {
+          final Uri url = Uri.parse(widget.dog.adoptionUrl);
+          if (await canLaunchUrl(url)) {
+            await launchUrl(url);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Could not launch adoption URL'),
+              ),
+            );
+          }
+        },
+        child: Text(
+          'Adopt ${widget.dog.name}',
+          style: GoogleFonts.quicksand(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
