@@ -124,18 +124,26 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   }
 
   Widget _buildHeader() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(4),
-        child: Text(
-          '${widget.dog.name}!',
-          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: 46,
+    return Column(                                                                                                                                                                                                  
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text( 
+          'My Doggelganger is...', 
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.normal,
           ),
           textAlign: TextAlign.center,
         ),
-      ),
+        const SizedBox(height: 8), 
+        Text(
+          '${widget.dog.name}!',
+          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            fontSize: 36
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 
@@ -228,10 +236,10 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             ),
           ],
         ),
-        // Text(
-        //   widget.dog.description,
-        //   overflow: TextOverflow.fade,
-        // )
+        Text(
+          widget.dog.description,
+          overflow: TextOverflow.fade,
+        )
       ],
       ),
     );
@@ -282,8 +290,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             Expanded(
                 child: Column(
                   children: [
-                  Expanded(flex: 10, child: _buildHeader()),
-                  Expanded(flex: 60, child: _buildImageSection()),
+                  Expanded(flex: 15, child: _buildHeader()),
+                  Expanded(flex: 50, child: _buildImageSection()),
                     Expanded(
                       flex: 20,
                       child: SingleChildScrollView(
