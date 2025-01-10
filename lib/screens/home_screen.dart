@@ -1,7 +1,7 @@
 import 'package:doggelganger_app/widgets/gradient_background.dart';
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/widgets/carousel_view.dart';
-import 'package:doggelganger_app/widgets/image_picker_button.dart';
+import 'package:doggelganger_app/widgets/bottom_button.dart';
 import 'package:doggelganger_app/widgets/calculating_view.dart';
 import 'package:doggelganger_app/screens/matched_dog_screen.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
@@ -19,6 +19,14 @@ class HomeScreenState extends State<HomeScreen> {
   bool isCalculating = false;
   DogData? matchedDog;
   String? userImagePath;
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      await startCalculating(image);
+    }
+  }
 
   Future<void> startCalculating(XFile image) async {
     setState(() {
@@ -73,10 +81,10 @@ class HomeScreenState extends State<HomeScreen> {
                               padding: EdgeInsets.only(
                                   bottom: constraints.maxHeight *
                                       0.03), // 3% of screen height
-                              child: ImagePickerButton(
-                                onImageSelected: (image) {
-                                  startCalculating(image);
-                                },
+                              child: BottomButton(
+                                onPressed: _pickImage,
+                                icon: Icons.pets,
+                                label: 'Find your doggelganger!',
                               ),
                             ),
                           ],
