@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:doggelganger_app/widgets/bottom_button.dart';
 
 class ImagePickerButton extends StatelessWidget {
   final Function(XFile) onImageSelected;
@@ -16,20 +17,10 @@ class ImagePickerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
+    return BottomButton(
       onPressed: _pickImage,
-      icon: const Icon(Icons.pets, size: 28),
-      label: const Text(
-        'Find your doggelganger!',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-        minimumSize: const Size(300, 60),
-      ),
+      icon: Icons.pets,
+      label: 'Find your doggelganger!',
     );
   }
 }

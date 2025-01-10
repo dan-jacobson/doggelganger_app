@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:doggelganger_app/widgets/gradient_background.dart';
+import 'package:doggelganger_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -237,7 +238,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   }
 
   Widget _buildAdoptButton() {
-    return ElevatedButton.icon(
+    return BottomButton(
       onPressed: () async {
         final Uri url = Uri.parse(widget.dog.url);
         if (await canLaunchUrl(url)) {
@@ -250,18 +251,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
           );
         }
       },
-      icon: const Icon(Icons.pets, size: 28),
-      label: Text(
-        'Adopt ${widget.dog.name}!',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        minimumSize: Size(MediaQuery.of(context).size.width * .68, 60),
-        padding: EdgeInsets.zero,
-      ),
+      icon: Icons.pets,
+      label: 'Adopt ${widget.dog.name}!',
     );
   }
 
