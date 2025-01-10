@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:doggelganger_app/widgets/gradient_background.dart';
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,40 +16,29 @@ class MatchedDogScreen extends StatefulWidget {
   final String userImagePath;
 
   const MatchedDogScreen({
-    Key? key,
+    super.key,
     required this.dog,
     required this.userImagePath,
-  }) : super(key: key);
+  });
 
   @override
-  _MatchedDogScreenState createState() => _MatchedDogScreenState();
+  MatchedDogScreenState createState() => MatchedDogScreenState();
 }
 
-class _MatchedDogScreenState extends State<MatchedDogScreen>
+class MatchedDogScreenState extends State<MatchedDogScreen>
     with TickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
   bool _isUserImageExpanded = false;
   bool _isDogImageExpanded = false;
   final ScreenshotController _screenshotController = ScreenshotController();
-  List<String> _screenshotPaths = [];
+  final List<String> _screenshotPaths = [];
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     _cleanupAllScreenshots();
     super.dispose();
   }
@@ -135,10 +125,10 @@ class _MatchedDogScreenState extends State<MatchedDogScreen>
   Widget _buildHeader() {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(4),
         child: Text(
           '${widget.dog.name}!',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
           textAlign: TextAlign.center,
@@ -159,7 +149,7 @@ class _MatchedDogScreenState extends State<MatchedDogScreen>
             });
           },
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 100),
             width: _isUserImageExpanded ? 250 : 150,
             height: _isUserImageExpanded ? 350 : 250,
             child: ClipRRect(
@@ -181,7 +171,7 @@ class _MatchedDogScreenState extends State<MatchedDogScreen>
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 100),
             width: _isDogImageExpanded ? 250 : 150,
-            height: _isDogImageExpanded ? 250 : 150,
+            height: _isDogImageExpanded ? 350 : 250,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
@@ -196,54 +186,78 @@ class _MatchedDogScreenState extends State<MatchedDogScreen>
   }
 
   Widget _buildDogInfo() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return Container(
+      padding: const EdgeInsets.all(8),
+      foregroundDecoration: BoxDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'About ${widget.dog.name}:',
-            style: Theme.of(context).textTheme.labelMedium,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  widget.dog.breed,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  overflow: TextOverflow.fade,
+                ),
+              ),
+              IconButton(
+                onPressed: _shareScreenshot,
+                icon: Platform.isIOS
+                    ? const Icon(CupertinoIcons.share)
+                    : const Icon(Icons.share)
+              )
+            ],
           ),
-          Text(
-            'Breed: ${widget.dog.breed}',
-            style: Theme.of(context).textTheme.bodySmall
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Age: ${widget.dog.age}',
-            style: Theme.of(context).textTheme.bodySmall
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Gender: ${widget.dog.sex}',
-            style: Theme.of(context).textTheme.bodySmall
-          ),
-          const SizedBox(height: 16),
-        ],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '${widget.dog.age} • ${widget.dog.sex}',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            Text(
+              '${widget.dog.location.city}, ${widget.dog.location.state}',
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.right,
+            )
+          ],
+        ),
+        // Text(
+        //   widget.dog.description,
+        //   overflow: TextOverflow.fade,
+        // )
+      ],
       ),
     );
   }
 
   Widget _buildAdoptButton() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton(
-        onPressed: () async {
-          final Uri url = Uri.parse(widget.dog.url);
-          if (await canLaunchUrl(url)) {
-            await launchUrl(url);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Could not launch adoption URL'),
-              ),
-            );
-          }
-        },
-        child: Text(
-          'Adopt ${widget.dog.name}',
+    return ElevatedButton.icon(
+      onPressed: () async {
+        final Uri url = Uri.parse(widget.dog.url);
+        if (await canLaunchUrl(url)) {
+          await launchUrl(url);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Could not launch adoption URL'),
+            ),
+          );
+        }
+      },
+      icon: const Icon(Icons.pets, size: 28),
+      label: Text(
+        'Adopt ${widget.dog.name}!',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
         ),
+        minimumSize: Size(MediaQuery.of(context).size.width * .68, 60),
+        padding: EdgeInsets.zero,
       ),
     );
   }
@@ -251,63 +265,49 @@ class _MatchedDogScreenState extends State<MatchedDogScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text('My Doggelganger is'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 15,
-            child: _buildHeader(),
-          ),
-          Expanded(
-            flex: 40,
-            child: _buildImageSection(),
-          ),
-          Expanded(
-            flex: 45,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  _buildDogInfo(),
-                  _buildAdoptButton(),
-                ],
+      body: GradientBackground(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop(),
               ),
+              title: Text("My Doggelganger is"),
+              backgroundColor: Colors.transparent,
+              floating: true,
+              snap: true,
             ),
-          ),
-        ],
-      ),
-      // body: Stack(
-      //   children: [
-      //     Screenshot(
-      //       controller: _screenshotController,
-      //       child: Container(
-      //         child: Column(
-      //           children: [
-      //             Expanded(
-      //               child: SingleChildScrollView(
-      //                 child: Column(
-      //                   children: [
-      //                     _buildHeader(),
-      //                     _buildImageSection(),
-      //                     _buildDogInfo(),
-      //                     _buildAdoptButton(),
-      //                   ],
-      //                 ),
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-      //   ],
-      // ),
+            SliverList(delegate: SliverChildListDelegate([
+              LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return SizedBox(
+                height: constraints.maxHeight - kToolbarHeight,
+                  child: Column(
+                  children: [
+                    SizedBox(height: constraints.maxHeight * 0.10,
+                    child: _buildHeader()),
+                    SizedBox(height: constraints.maxHeight * 0.40,
+                    child:  _buildImageSection()), 
+                    SizedBox(height: constraints.maxHeight * 0.25,
+                      child: SingleChildScrollView(
+                        child: Column(children: [_buildDogInfo()]),
+                      )), 
+                    SizedBox(
+                      height: constraints.maxHeight * 0.15,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 20),
+                        child: Center(child: _buildAdoptButton())))
+                  ],
+                    )
+                  );
+                }
+              )
+            ])
+            )
+            ]
+        )
+      )
     );
   }
-
-  // ... (rest of the widget methods from MatchedDogView)
 }
