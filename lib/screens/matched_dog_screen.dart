@@ -133,14 +133,16 @@ class _MatchedDogScreenState extends State<MatchedDogScreen>
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Text(
-        '${widget.dog.name}!',
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-          fontWeight: FontWeight.bold,
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          '${widget.dog.name}!',
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }
@@ -256,39 +258,29 @@ class _MatchedDogScreenState extends State<MatchedDogScreen>
         ),
         title: Text('My Doggelganger is'),
       ),
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return Column(
-            children: [
-              FractionallySizedBox(
-                heightFactor: 0.15,
-                child: _buildHeader(),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 15,
+            child: _buildHeader(),
+          ),
+          Expanded(
+            flex: 40,
+            child: _buildImageSection(),
+          ),
+          Expanded(
+            flex: 45,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildDogInfo(),
+                  _buildAdoptButton(),
+                ],
               ),
-              FractionallySizedBox(
-                heightFactor: 0.40,
-                child: _buildImageSection(),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    SingleChildScrollView(
-                      child:
-                        FractionallySizedBox(
-                          heightFactor: 0.30,
-                          child: _buildDogInfo(),
-                        ),
-                    ),
-                    FractionallySizedBox(
-                      heightFactor: 0.15,
-                      child: _buildAdoptButton(),
-                    )
-                  ],
-                )
-              )
-            ],
-          );
-        } 
-      )
+            ),
+          ),
+        ],
+      ),
       // body: Stack(
       //   children: [
       //     Screenshot(
