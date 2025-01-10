@@ -26,7 +26,7 @@ class BottomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
         ),
         minimumSize: Size(MediaQuery.of(context).size.width * .65, 60),
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       ),
     );
   }

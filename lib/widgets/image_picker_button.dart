@@ -20,7 +20,7 @@ class ImagePickerButton extends StatelessWidget {
     return BottomButton(
       onPressed: _pickImage,
       icon: Icons.pets,
-      label: 'Find your doggelganger!',
+      label: 'Find your doggelganger match!',
     );
   }
 }
