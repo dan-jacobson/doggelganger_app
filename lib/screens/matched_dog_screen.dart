@@ -26,12 +26,27 @@ class MatchedDogScreen extends StatefulWidget {
   MatchedDogScreenState createState() => MatchedDogScreenState();
 }
 
+class DebugDivider extends StatelessWidget {
+  final Color color;
+
+  const DebugDivider({Key? key, this.color = Colors.purple}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 2,
+      color: color,
+    );
+  }
+}
+
 class MatchedDogScreenState extends State<MatchedDogScreen>
     with TickerProviderStateMixin {
   bool _isUserImageExpanded = false;
   bool _isDogImageExpanded = false;
   final ScreenshotController _screenshotController = ScreenshotController();
   final List<String> _screenshotPaths = [];
+  bool _debugMode = false;
 
   @override
   void initState() {
@@ -42,6 +57,12 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   void dispose() {
     _cleanupAllScreenshots();
     super.dispose();
+  }
+
+  void _toggleDebugMode() {
+    setState(() {
+      _debugMode = !_debugMode;
+    });
   }
   
   Future<void> _shareScreenshot() async {
@@ -185,7 +206,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 });                                                                                                                                                                                                   
               },                                                                                                                                                                                                      
               child: AnimatedContainer(                                                                                                                                                                               
-                duration: const Duration(milliseconds: 300),                                                                                                                                                          
+                duration: const Duration(milliseconds: 200),                                                                                                                                                          
                 margin: EdgeInsets.all(8),                                                                                                                                                                            
                 child: AspectRatio(                                                                                                                                                                                   
                   aspectRatio: _isDogImageExpanded ? 2/3 : 3/4,                                                                                                                                                       
@@ -284,29 +305,34 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                   icon: Platform.isIOS
                       ? const Icon(CupertinoIcons.share)
                       : const Icon(Icons.share)
-                )
+                ),
+                IconButton(onPressed: _toggleDebugMode, icon: Icon(Icons.bug_report))
               ],
               backgroundColor: Colors.transparent,
             ),
+            if (_debugMode) DebugDivider(),
             Expanded(
                 child: Column(
                   children: [
-                  Expanded(flex: 15, child: _buildHeader()),
-                  Expanded(flex: 50, child: _buildImageSection()),
-                    Expanded(
-                      flex: 20,
-                      child: SingleChildScrollView(
-                        child: _buildDogInfo()
-                        )
-                      ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height * 0.03,
-                        left: MediaQuery.of(context).size.width * 0.03,
-                        right: MediaQuery.of(context).size.width * 0.03,
-                      ),
-                      child: _buildAdoptButton(),
+                  Expanded(flex: 10, child: _buildHeader()),
+                  if (_debugMode) DebugDivider(),
+                  Expanded(flex: 30, child: _buildImageSection()),
+                  if (_debugMode) DebugDivider(),
+                  Expanded(
+                    flex: 20,
+                    child: SingleChildScrollView(
+                      child: _buildDogInfo()
+                      )
                     ),
+                  if (_debugMode) DebugDivider(),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.03,
+                      left: MediaQuery.of(context).size.width * 0.03,
+                      right: MediaQuery.of(context).size.width * 0.03,
+                    ),
+                    child: _buildAdoptButton(),
+                  ),
                   ],
                 ),
               ),
