@@ -299,9 +299,13 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                         )
                       ),
                     Padding(
-                    padding: EdgeInsets.symmetric(vertical: 30),
-                      child: _buildAdoptButton()
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.03,
+                        left: MediaQuery.of(context).size.width * 0.03,
+                        right: MediaQuery.of(context).size.width * 0.03,
                       ),
+                      child: _buildAdoptButton(),
+                    ),
                   ],
                 ),
               ),
