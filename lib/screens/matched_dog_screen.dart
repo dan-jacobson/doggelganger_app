@@ -278,36 +278,38 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               floating: true,
               snap: true,
             ),
-            SliverList(delegate: SliverChildListDelegate([
-              LayoutBuilder(
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
-                  return SizedBox(
-                height: constraints.maxHeight - kToolbarHeight,
-                  child: Column(
-                  children: [
-                    SizedBox(height: constraints.maxHeight * 0.10,
-                    child: _buildHeader()),
-                    SizedBox(height: constraints.maxHeight * 0.40,
-                    child:  _buildImageSection()), 
-                    SizedBox(height: constraints.maxHeight * 0.25,
-                      child: SingleChildScrollView(
-                        child: Column(children: [_buildDogInfo()]),
-                      )), 
-                    SizedBox(
-                      height: constraints.maxHeight * 0.15,
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                        child: Center(child: _buildAdoptButton())))
-                  ],
-                    )
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: constraints.maxHeight * 0.10,
+                        child: _buildHeader(),
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.40,
+                        child: _buildImageSection(),
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.25,
+                        child: SingleChildScrollView(
+                          child: _buildDogInfo(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.25,
+                        child: Center(child: _buildAdoptButton()),
+                      ),
+                    ],
                   );
-                }
-              )
-            ])
-            )
-            ]
-        )
-      )
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
