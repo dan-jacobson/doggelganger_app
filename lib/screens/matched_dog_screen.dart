@@ -130,6 +130,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
           '${widget.dog.name}!',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
             fontWeight: FontWeight.bold,
+            fontSize: 46,
           ),
           textAlign: TextAlign.center,
         ),
@@ -137,53 +138,63 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
     );
   }
 
-  Widget _buildImageSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _isUserImageExpanded = !_isUserImageExpanded;
-              _isDogImageExpanded = false;
-            });
-          },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            width: _isUserImageExpanded ? 250 : 150,
-            height: _isUserImageExpanded ? 350 : 250,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.file(
-                File(widget.userImagePath),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _isDogImageExpanded = !_isDogImageExpanded;
-              _isUserImageExpanded = false;
-            });
-          },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            width: _isDogImageExpanded ? 250 : 150,
-            height: _isDogImageExpanded ? 350 : 250,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                widget.dog.photo,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  Widget _buildImageSection() {                                                                                                                                                                                       
+    return Expanded(                                                                                                                                                                                                  
+      child: Row(                                                                                                                                                                                                     
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,                                                                                                                                                             
+        children: [                                                                                                                                                                                                   
+          Expanded(                                                                                                                                                                                                   
+            child: GestureDetector(                                                                                                                                                                                   
+              onTap: () {                                                                                                                                                                                             
+                setState(() {                                                                                                                                                                                         
+                  _isUserImageExpanded = !_isUserImageExpanded;                                                                                                                                                       
+                  _isDogImageExpanded = false;                                                                                                                                                                        
+                });                                                                                                                                                                                                   
+              },                                                                                                                                                                                                      
+              child: AnimatedContainer(                                                                                                                                                                               
+                duration: const Duration(milliseconds: 300),                                                                                                                                                          
+                margin: EdgeInsets.all(8),                                                                                                                                                                            
+                child: AspectRatio(                                                                                                                                                                                   
+                  aspectRatio: _isUserImageExpanded ? 2/3 : 3/4,                                                                                                                                                      
+                  child: ClipRRect(                                                                                                                                                                                   
+                    borderRadius: BorderRadius.circular(10),                                                                                                                                                          
+                    child: Image.file(                                                                                                                                                                                
+                      File(widget.userImagePath),                                                                                                                                                                     
+                      fit: BoxFit.cover,                                                                                                                                                                              
+                    ),                                                                                                                                                                                                
+                  ),                                                                                                                                                                                                  
+                ),                                                                                                                                                                                                    
+              ),                                                                                                                                                                                                      
+            ),                                                                                                                                                                                                        
+          ),                                                                                                                                                                                                          
+          Expanded(                                                                                                                                                                                                   
+            child: GestureDetector(                                                                                                                                                                                   
+              onTap: () {                                                                                                                                                                                             
+                setState(() {                                                                                                                                                                                         
+                  _isDogImageExpanded = !_isDogImageExpanded;                                                                                                                                                         
+                  _isUserImageExpanded = false;                                                                                                                                                                       
+                });                                                                                                                                                                                                   
+              },                                                                                                                                                                                                      
+              child: AnimatedContainer(                                                                                                                                                                               
+                duration: const Duration(milliseconds: 300),                                                                                                                                                          
+                margin: EdgeInsets.all(8),                                                                                                                                                                            
+                child: AspectRatio(                                                                                                                                                                                   
+                  aspectRatio: _isDogImageExpanded ? 2/3 : 3/4,                                                                                                                                                       
+                  child: ClipRRect(                                                                                                                                                                                   
+                    borderRadius: BorderRadius.circular(10),                                                                                                                                                          
+                    child: Image.network(                                                                                                                                                                             
+                      widget.dog.photo,                                                                                                                                                                               
+                      fit: BoxFit.cover,                                                                                                                                                                              
+                    ),                                                                                                                                                                                                
+                  ),                                                                                                                                                                                                  
+                ),                                                                                                                                                                                                    
+              ),                                                                                                                                                                                                      
+            ),                                                                                                                                                                                                        
+          ),                                                                                                                                                                                                          
+        ],                                                                                                                                                                                                            
+      ),                                                                                                                                                                                                              
+    );                                                                                                                                                                                                                
+  }   
 
   Widget _buildDogInfo() {
     return Container(
@@ -202,11 +213,10 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                   overflow: TextOverflow.fade,
                 ),
               ),
-              IconButton(
-                onPressed: _shareScreenshot,
-                icon: Platform.isIOS
-                    ? const Icon(CupertinoIcons.share)
-                    : const Icon(Icons.share)
+              Text(
+                '${widget.dog.location.city}, ${widget.dog.location.state}',
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.right,
               )
             ],
           ),
@@ -217,11 +227,6 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               '${widget.dog.age} • ${widget.dog.sex}',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            Text(
-              '${widget.dog.location.city}, ${widget.dog.location.state}',
-              style: Theme.of(context).textTheme.bodyLarge,
-              textAlign: TextAlign.right,
-            )
           ],
         ),
         // Text(
@@ -265,7 +270,9 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GradientBackground(
+      body: Screenshot(
+        controller: _screenshotController,
+        child: GradientBackground(
         child: Column(
           children: [
             AppBar(
@@ -273,26 +280,41 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 icon: Icon(Icons.arrow_back),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              title: Text("My Doggelganger is"),
+              actions: [
+                IconButton(
+                  onPressed: _shareScreenshot,
+                  icon: Platform.isIOS
+                      ? const Icon(CupertinoIcons.share)
+                      : const Icon(Icons.share)
+                )
+              ],
+              title: Text("My Doggelganger is"), 
               backgroundColor: Colors.transparent,
             ),
             Expanded(
-              child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    _buildHeader(),
-                    _buildImageSection(),
-                    _buildDogInfo(),
+                    Expanded(flex: 15, child: _buildHeader()),
+                    Expanded(flex: 40, child: _buildImageSection()),
+                    Expanded(
+                      flex: 20,
+                      child: SingleChildScrollView(
+                        child: _buildDogInfo()
+                        )
+                      ),
                     SizedBox(height: 20),
-                    _buildAdoptButton(),
-                    SizedBox(height: 20),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 30),
+                      child: _buildAdoptButton()
+                      ),
+                    SizedBox(height: 20)
                   ],
                 ),
               ),
-            ),
           ],
         ),
       ),
+      )
     );
   }
 }
