@@ -161,9 +161,9 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
         AutoSizeText(
           '${widget.dog.name}!',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-              color: Theme.of(context).secondaryHeaderColor,
-              fontWeight: FontWeight.bold,
-          ),
+                color: Theme.of(context).secondaryHeaderColor,
+                fontWeight: FontWeight.bold,
+              ),
           maxLines: 1,
           minFontSize: 20,
           maxFontSize: 36,
@@ -276,7 +276,10 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
           Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary.withAlpha((255 * 0.5).round()),
+                color: Theme.of(context)
+                    .colorScheme
+                    .primary
+                    .withAlpha((255 * 0.5).round()),
               ),
               child: Column(children: [
                 Row(
@@ -306,12 +309,12 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                   ],
                 ),
               ])),
-          Padding(padding: EdgeInsets.all(8),
-          child:Text(
-            widget.dog.description,
-            overflow: TextOverflow.fade,
-          )
-          )
+          Padding(
+              padding: EdgeInsets.all(8),
+              child: Text(
+                widget.dog.description,
+                overflow: TextOverflow.fade,
+              ))
         ],
       ),
     );
@@ -369,21 +372,20 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                   Expanded(flex: 20, child: _buildImageSection()),
                   if (_debugMode) DebugDivider(),
                   Expanded(
-                      flex: 15,
-                      child: Stack(
-                        children: [
+                    flex: 15,
+                    child: Stack(
+                      children: [
                         SingleChildScrollView(
                           child: Padding(
-                            padding: EdgeInsets.only(bottom: 110),
-                            child: _buildDogInfo()
-                          ),
+                              padding: EdgeInsets.only(bottom: 110),
+                              child: _buildDogInfo()),
                         ),
                         Positioned(
-                          bottom: MediaQuery.of(context).size.height * 0.06,
-                          left: MediaQuery.of(context).size.width * 0.06,
-                          right: MediaQuery.of(context).size.width * 0.06,
-                          child: _buildAdoptButton())
-                        ],
+                            bottom: MediaQuery.of(context).size.height * 0.06,
+                            left: MediaQuery.of(context).size.width * 0.06,
+                            right: MediaQuery.of(context).size.width * 0.06,
+                            child: _buildAdoptButton())
+                      ],
                     ),
                   )
                 ],
