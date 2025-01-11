@@ -174,7 +174,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
       alignment: Alignment.center,
       children: [
         Positioned(
-          left: -10,
+          left: 20,
           child: Transform.rotate(
             angle: -0.05, // Approximately 3 degrees to the left
             child: GestureDetector(
@@ -187,7 +187,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 width: MediaQuery.of(context).size.width * 0.45,
-                height: MediaQuery.of(context).size.width * (_isUserImageExpanded ? 0.6 : 0.55),
+                height: MediaQuery.of(context).size.width * (_isUserImageExpanded ? 0.8 : 0.55),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.file(
@@ -200,7 +200,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
           ),
         ),
         Positioned(
-          right: -10,
+          right: 20,
           child: Transform.rotate(
             angle: 0.05, // Approximately 3 degrees to the right
             child: GestureDetector(
@@ -213,7 +213,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 width: MediaQuery.of(context).size.width * 0.45,
-                height: MediaQuery.of(context).size.width * (_isDogImageExpanded ? 0.6 : 0.55),
+                height: MediaQuery.of(context).size.width * (_isDogImageExpanded ? 0.8 : 0.55),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
