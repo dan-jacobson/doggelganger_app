@@ -6,11 +6,11 @@ class BottomButton extends StatelessWidget {
   final IconData icon;
 
   const BottomButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.label,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
