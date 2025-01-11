@@ -301,9 +301,11 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                   ],
                 ),
               ])),
-          Text(
+          Padding(padding: EdgeInsets.all(8),
+          child:Text(
             widget.dog.description,
             overflow: TextOverflow.fade,
+          )
           )
         ],
       ),
