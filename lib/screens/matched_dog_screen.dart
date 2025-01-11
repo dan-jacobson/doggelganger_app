@@ -182,8 +182,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
-              left: _isUserImageExpanded ? 0 : (_isDogImageExpanded ? -maxWidth * 0.2 : 20),
-              top: _isUserImageExpanded ? 0 : null,
+              left: _isUserImageExpanded ? (maxWidth * 0.05) : (_isDogImageExpanded ? maxWidth * 0.1 : 20),
+              top: _isUserImageExpanded ? 0 : (_isDogImageExpanded ? maxHeight * .6 : 30),
               width: _isUserImageExpanded ? maxWidth * 0.67 : (_isDogImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
               height: _isUserImageExpanded ? maxHeight : (_isDogImageExpanded ? maxWidth * 0.25 * 0.55 / 0.45 : maxWidth * 0.55),
               child: GestureDetector(
@@ -210,8 +210,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
-              right: _isDogImageExpanded ? 0 : (_isUserImageExpanded ? -maxWidth * 0.2 : 20),
-              bottom: _isDogImageExpanded ? 0 : null,
+              right: _isDogImageExpanded ? (maxWidth * 0.05) : (_isUserImageExpanded ? maxWidth * 0.1 : 20),
+              bottom: _isDogImageExpanded ? 0 : (_isUserImageExpanded ? maxHeight * 0.1 : 30),
               width: _isDogImageExpanded ? maxWidth * 0.67 : (_isUserImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
               height: _isDogImageExpanded ? maxHeight : (_isUserImageExpanded ? maxWidth * 0.25 * 0.55 / 0.45 : maxWidth * 0.55),
               child: GestureDetector(
