@@ -165,7 +165,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               fontWeight: FontWeight.bold,
           ),
           maxLines: 1,
-          minFontSize: 18,
+          minFontSize: 20,
           maxFontSize: 36,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
