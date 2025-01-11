@@ -6,13 +6,13 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 
 class DogCarouselView extends StatefulWidget {
-  const DogCarouselView({Key? key}) : super(key: key);
+  const DogCarouselView({super.key});
 
   @override
-  _DogCarouselViewState createState() => _DogCarouselViewState();
+  DogCarouselViewState createState() => DogCarouselViewState();
 }
 
-class _DogCarouselViewState extends State<DogCarouselView> {
+class DogCarouselViewState extends State<DogCarouselView> {
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
   List<DogData> dogs = [];
 
@@ -83,10 +83,6 @@ class _DogCarouselViewState extends State<DogCarouselView> {
                     child: Image.asset(
                       'assets/images/carousel/${dog.photo}',
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        print('Error loading image: ${dog.photo}');
-                        return const Icon(Icons.error);
-                      },
                     ),
                   ),
                   Container(

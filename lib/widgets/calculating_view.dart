@@ -6,10 +6,10 @@ class CalculatingView extends StatefulWidget {
   const CalculatingView({super.key});
 
   @override
-  _CalculatingViewState createState() => _CalculatingViewState();
+  CalculatingViewState createState() => CalculatingViewState();
 }
 
-class _CalculatingViewState extends State<CalculatingView>
+class CalculatingViewState extends State<CalculatingView>
     with SingleTickerProviderStateMixin {
   TextStyle get _baseTextStyle => GoogleFonts.quicksand();
   late AnimationController _controller;

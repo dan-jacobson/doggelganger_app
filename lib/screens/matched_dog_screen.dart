@@ -30,7 +30,7 @@ class MatchedDogScreen extends StatefulWidget {
 class DebugDivider extends StatelessWidget {
   final Color color;
 
-  const DebugDivider({Key? key, this.color = Colors.purple}) : super(key: key);
+  const DebugDivider({super.key, this.color = Colors.purple});
 
   @override
   Widget build(BuildContext context) {
@@ -327,6 +327,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
         if (await canLaunchUrl(url)) {
           await launchUrl(url);
         } else {
+          if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Could not launch adoption URL'),

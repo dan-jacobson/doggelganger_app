@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/screens/home_screen.dart';
 import 'package:doggelganger_app/config/environment.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   Environment.appFlavor = Flavor.production;
@@ -12,15 +13,16 @@ class DoggelgangerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return MaterialApp(
       title: 'Doggelganger',
       theme: ThemeData(
-        primaryColor: const Color(0xFF3399DD),
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: const Color(0xFFFAB04F),
-          surface: const Color(0xFFF2F2F7),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 150, 21, 160)),
+        textTheme: GoogleFonts.figtreeTextTheme(textTheme).copyWith(
+          bodyMedium: GoogleFonts.cabin(textStyle: textTheme.bodyMedium),
         ),
-        fontFamily: 'Chalkduster',
       ),
       home: const HomeScreen(),
     );
