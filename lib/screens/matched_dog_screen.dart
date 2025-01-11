@@ -70,7 +70,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   }
 
   double? getWidgetYPosition(GlobalKey key) {
-    final RenderBox? renderBox = key.currentContext?.findRenderObject() as RenderBox?;
+    final RenderBox? renderBox =
+        key.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null) return null;
     return renderBox.localToGlobal(Offset.zero).dy;
   }
@@ -105,7 +106,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
     // Get the pixel positions of the tops of header and dogInfo widgets
     // That defines the bounds we want to screenshot
     final headerY = getWidgetYPosition(headerKey);
-    final dogInfoY = getWidgetYPosition(dogInfoKey); 
+    final dogInfoY = getWidgetYPosition(dogInfoKey);
 
     if (headerY == null || dogInfoY == null) {
       throw Exception("Failed to get widget Y positions");
@@ -119,7 +120,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
 
     // Calculate crop dimensions
     final int topCrop = (headerY * pixelRatio).round();
-    final int bottomCrop = ((dogInfoY + 8) * pixelRatio).round(); // TODO(drj): get padding (8) programmatically 
+    final int bottomCrop = ((dogInfoY + 8) * pixelRatio)
+        .round(); // TODO(drj): get padding (8) programmatically
 
     // Crop the image
     final croppedImage = img.copyCrop(
