@@ -97,8 +97,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
     }
 
     // Calculate crop dimensions
-    final int topCrop = (image.height * .14).round();
-    final int bottomCrop = (image.height * 0.83).round(); // Cut out the bottom
+    final int topCrop = (image.height * 0.13).round();
+    final int bottomCrop = (image.height * 0.65).round(); // Cut out the bottom
 
     // Crop the image
     final croppedImage = img.copyCrop(
@@ -160,6 +160,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
         Text(
           '${widget.dog.name}!',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+            color: Theme.of(context).secondaryHeaderColor,
             fontWeight: FontWeight.bold,
             fontSize: 36
           ),
@@ -177,10 +178,10 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
 
         Widget userImage = Positioned(
           key: ValueKey('user'),
-          left: _isUserImageExpanded ? (maxWidth * 0.05) : (_isDogImageExpanded ? maxWidth * 0.1 : 20),
-          top: _isUserImageExpanded ? 0 : (_isDogImageExpanded ? maxHeight * .6 : 30),
+          left: _isUserImageExpanded ? (maxWidth * 0.1) : (_isDogImageExpanded ? maxWidth * 0.08 : 20),
+          top: _isUserImageExpanded ? 5 : (_isDogImageExpanded ? maxHeight * .6 : 30),
           width: _isUserImageExpanded ? maxWidth * 0.67 : (_isDogImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
-          height: _isUserImageExpanded ? maxHeight : (_isDogImageExpanded ? maxWidth * 0.25 * 0.55 / 0.45 : maxWidth * 0.55),
+          height: _isUserImageExpanded ? maxHeight * 0.95 : (_isDogImageExpanded ? maxHeight * 0.38 : maxHeight * 0.7),
           child: GestureDetector(
             onTap: () {
               setState(() {
@@ -189,7 +190,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               });
             },
             child: Transform.rotate(
-              angle: 0.052,
+              angle: -0.052,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(_isDogImageExpanded ? 5 : 10),
                 child: Image.file(
@@ -203,10 +204,10 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
 
         Widget dogImage = Positioned(
           key: ValueKey('dog'),
-          right: _isDogImageExpanded ? (maxWidth * 0.05) : (_isUserImageExpanded ? maxWidth * 0.1 : 20),
-          bottom: _isDogImageExpanded ? 0 : (_isUserImageExpanded ? maxHeight * 0.1 : 30),
+          right: _isDogImageExpanded ? (maxWidth * 0.1) : (_isUserImageExpanded ? maxWidth * 0.08 : 20),
+          bottom: _isDogImageExpanded ? 5 : (_isUserImageExpanded ? maxHeight * 0.1 : 30),
           width: _isDogImageExpanded ? maxWidth * 0.67 : (_isUserImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
-          height: _isDogImageExpanded ? maxHeight : (_isUserImageExpanded ? maxWidth * 0.25 * 0.55 / 0.45 : maxWidth * 0.55),
+          height: _isDogImageExpanded ? maxHeight * 0.95 : (_isUserImageExpanded ? maxHeight * 0.38 : maxHeight * 0.7),
           child: GestureDetector(
             onTap: () {
               setState(() {
@@ -215,7 +216,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               });
             },
             child: Transform.rotate(
-              angle: -0.052,
+              angle: 0.052,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(_isUserImageExpanded ? 5 : 10),
                 child: Image.network(
@@ -250,28 +251,35 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
 
   Widget _buildDogInfo() {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       foregroundDecoration: BoxDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  widget.dog.breed,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  overflow: TextOverflow.fade,
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.purple.withAlpha((255*0.1).round()),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.dog.breed,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        overflow: TextOverflow.fade,
+                      ),
+                    ),
+                    Text(
+                      '${widget.dog.location.city}, ${widget.dog.location.state}',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      textAlign: TextAlign.right,
+                    )
+                  ],
                 ),
-              ),
-              Text(
-                '${widget.dog.location.city}, ${widget.dog.location.state}',
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.right,
-              )
-            ],
-          ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -281,6 +289,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             ),
           ],
         ),
+              ]
+            )),
         Text(
           widget.dog.description,
           overflow: TextOverflow.fade,
@@ -337,7 +347,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             Expanded(
                 child: Column(
                   children: [
-                  Expanded(flex: 10, child: _buildHeader()),
+                  Expanded(flex: 8, child: _buildHeader()),
                   if (_debugMode) DebugDivider(),
                   Expanded(flex: 30, child: _buildImageSection()),
                   if (_debugMode) DebugDivider(),
