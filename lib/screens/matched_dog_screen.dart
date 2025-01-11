@@ -64,7 +64,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
       _debugMode = !_debugMode;
     });
   }
-  
+
   Future<void> _shareScreenshot() async {
     final imagePath = await _captureAndSaveScreenshot();
     _screenshotPaths.add(imagePath);
@@ -146,24 +146,23 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   }
 
   Widget _buildHeader() {
-    return Column(                                                                                                                                                                                                  
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text( 
-          'My Doggelganger is...', 
+        Text(
+          'My Doggelganger is...',
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.normal,
-          ),
+                fontWeight: FontWeight.normal,
+              ),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 8), 
+        const SizedBox(height: 8),
         Text(
           '${widget.dog.name}!',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-            color: Theme.of(context).secondaryHeaderColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 36
-          ),
+              color: Theme.of(context).secondaryHeaderColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 36),
           textAlign: TextAlign.center,
         ),
       ],
@@ -171,17 +170,24 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   }
 
   Widget _buildImageSection() {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double maxWidth = constraints.maxWidth;
-        final double maxHeight = constraints.maxHeight;
+    return LayoutBuilder(builder: (context, constraints) {
+      final double maxWidth = constraints.maxWidth;
+      final double maxHeight = constraints.maxHeight;
 
-        Widget userImage = Positioned(
+      Widget userImage = Positioned(
           key: ValueKey('user'),
-          left: _isUserImageExpanded ? (maxWidth * 0.1) : (_isDogImageExpanded ? maxWidth * 0.08 : 20),
-          top: _isUserImageExpanded ? 5 : (_isDogImageExpanded ? maxHeight * .6 : 30),
-          width: _isUserImageExpanded ? maxWidth * 0.67 : (_isDogImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
-          height: _isUserImageExpanded ? maxHeight * 0.95 : (_isDogImageExpanded ? maxHeight * 0.38 : maxHeight * 0.7),
+          left: _isUserImageExpanded
+              ? (maxWidth * 0.1)
+              : (_isDogImageExpanded ? maxWidth * 0.08 : 20),
+          top: _isUserImageExpanded
+              ? 5
+              : (_isDogImageExpanded ? maxHeight * .6 : 30),
+          width: _isUserImageExpanded
+              ? maxWidth * 0.67
+              : (_isDogImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
+          height: _isUserImageExpanded
+              ? maxHeight * 0.95
+              : (_isDogImageExpanded ? maxHeight * 0.38 : maxHeight * 0.7),
           child: GestureDetector(
             onTap: () {
               setState(() {
@@ -192,22 +198,30 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             child: Transform.rotate(
               angle: -0.052,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(_isDogImageExpanded ? 5 : 10),
+                borderRadius:
+                    BorderRadius.circular(_isDogImageExpanded ? 5 : 10),
                 child: Image.file(
                   File(widget.userImagePath),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-          )
-        );
+          ));
 
-        Widget dogImage = Positioned(
+      Widget dogImage = Positioned(
           key: ValueKey('dog'),
-          right: _isDogImageExpanded ? (maxWidth * 0.1) : (_isUserImageExpanded ? maxWidth * 0.08 : 20),
-          bottom: _isDogImageExpanded ? 5 : (_isUserImageExpanded ? maxHeight * 0.1 : 30),
-          width: _isDogImageExpanded ? maxWidth * 0.67 : (_isUserImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
-          height: _isDogImageExpanded ? maxHeight * 0.95 : (_isUserImageExpanded ? maxHeight * 0.38 : maxHeight * 0.7),
+          right: _isDogImageExpanded
+              ? (maxWidth * 0.1)
+              : (_isUserImageExpanded ? maxWidth * 0.08 : 20),
+          bottom: _isDogImageExpanded
+              ? 5
+              : (_isUserImageExpanded ? maxHeight * 0.1 : 30),
+          width: _isDogImageExpanded
+              ? maxWidth * 0.67
+              : (_isUserImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
+          height: _isDogImageExpanded
+              ? maxHeight * 0.95
+              : (_isUserImageExpanded ? maxHeight * 0.38 : maxHeight * 0.7),
           child: GestureDetector(
             onTap: () {
               setState(() {
@@ -218,17 +232,17 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             child: Transform.rotate(
               angle: 0.052,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(_isUserImageExpanded ? 5 : 10),
+                borderRadius:
+                    BorderRadius.circular(_isUserImageExpanded ? 5 : 10),
                 child: Image.network(
                   widget.dog.photo,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-          )
-          );
+          ));
 
-        return AnimatedSwitcher(
+      return AnimatedSwitcher(
           duration: Duration(milliseconds: 200),
           switchInCurve: Curves.easeInOut,
           switchOutCurve: Curves.easeInOut,
@@ -236,17 +250,15 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             return FadeTransition(
               opacity: animation,
               child: child,
-              );
+            );
           },
           child: Stack(
             key: ValueKey('${_isUserImageExpanded}_$_isDogImageExpanded'),
-            children: _isDogImageExpanded 
-              ? [dogImage, userImage]
-              : [userImage, dogImage],
-            )
-          ); 
-      }
-    );
+            children: _isDogImageExpanded
+                ? [dogImage, userImage]
+                : [userImage, dogImage],
+          ));
+    });
   }
 
   Widget _buildDogInfo() {
@@ -257,12 +269,11 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.purple.withAlpha((255*0.1).round()),
-            ),
-            child: Column(
-              children: [
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.purple.withAlpha((255 * 0.1).round()),
+              ),
+              child: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -280,22 +291,21 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                     )
                   ],
                 ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '${widget.dog.age} • ${widget.dog.sex}',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ],
-        ),
-              ]
-            )),
-        Text(
-          widget.dog.description,
-          overflow: TextOverflow.fade,
-        )
-      ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${widget.dog.age} • ${widget.dog.sex}',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+              ])),
+          Text(
+            widget.dog.description,
+            overflow: TextOverflow.fade,
+          )
+        ],
       ),
     );
   }
@@ -322,9 +332,9 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Screenshot(
-        controller: _screenshotController,
-        child: GradientBackground(
+        body: Screenshot(
+      controller: _screenshotController,
+      child: GradientBackground(
         child: Column(
           children: [
             AppBar(
@@ -334,29 +344,26 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               ),
               actions: [
                 IconButton(
-                  onPressed: _shareScreenshot,
-                  icon: Platform.isIOS
-                      ? const Icon(CupertinoIcons.share)
-                      : const Icon(Icons.share)
-                ),
-                IconButton(onPressed: _toggleDebugMode, icon: Icon(Icons.bug_report))
+                    onPressed: _shareScreenshot,
+                    icon: Platform.isIOS
+                        ? const Icon(CupertinoIcons.share)
+                        : const Icon(Icons.share)),
+                IconButton(
+                    onPressed: _toggleDebugMode, icon: Icon(Icons.bug_report))
               ],
               backgroundColor: Colors.transparent,
             ),
             if (_debugMode) DebugDivider(),
             Expanded(
-                child: Column(
-                  children: [
+              child: Column(
+                children: [
                   Expanded(flex: 8, child: _buildHeader()),
                   if (_debugMode) DebugDivider(),
                   Expanded(flex: 30, child: _buildImageSection()),
                   if (_debugMode) DebugDivider(),
                   Expanded(
-                    flex: 20,
-                    child: SingleChildScrollView(
-                      child: _buildDogInfo()
-                      )
-                    ),
+                      flex: 20,
+                      child: SingleChildScrollView(child: _buildDogInfo())),
                   if (_debugMode) DebugDivider(),
                   Padding(
                     padding: EdgeInsets.only(
@@ -366,13 +373,12 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                     ),
                     child: _buildAdoptButton(),
                   ),
-                  ],
-                ),
+                ],
               ),
+            ),
           ],
         ),
       ),
-      )
-    );
+    ));
   }
 }

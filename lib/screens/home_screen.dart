@@ -59,40 +59,39 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GradientBackground(
-        child: SafeArea(
-              child: isCalculating
-                  ? const CalculatingView()
-                  : LayoutBuilder(
-                      builder: (context, constraints) {
-                        return Column(
-                          children: [
-                            SizedBox(
-                                height: constraints.maxHeight *
-                                    0.03), // 3% of screen height
-                            Expanded(
-                              flex: 8,
-                              child: DogCarouselView(),
-                            ),
-                            SizedBox(
-                                height: constraints.maxHeight *
-                                    0.03), // 3% of screen height
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: constraints.maxHeight *
-                                      0.03), // 3% of screen height
-                              child: BottomButton(
-                                onPressed: _pickImage,
-                                icon: Icons.pets,
-                                label: 'Find your doggelganger!',
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-            ),
-          )
-      );
+        body: GradientBackground(
+      child: SafeArea(
+        child: isCalculating
+            ? const CalculatingView()
+            : LayoutBuilder(
+                builder: (context, constraints) {
+                  return Column(
+                    children: [
+                      SizedBox(
+                          height: constraints.maxHeight *
+                              0.03), // 3% of screen height
+                      Expanded(
+                        flex: 8,
+                        child: DogCarouselView(),
+                      ),
+                      SizedBox(
+                          height: constraints.maxHeight *
+                              0.03), // 3% of screen height
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: constraints.maxHeight *
+                                0.03), // 3% of screen height
+                        child: BottomButton(
+                          onPressed: _pickImage,
+                          icon: Icons.pets,
+                          label: 'Find your doggelganger!',
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+      ),
+    ));
   }
 }
