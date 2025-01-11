@@ -4,6 +4,7 @@ import 'package:doggelganger_app/widgets/gradient_background.dart';
 import 'package:doggelganger_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
+import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,6 +49,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   final ScreenshotController _screenshotController = ScreenshotController();
   final List<String> _screenshotPaths = [];
   bool _debugMode = false;
+  final GlobalKey headerKey = GlobalKey();
+  final GlobalKey dogInfoKey = GlobalKey();
 
   @override
   void initState() {
@@ -66,6 +69,12 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
     });
   }
 
+  double? getWidgetYPosition(GlobalKey key) {
+    final RenderBox? renderBox = key.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox == null) return null;
+    return renderBox.localToGlobal(Offset.zero).dy;
+  }
+
   Future<void> _shareScreenshot() async {
     final imagePath = await _captureAndSaveScreenshot();
     _screenshotPaths.add(imagePath);
@@ -82,13 +91,24 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   }
 
   Future<String> _captureAndSaveScreenshot() async {
+    final pixelRatio = 3.0;
+
     final Uint8List? imageBytes = await _screenshotController.capture(
       delay: const Duration(milliseconds: 10),
-      pixelRatio: 3.0,
+      pixelRatio: pixelRatio,
     );
 
     if (imageBytes == null) {
       throw Exception('Failed to capture screenshot');
+    }
+
+    // Get the pixel positions of the tops of header and dogInfo widgets
+    // That defines the bounds we want to screenshot
+    final headerY = getWidgetYPosition(headerKey);
+    final dogInfoY = getWidgetYPosition(dogInfoKey); 
+
+    if (headerY == null || dogInfoY == null) {
+      throw Exception("Failed to get widget Y positions");
     }
 
     // Decode the image
@@ -98,8 +118,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
     }
 
     // Calculate crop dimensions
-    final int topCrop = (image.height * 0.13).round();
-    final int bottomCrop = (image.height * 0.66).round(); // Cut out the bottom
+    final int topCrop = (headerY * pixelRatio).round();
+    final int bottomCrop = ((dogInfoY + 8) * pixelRatio).round(); // TODO(drj): get padding (8) programmatically 
 
     // Crop the image
     final croppedImage = img.copyCrop(
@@ -368,7 +388,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             Expanded(
               child: Column(
                 children: [
-                  Expanded(flex: 5, child: _buildHeader()),
+                  Expanded(flex: 5, key: headerKey, child: (_buildHeader())),
                   if (_debugMode) DebugDivider(),
                   Expanded(flex: 20, child: _buildImageSection()),
                   if (_debugMode) DebugDivider(),
@@ -377,6 +397,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                     child: Stack(
                       children: [
                         SingleChildScrollView(
+                          key: dogInfoKey,
                           child: Padding(
                               padding: EdgeInsets.only(bottom: 110),
                               child: _buildDogInfo()),
