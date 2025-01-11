@@ -381,8 +381,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                     icon: Platform.isIOS
                         ? const Icon(CupertinoIcons.share)
                         : const Icon(Icons.share)),
-                IconButton(
-                    onPressed: _toggleDebugMode, icon: Icon(Icons.bug_report))
+                // IconButton(
+                //     onPressed: _toggleDebugMode, icon: Icon(Icons.bug_report))
               ],
               backgroundColor: Colors.transparent,
             ),
