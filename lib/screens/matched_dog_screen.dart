@@ -188,6 +188,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 _isDogImageExpanded = false;
               });
             },
+            child: Transform.rotate(
+              angle: 0.052,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(_isDogImageExpanded ? 5 : 10),
                 child: Image.file(
@@ -196,7 +198,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 ),
               ),
             ),
-          );
+          )
+        );
 
         Widget dogImage = Positioned(
           key: ValueKey('dog'),
@@ -211,7 +214,9 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 _isUserImageExpanded = false;
               });
             },
-            child: ClipRRect(
+            child: Transform.rotate(
+              angle: -0.052,
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(_isUserImageExpanded ? 5 : 10),
                 child: Image.network(
                   widget.dog.photo,
@@ -219,10 +224,11 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 ),
               ),
             ),
+          )
           );
 
         return AnimatedSwitcher(
-          duration: Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 200),
           switchInCurve: Curves.easeInOut,
           switchOutCurve: Curves.easeInOut,
           transitionBuilder: (Widget child, Animation<double> animation) {
@@ -231,17 +237,16 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               child: child,
               );
           },
-          child: Stack(children: [userImage, dogImage])
+          child: Stack(
+            key: ValueKey('${_isUserImageExpanded}_$_isDogImageExpanded'),
+            children: _isDogImageExpanded 
+              ? [dogImage, userImage]
+              : [userImage, dogImage],
+            )
           ); 
-
-        // return Stack(
-        //   alignment: Alignment.center,
-        //   children: _isDogImageExpanded
-        //       ? [dogImage, userImage]
-        //       : [userImage, dogImage],
-        // );
       }
     );
+  }
 
   Widget _buildDogInfo() {
     return Container(
