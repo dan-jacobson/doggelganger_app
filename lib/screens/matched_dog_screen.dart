@@ -11,6 +11,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:logger/logger.dart';
 import 'package:image/image.dart' as img;
+import 'package:auto_size_text/auto_size_text.dart';
 
 class MatchedDogScreen extends StatefulWidget {
   final DogData dog;
@@ -98,7 +99,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
 
     // Calculate crop dimensions
     final int topCrop = (image.height * 0.13).round();
-    final int bottomCrop = (image.height * 0.65).round(); // Cut out the bottom
+    final int bottomCrop = (image.height * 0.66).round(); // Cut out the bottom
 
     // Crop the image
     final croppedImage = img.copyCrop(
@@ -157,12 +158,16 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
-        Text(
+        AutoSizeText(
           '${widget.dog.name}!',
           style: Theme.of(context).textTheme.headlineLarge?.copyWith(
               color: Theme.of(context).secondaryHeaderColor,
               fontWeight: FontWeight.bold,
-              fontSize: 36),
+          ),
+          maxLines: 1,
+          minFontSize: 18,
+          maxFontSize: 36,
+          overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
         ),
       ],
@@ -271,7 +276,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
           Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.purple.withAlpha((255 * 0.1).round()),
+                color: Theme.of(context).colorScheme.primary.withAlpha((255 * 0.5).round()),
               ),
               child: Column(children: [
                 Row(
