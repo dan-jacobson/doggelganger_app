@@ -175,9 +175,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
         final double maxWidth = constraints.maxWidth;
         final double maxHeight = constraints.maxHeight;
 
-        Widget userImage = AnimatedPositioned(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
+        Widget userImage = Positioned(
+          key: ValueKey('user'),
           left: _isUserImageExpanded ? (maxWidth * 0.05) : (_isDogImageExpanded ? maxWidth * 0.1 : 20),
           top: _isUserImageExpanded ? 0 : (_isDogImageExpanded ? maxHeight * .6 : 30),
           width: _isUserImageExpanded ? maxWidth * 0.67 : (_isDogImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
@@ -189,9 +188,6 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 _isDogImageExpanded = false;
               });
             },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              transform: Matrix4.rotationZ(_isUserImageExpanded ? 0 : -0.05),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(_isDogImageExpanded ? 5 : 10),
                 child: Image.file(
@@ -200,12 +196,10 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 ),
               ),
             ),
-          ),
-        );
+          );
 
-        Widget dogImage = AnimatedPositioned(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
+        Widget dogImage = Positioned(
+          key: ValueKey('dog'),
           right: _isDogImageExpanded ? (maxWidth * 0.05) : (_isUserImageExpanded ? maxWidth * 0.1 : 20),
           bottom: _isDogImageExpanded ? 0 : (_isUserImageExpanded ? maxHeight * 0.1 : 30),
           width: _isDogImageExpanded ? maxWidth * 0.67 : (_isUserImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
@@ -217,10 +211,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 _isUserImageExpanded = false;
               });
             },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              transform: Matrix4.rotationZ(_isDogImageExpanded ? 0 : 0.05),
-              child: ClipRRect(
+            child: ClipRRect(
                 borderRadius: BorderRadius.circular(_isUserImageExpanded ? 5 : 10),
                 child: Image.network(
                   widget.dog.photo,
@@ -228,18 +219,29 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                 ),
               ),
             ),
-          ),
-        );
+          );
 
-        return Stack(
-          alignment: Alignment.center,
-          children: _isDogImageExpanded
-              ? [dogImage, userImage]
-              : [userImage, dogImage],
-        );
-      },
+        return AnimatedSwitcher(
+          duration: Duration(milliseconds: 300),
+          switchInCurve: Curves.easeInOut,
+          switchOutCurve: Curves.easeInOut,
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+              );
+          },
+          child: Stack(children: [userImage, dogImage])
+          ); 
+
+        // return Stack(
+        //   alignment: Alignment.center,
+        //   children: _isDogImageExpanded
+        //       ? [dogImage, userImage]
+        //       : [userImage, dogImage],
+        // );
+      }
     );
-  }
 
   Widget _buildDogInfo() {
     return Container(
