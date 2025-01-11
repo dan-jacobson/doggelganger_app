@@ -214,7 +214,7 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
               ? (maxWidth * 0.1)
               : (_isUserImageExpanded ? maxWidth * 0.08 : 20),
           bottom: _isDogImageExpanded
-              ? 5
+              ? 12
               : (_isUserImageExpanded ? maxHeight * 0.1 : 30),
           width: _isDogImageExpanded
               ? maxWidth * 0.67
@@ -359,22 +359,28 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
             Expanded(
               child: Column(
                 children: [
-                  Expanded(flex: 8, child: _buildHeader()),
+                  Expanded(flex: 5, child: _buildHeader()),
                   if (_debugMode) DebugDivider(),
-                  Expanded(flex: 30, child: _buildImageSection()),
+                  Expanded(flex: 20, child: _buildImageSection()),
                   if (_debugMode) DebugDivider(),
                   Expanded(
-                      flex: 20,
-                      child: SingleChildScrollView(child: _buildDogInfo())),
-                  if (_debugMode) DebugDivider(),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.03,
-                      left: MediaQuery.of(context).size.width * 0.03,
-                      right: MediaQuery.of(context).size.width * 0.03,
+                      flex: 15,
+                      child: Stack(
+                        children: [
+                        SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 110),
+                            child: _buildDogInfo()
+                          ),
+                        ),
+                        Positioned(
+                          bottom: MediaQuery.of(context).size.height * 0.06,
+                          left: MediaQuery.of(context).size.width * 0.06,
+                          right: MediaQuery.of(context).size.width * 0.06,
+                          child: _buildAdoptButton())
+                        ],
                     ),
-                    child: _buildAdoptButton(),
-                  ),
+                  )
                 ],
               ),
             ),
