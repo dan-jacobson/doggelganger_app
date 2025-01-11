@@ -175,66 +175,67 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
         final double maxWidth = constraints.maxWidth;
         final double maxHeight = constraints.maxHeight;
 
+        Widget userImage = AnimatedPositioned(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          left: _isUserImageExpanded ? (maxWidth * 0.05) : (_isDogImageExpanded ? maxWidth * 0.1 : 20),
+          top: _isUserImageExpanded ? 0 : (_isDogImageExpanded ? maxHeight * .6 : 30),
+          width: _isUserImageExpanded ? maxWidth * 0.67 : (_isDogImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
+          height: _isUserImageExpanded ? maxHeight : (_isDogImageExpanded ? maxWidth * 0.25 * 0.55 / 0.45 : maxWidth * 0.55),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                _isUserImageExpanded = !_isUserImageExpanded;
+                _isDogImageExpanded = false;
+              });
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              transform: Matrix4.rotationZ(_isUserImageExpanded ? 0 : -0.05),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(_isDogImageExpanded ? 5 : 10),
+                child: Image.file(
+                  File(widget.userImagePath),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        );
+
+        Widget dogImage = AnimatedPositioned(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          right: _isDogImageExpanded ? (maxWidth * 0.05) : (_isUserImageExpanded ? maxWidth * 0.1 : 20),
+          bottom: _isDogImageExpanded ? 0 : (_isUserImageExpanded ? maxHeight * 0.1 : 30),
+          width: _isDogImageExpanded ? maxWidth * 0.67 : (_isUserImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
+          height: _isDogImageExpanded ? maxHeight : (_isUserImageExpanded ? maxWidth * 0.25 * 0.55 / 0.45 : maxWidth * 0.55),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                _isDogImageExpanded = !_isDogImageExpanded;
+                _isUserImageExpanded = false;
+              });
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              transform: Matrix4.rotationZ(_isDogImageExpanded ? 0 : 0.05),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(_isUserImageExpanded ? 5 : 10),
+                child: Image.network(
+                  widget.dog.photo,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        );
+
         return Stack(
           alignment: Alignment.center,
-          children: [
-            // User Image
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              left: _isUserImageExpanded ? (maxWidth * 0.05) : (_isDogImageExpanded ? maxWidth * 0.1 : 20),
-              top: _isUserImageExpanded ? 0 : (_isDogImageExpanded ? maxHeight * .6 : 30),
-              width: _isUserImageExpanded ? maxWidth * 0.67 : (_isDogImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
-              height: _isUserImageExpanded ? maxHeight : (_isDogImageExpanded ? maxWidth * 0.25 * 0.55 / 0.45 : maxWidth * 0.55),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _isUserImageExpanded = !_isUserImageExpanded;
-                    _isDogImageExpanded = false;
-                  });
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  transform: Matrix4.rotationZ(_isUserImageExpanded ? 0 : -0.05),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(_isDogImageExpanded ? 5 : 10),
-                    child: Image.file(
-                      File(widget.userImagePath),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // Dog Image
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              right: _isDogImageExpanded ? (maxWidth * 0.05) : (_isUserImageExpanded ? maxWidth * 0.1 : 20),
-              bottom: _isDogImageExpanded ? 0 : (_isUserImageExpanded ? maxHeight * 0.1 : 30),
-              width: _isDogImageExpanded ? maxWidth * 0.67 : (_isUserImageExpanded ? maxWidth * 0.25 : maxWidth * 0.45),
-              height: _isDogImageExpanded ? maxHeight : (_isUserImageExpanded ? maxWidth * 0.25 * 0.55 / 0.45 : maxWidth * 0.55),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _isDogImageExpanded = !_isDogImageExpanded;
-                    _isUserImageExpanded = false;
-                  });
-                },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  transform: Matrix4.rotationZ(_isDogImageExpanded ? 0 : 0.05),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(_isUserImageExpanded ? 5 : 10),
-                    child: Image.network(
-                      widget.dog.photo,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          children: _isDogImageExpanded
+              ? [dogImage, userImage]
+              : [userImage, dogImage],
         );
       },
     );
