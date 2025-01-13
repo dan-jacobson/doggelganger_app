@@ -35,6 +35,7 @@ class HomeScreenState extends State<HomeScreen> {
     try {
       final matchedDogData =
           await ApiService.uploadImageAndGetMatch(image.path);
+      if (!mounted) return;
       setState(() {
         isCalculating = false;
       });
@@ -47,6 +48,8 @@ class HomeScreenState extends State<HomeScreen> {
         ),
       );
     } catch (e) {
+      if (!mounted) return;
+
       setState(() {
         isCalculating = false;
       });
