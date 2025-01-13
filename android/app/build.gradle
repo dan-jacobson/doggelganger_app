@@ -4,9 +4,14 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
-    namespace = "com.example.doggelganger_app"
+    namespace = "me.doggelganger.app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,7 +25,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.doggelganger_app"
+        applicationId = "me.doggelganger.app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -40,10 +45,17 @@ android {
             versionNameSuffix "-prod"
         }
     }
-
+    signingConfigs {
+    release {
+        keyAlias = keystoreProperties['keyAlias']
+        keyPassword = keystoreProperties['keyPassword']
+        storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+        storePassword = keystoreProperties['storePassword']
+        }
+    }
     buildTypes {
         release {
-            signingConfig = signingConfigs.debug
+            signingConfig = signingConfigs.release
         }
     }
 }
