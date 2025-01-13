@@ -13,7 +13,8 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "me.doggelganger.app"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "28.0.12674087"
+    // ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
