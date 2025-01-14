@@ -58,3 +58,6 @@ pyvenv.cfg
 *.png
 *.jpg
 *.jpeg
+
+# Tokens
+*.p8
