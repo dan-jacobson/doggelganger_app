@@ -4,7 +4,6 @@ import 'package:doggelganger_app/widgets/gradient_background.dart';
 import 'package:doggelganger_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:doggelganger_app/models/dog_data.dart';
-import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/cupertino.dart';
@@ -381,8 +380,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
                     icon: Platform.isIOS
                         ? const Icon(CupertinoIcons.share)
                         : const Icon(Icons.share)),
-                // IconButton(
-                //     onPressed: _toggleDebugMode, icon: Icon(Icons.bug_report))
+                IconButton(
+                    onPressed: _toggleDebugMode, icon: Icon(Icons.bug_report))
               ],
               backgroundColor: Colors.transparent,
             ),
