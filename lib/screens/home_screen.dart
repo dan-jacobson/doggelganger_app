@@ -1,11 +1,11 @@
-import 'package:doggelganger_app/widgets/gradient_background.dart';
+import 'package:doggelganger/widgets/gradient_background.dart';
 import 'package:flutter/material.dart';
-import 'package:doggelganger_app/widgets/carousel_view.dart';
-import 'package:doggelganger_app/widgets/bottom_button.dart';
-import 'package:doggelganger_app/widgets/calculating_view.dart';
-import 'package:doggelganger_app/screens/matched_dog_screen.dart';
-import 'package:doggelganger_app/models/dog_data.dart';
-import 'package:doggelganger_app/services/api_service.dart';
+import 'package:doggelganger/widgets/carousel_view.dart';
+import 'package:doggelganger/widgets/bottom_button.dart';
+import 'package:doggelganger/widgets/calculating_view.dart';
+import 'package:doggelganger/screens/matched_dog_screen.dart';
+import 'package:doggelganger/models/dog_data.dart';
+import 'package:doggelganger/services/api_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -69,6 +69,7 @@ class HomeScreenState extends State<HomeScreen> {
             : LayoutBuilder(
                 builder: (context, constraints) {
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SizedBox(
                           height: constraints.maxHeight *
@@ -84,10 +85,12 @@ class HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.only(
                             bottom: constraints.maxHeight *
                                 0.03), // 3% of screen height
-                        child: BottomButton(
+                        child: Center(child: SizedBox(width: constraints.maxWidth * 0.8, child: BottomButton(
                           onPressed: _pickImage,
                           icon: Icons.pets,
                           label: 'Find your doggelganger!',
+                        ),
+                        ),
                         ),
                       ),
                     ],

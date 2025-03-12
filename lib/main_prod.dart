@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:doggelganger_app/screens/home_screen.dart';
-import 'package:doggelganger_app/config/environment.dart';
+import 'package:doggelganger/screens/home_screen.dart';
+import 'package:doggelganger/config/environment.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -16,6 +16,7 @@ class DoggelgangerApp extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return MaterialApp(
+      debugShowCheckedModeBanner:false,
       title: 'Doggelganger',
       theme: ThemeData(
         colorScheme:
