@@ -61,3 +61,6 @@ pyvenv.cfg
 
 # Tokens
 *.p8
+
+# Env files
+*.env
