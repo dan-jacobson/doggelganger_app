@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class BottomButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -17,9 +18,12 @@ class BottomButton extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: onPressed,
       icon: Icon(icon, size: 28),
-      label: Text(
+      label: AutoSizeText(
         label,
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        minFontSize: 14,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
