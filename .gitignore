@@ -47,6 +47,8 @@ app.*.map.json
 /android/app/production
 /android/app/.cxx
 
+# Screenshots
+screenshots/
 
 # Aider
 .aider*
