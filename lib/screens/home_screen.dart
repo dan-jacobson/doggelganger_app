@@ -86,14 +86,30 @@ class HomeScreenState extends State<HomeScreen> {
                             bottom: constraints.maxHeight *
                                 0.03), // 3% of screen height
                         child: Center(
-                          child: SizedBox(
-                            width: constraints.maxWidth * 0.8,
-                            child: BottomButton(
-                              onPressed: _pickImage,
-                              icon: Icons.pets,
-                              label: 'Find your doggelganger!',
-                            ),
-                          ),
+                          // adjust the button width dependong on the size of the screen
+                          child: LayoutBuilder(
+                              builder: (context, buttonConstraints) {
+                            double buttonWidth;
+                            if (constraints.maxWidth < 390) {
+                              // if we're on a small phone
+                              buttonWidth = constraints.maxWidth * 0.85;
+                            } else if (constraints.maxWidth < 500) {
+                              // Normal sized phones
+                              buttonWidth = constraints.maxWidth * 0.8;
+                            } else {
+                              // Fixed size for tablets and other larger devices
+                              buttonWidth = 500;
+                            }
+
+                            return SizedBox(
+                              width: buttonWidth,
+                              child: BottomButton(
+                                onPressed: _pickImage,
+                                icon: Icons.pets,
+                                label: 'Find your doggelganger!',
+                              ),
+                            );
+                          }),
                         ),
                       ),
                     ],
