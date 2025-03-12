@@ -85,12 +85,15 @@ class HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.only(
                             bottom: constraints.maxHeight *
                                 0.03), // 3% of screen height
-                        child: Center(child: SizedBox(width: constraints.maxWidth * 0.8, child: BottomButton(
-                          onPressed: _pickImage,
-                          icon: Icons.pets,
-                          label: 'Find your doggelganger!',
-                        ),
-                        ),
+                        child: Center(
+                          child: SizedBox(
+                            width: constraints.maxWidth * 0.8,
+                            child: BottomButton(
+                              onPressed: _pickImage,
+                              icon: Icons.pets,
+                              label: 'Find your doggelganger!',
+                            ),
+                          ),
                         ),
                       ),
                     ],
