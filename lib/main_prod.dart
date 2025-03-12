@@ -16,7 +16,7 @@ class DoggelgangerApp extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return MaterialApp(
-      debugShowCheckedModeBanner:false,
+      // debugShowCheckedModeBanner: false,
       title: 'Doggelganger',
       theme: ThemeData(
         colorScheme:
