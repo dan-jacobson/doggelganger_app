@@ -4,7 +4,13 @@ import 'package:doggelganger/config/environment.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  Environment.appFlavor = Flavor.development;
+  const isDev = bool.fromEnvironment('dev', defaultValue: false);
+
+  if (isDev) {
+    Environment.appFlavor = Flavor.development;
+  } else {  
+    Environment.appFlavor = Flavor.production;
+  }
   runApp(const DoggelgangerApp());
 }
 
