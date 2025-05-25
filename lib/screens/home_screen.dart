@@ -20,6 +20,12 @@ class HomeScreenState extends State<HomeScreen> {
   DogData? matchedDog;
   String? userImagePath;
 
+  @override
+  void initState() {
+    super.initState();
+    ApiService.warmUp();
+  }
+
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);

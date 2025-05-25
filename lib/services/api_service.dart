@@ -8,6 +8,14 @@ import 'package:doggelganger/config/environment.dart';
 class ApiService {
   static String get baseUrl => Environment.apiUrl;
 
+  static Future<void> warmUp() async {
+    try {
+      await http.get(Uri.parse(baseUrl));
+    } catch (e) {
+      log("Warm-up call failed: $e");
+    }
+  }
+
   static Future<(DogData, List<double>)> uploadImageAndGetMatch(
       String imagePath) async {
     var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/embed'));
