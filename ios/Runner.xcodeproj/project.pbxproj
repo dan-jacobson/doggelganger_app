@@ -700,7 +700,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5WKL3W9DLL;
 				ENABLE_BITCODE = NO;
-				FLUTTER_TARGET = lib/main_prod.dart;
+				FLUTTER_TARGET = /Users/drj/code/doggelganger_app/lib/main.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Doggelganger;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
