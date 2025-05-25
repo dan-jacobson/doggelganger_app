@@ -8,7 +8,7 @@ void main() {
 
   if (isDev) {
     Environment.appFlavor = Flavor.development;
-  } else {  
+  } else {
     Environment.appFlavor = Flavor.production;
   }
   runApp(const DoggelgangerApp());

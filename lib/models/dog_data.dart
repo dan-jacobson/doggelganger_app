@@ -27,6 +27,7 @@ class Location {
 }
 
 class DogData {
+  final String id;
   final String name;
   final Location location;
   final String age;
@@ -36,9 +37,11 @@ class DogData {
   final String url;
   final String photo;
   final String croppedPhoto;
+  final List<double>? dogEmbedding;
   final double? similarity;
 
   DogData({
+    required this.id,
     required this.name,
     required this.location,
     required this.age,
@@ -48,11 +51,13 @@ class DogData {
     required this.url,
     required this.photo,
     required this.croppedPhoto,
+    this.dogEmbedding,
     this.similarity,
   });
 
   factory DogData.fromJson(Map<String, dynamic> json) {
     return DogData(
+      id: json['id'],
       name: json['name'],
       location: Location.fromJson(json['location']),
       age: json['age'],
@@ -62,6 +67,9 @@ class DogData {
       url: json['url'],
       photo: json['primary_photo'],
       croppedPhoto: json['primary_photo_cropped'],
+      dogEmbedding: json['dog_embedding'] != null
+          ? List<double>.from(json['dog_embedding'])
+          : null,
       similarity: json['similarity'] != null
           ? (json['similarity'] as num).toDouble()
           : null,
@@ -70,6 +78,7 @@ class DogData {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'location': location.toJson(),
       'age': age,
@@ -79,6 +88,7 @@ class DogData {
       'url': url,
       'primary_photo': photo,
       'primary_photo_cropped': croppedPhoto,
+      if (dogEmbedding != null) 'dogEmbedding': dogEmbedding,
       if (similarity != null) 'similarity': similarity,
     };
   }

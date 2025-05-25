@@ -33,7 +33,7 @@ class HomeScreenState extends State<HomeScreen> {
       isCalculating = true;
     });
     try {
-      final matchedDogData =
+      final (matchedDogData, userEmbedding) =
           await ApiService.uploadImageAndGetMatch(image.path);
       if (!mounted) return;
       setState(() {
@@ -44,6 +44,7 @@ class HomeScreenState extends State<HomeScreen> {
           builder: (context) => MatchedDogScreen(
             dog: matchedDogData,
             userImagePath: image.path,
+            userEmbedding: userEmbedding,
           ),
         ),
       );

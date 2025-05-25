@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:doggelganger/services/api_service.dart';
 import 'package:doggelganger/widgets/gradient_background.dart';
 import 'package:doggelganger/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 class MatchedDogScreen extends StatefulWidget {
   final DogData dog;
   final String userImagePath;
+  final List<double> userEmbedding;
 
   const MatchedDogScreen({
     super.key,
     required this.dog,
     required this.userImagePath,
+    required this.userEmbedding,
   });
 
   @override
@@ -57,10 +60,17 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
   Future<void> _shareScreenshot() async {
     final imagePath = await _captureAndSaveScreenshot();
     _screenshotPaths.add(imagePath);
-    await Share.shareXFiles(
+    final result = await Share.shareXFiles(
       [XFile(imagePath, mimeType: "image/png")],
       subject: 'Check out my Doggelganger',
     );
+
+    if (result.status == ShareResultStatus.success) {
+      await ApiService.logMatch(
+          dogId: widget.dog.id,
+          dogEmbedding: widget.dog.dogEmbedding,
+          userEmbedding: widget.userEmbedding);
+    }
 
     // Cleanup old screenshots if there are more than 5
     if (_screenshotPaths.length > 5) {
