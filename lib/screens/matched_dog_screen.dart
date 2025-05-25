@@ -62,7 +62,8 @@ class MatchedDogScreenState extends State<MatchedDogScreen>
     _screenshotPaths.add(imagePath);
     final result = await Share.shareXFiles(
       [XFile(imagePath, mimeType: "image/png")],
-      subject: 'Check out my Doggelganger',
+      subject:
+          'Check out my Doggelganger ${widget.dog.name}! https://apps.apple.com/us/app/doggelganger/id6740509252',
     );
 
     if (result.status == ShareResultStatus.success) {
